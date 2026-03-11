@@ -20,14 +20,10 @@ export function BlockedUsersPage() {
       .select('*, blocked:blocked_user_id(id, username, display_name, avatar_url)')
       .eq('user_id', user.id)
 
-    if (data && data.length > 0) {
+    if (data) {
       setBlockedUsers(data)
     } else {
-      // Mock data for UI display
-      setBlockedUsers([
-        { id: '1', blocked: { id: 'u1', username: 'ToxicUser123', display_name: 'Toxic User', avatar_url: '' }, created_at: '2024-01-10T10:00:00Z' },
-        { id: '2', blocked: { id: 'u2', username: 'SpamBot99', display_name: 'Spam Bot', avatar_url: '' }, created_at: '2024-01-05T15:30:00Z' }
-      ])
+      setBlockedUsers([])
     }
 
     setLoading(false)

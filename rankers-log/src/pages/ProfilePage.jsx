@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
+import { useProfile } from '../hooks/useProfile'
 import { PostCreatorModal } from '../components/PostCreatorModal'
 import { FollowButton } from '../components/FollowButton'
 
 export function ProfilePage() {
   const { user } = useAuth()
+  const { avatarUrl, username, displayName, level, rank } = useProfile()
   const navigate = useNavigate()
   const [profile, setProfile] = useState(null)
   const [posts, setPosts] = useState([])
@@ -105,11 +107,7 @@ export function ProfilePage() {
     return colors[status] || colors.planned
   }
 
-  const username = profile?.username || user?.user_metadata?.username || 'Player'
-  const displayName = profile?.display_name || username
-  const level = profile?.level || 1
-  const rank = profile?.rank || 'E'
-  const avatarUrl = profile?.avatar_url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAdaWmABVJXA2jsgAaK0-A6KfaQdF1oWID-5yztCv3l5U4qlYJDSTECr6S60s6aBycW6BghIvBQ1xOa8-DhAwvTEzDPpjRcZd0K45p4r0ZfOwdKum9Qnyac1EEnvjyeO_Kq60P6BMi4UkW9vs35XyjWPzLq4wVuhV3rWwCt6UUEUAj6mnAT-RhULGMZ8cxGGp7Uc_F5TTib0U2w_QW5cFL4wkdzQUMu-AH7iLWkIVuNlTrz5B5RRSt_BDGQakh-x3VtiqhU72W8jV3j'
+  // avatarUrl, username, displayName, level, rank come from useProfile hook above
 
   async function handleLike(postId) {
     const isLiked = likedPosts.has(postId)
@@ -134,7 +132,7 @@ export function ProfilePage() {
   }
 
   function handleComment(postId) {
-    navigate(`/posts/${postId}/comments`)
+    navigate(`/post/${postId}`)
   }
 
   async function handleShare(post) {
@@ -259,12 +257,10 @@ export function ProfilePage() {
               <h3 className="font-bold text-lg text-white border-l-4 border-[#FFD700] pl-3">Collection</h3>
               <Link to="/library" className="text-xs text-[#FFD700] hover:text-white transition-colors">See all</Link>
             </div>
-            <div className="grid grid-cols-3 gap-2">
-              {[1,2,3,4,5,6].map(i => (
-                <div key={i} className="aspect-square bg-gray-800 rounded-lg overflow-hidden border border-white/5 hover:border-[#1A1A1A]/50 transition-colors flex items-center justify-center">
-                  <span className="material-symbols-outlined text-gray-600">image</span>
-                </div>
-              ))}
+            <div className="text-center py-6">
+              <span className="material-symbols-outlined text-gray-600 text-4xl mb-2">collections_bookmark</span>
+              <p className="text-gray-500 text-sm">No items tracked yet</p>
+              <Link to="/library" className="text-xs text-[#FFD700] hover:text-white mt-2 inline-block transition-colors">Browse Library →</Link>
             </div>
           </div>
         </aside>
@@ -498,61 +494,26 @@ export function ProfilePage() {
         <aside className="lg:col-span-3 space-y-6">
           {/* Achievements */}
           <div className="bg-[#13151D] rounded-xl p-6 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.5)] border border-white/10">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-4">
               <h3 className="font-bold text-white">Achievements</h3>
               <Link to="/achievements" className="text-xs text-[#FFD700] hover:text-white transition-colors">View All</Link>
             </div>
-            <div className="grid grid-cols-4 gap-2">
-              <div className="flex flex-col items-center gap-1">
-                <div className="w-10 h-10 bg-yellow-900/30 border border-[#FFD700]/50 flex items-center justify-center text-[#FFD700] shadow-[0_0_8px_-2px_rgba(255,179,0,0.4)] hexagon">
-                  <span className="material-symbols-outlined text-lg">emoji_events</span>
-                </div>
-                <span className="text-[9px] text-gray-500 uppercase tracking-wide">Veteran</span>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <div className="w-10 h-10 bg-blue-900/30 border border-blue-500 flex items-center justify-center text-blue-500 hexagon">
-                  <span className="material-symbols-outlined text-lg">rate_review</span>
-                </div>
-                <span className="text-[9px] text-gray-500 uppercase tracking-wide">Critic</span>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <div className="w-10 h-10 bg-purple-900/30 border border-purple-500 flex items-center justify-center text-purple-500 hexagon">
-                  <span className="material-symbols-outlined text-lg">menu_book</span>
-                </div>
-                <span className="text-[9px] text-gray-500 uppercase tracking-wide">Reader</span>
-              </div>
-              <div className="flex flex-col items-center gap-1 opacity-50">
-                <div className="w-10 h-10 bg-gray-800 border border-gray-600 flex items-center justify-center text-gray-400 hexagon">
-                  <span className="material-symbols-outlined text-lg">lock</span>
-                </div>
-                <span className="text-[9px] text-gray-500 uppercase tracking-wide">Locked</span>
-              </div>
+            <div className="text-center py-6">
+              <span className="material-symbols-outlined text-gray-600 text-4xl mb-2">emoji_events</span>
+              <p className="text-gray-500 text-sm">No achievements unlocked yet</p>
+              <p className="text-gray-600 text-xs mt-1">Complete quests and milestones to earn badges</p>
             </div>
           </div>
           
-          {/* Currently Watching */}
-          <div className="bg-[#13151D] rounded-xl p-6 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.5)] border border-[#1A1A1A]/40 relative overflow-hidden">
-            <div className="absolute -right-10 -top-10 w-24 h-24 bg-[#1A1A1A]/20 blur-3xl rounded-full pointer-events-none"></div>
-            <h3 className="font-bold text-white mb-4 border-l-4 border-[#FFD700] pl-3">Currently Watching</h3>
-            <div className="space-y-4">
-              <div className="flex gap-3 group cursor-pointer">
-                <div className="w-12 h-12 bg-gray-800 shrink-0 overflow-hidden border border-[#1A1A1A]/50 group-hover:border-[#1A1A1A] transition-colors hexagon">
-                  <div className="w-full h-full bg-gray-700 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-gray-600 text-sm">movie</span>
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex justify-between items-baseline">
-                    <h4 className="text-sm font-bold text-white truncate">Chainsaw Man</h4>
-                    <span className="text-[10px] text-[#FFD700]">Ep 8/12</span>
-                  </div>
-                  <div className="w-full bg-gray-800 h-1 rounded-full mt-2 overflow-hidden">
-                    <div className="bg-[#FFD700] h-full w-2/3 shadow-[0_0_12px_rgba(255,215,0,0.6)]"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+           {/* Currently Tracking */}
+           <div className="bg-[#13151D] rounded-xl p-6 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.5)] border border-[#1A1A1A]/40 relative overflow-hidden">
+             <h3 className="font-bold text-white mb-4 border-l-4 border-[#FFD700] pl-3">Currently Watching</h3>
+             <div className="text-center py-4">
+               <span className="material-symbols-outlined text-gray-600 text-3xl mb-2">tv</span>
+               <p className="text-gray-500 text-sm">Nothing tracked yet</p>
+               <Link to="/library" className="text-xs text-[#FFD700] hover:text-white mt-2 inline-block transition-colors">Start tracking →</Link>
+             </div>
+           </div>
           
           {/* Suggested Rankers */}
           <div className="bg-[#13151D] rounded-xl p-6 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.5)] border border-white/10">

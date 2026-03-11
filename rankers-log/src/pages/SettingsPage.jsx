@@ -203,15 +203,16 @@ export function SettingsPage() {
                 <span className="font-bold text-white tracking-wider">LOGOUT SESSION</span>
               </div>
             </button>
-            <Link
-              to="/settings/data"
-              className="relative w-full group overflow-hidden rounded-lg bg-transparent border border-red-500/30 hover:border-red-500 hover:bg-red-500/10 transition-all p-4 text-center"
+            {/* /settings/data does not exist yet — destructive action, must be implemented carefully */}
+            <div
+              className="relative w-full group overflow-hidden rounded-lg bg-transparent border border-red-500/20 p-4 text-center opacity-40 cursor-not-allowed"
             >
               <div className="flex items-center justify-center gap-3 relative z-10">
                 <span className="material-symbols-outlined text-red-500">delete_forever</span>
                 <span className="font-bold text-red-500 tracking-wider">DELETE ACCOUNT DATA</span>
+                <span className="text-[9px] font-mono text-red-700 border border-red-900 px-1 rounded uppercase ml-2">Soon</span>
               </div>
-            </Link>
+            </div>
           </div>
         </section>
       </div>

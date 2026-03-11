@@ -32,7 +32,8 @@ export function StreaksPage() {
       const lastCheckIn = data.last_check_in ? new Date(data.last_check_in).toDateString() : null
       setCheckedIn(today === lastCheckIn)
     } else {
-      setStreak({ current: 7, longest: 42, lastCheckIn: null })
+      // No streak row yet — honest zeros, not fake data
+      setStreak({ current: 0, longest: 0, lastCheckIn: null })
     }
 
     // Generate week days

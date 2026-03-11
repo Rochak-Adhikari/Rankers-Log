@@ -1,10 +1,17 @@
 import { useState } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 export function AuthPage() {
   const [searchParams] = useSearchParams()
-  const initialTab = searchParams.get('tab') || 'login'
+  const location = useLocation()
+  // Derive active tab from pathname first, then fall back to ?tab= query param
+  const tabFromPath = location.pathname.includes('/signup')
+    ? 'signup'
+    : location.pathname.includes('/forgot')
+    ? 'forgot'
+    : null
+  const initialTab = tabFromPath || searchParams.get('tab') || 'login'
   const [activeTab, setActiveTab] = useState(initialTab)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

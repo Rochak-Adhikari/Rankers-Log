@@ -18,8 +18,8 @@ export function LandingPage() {
           </div>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-          <a className="hover:text-white hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)] transition-all" href="#">FEATURES</a>
-          <a className="hover:text-white hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)] transition-all" href="#">LEADERBOARD</a>
+          <span className="text-gray-600 cursor-default select-none">FEATURES</span>
+          <span className="text-gray-600 cursor-default select-none">LEADERBOARD</span>
           <Link to="/auth/login" className="px-6 py-2 border border-white/20 rounded-lg hover:bg-white/5 hover:border-white/50 text-white transition-all shadow-[0_0_10px_rgba(0,0,0,0.5)]">LOGIN</Link>
         </div>
       </header>

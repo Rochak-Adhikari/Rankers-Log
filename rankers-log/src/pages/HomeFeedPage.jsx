@@ -12,10 +12,14 @@ export function HomeFeedPage() {
   const [showPostModal, setShowPostModal] = useState(false)
   const [likedPosts, setLikedPosts] = useState(new Set())
   const [userProfile, setUserProfile] = useState(null)
+  const [currentStreak, setCurrentStreak] = useState(null)
 
   useEffect(() => {
     fetchPosts()
-    if (user) fetchUserProfile()
+    if (user) {
+      fetchUserProfile()
+      fetchStreak()
+    }
   }, [user])
 
   async function fetchUserProfile() {
@@ -25,6 +29,16 @@ export function HomeFeedPage() {
       .eq('id', user.id)
       .single()
     if (data) setUserProfile(data)
+  }
+
+  async function fetchStreak() {
+    const { data } = await supabase
+      .from('streaks')
+      .select('current_streak')
+      .eq('user_id', user.id)
+      .maybeSingle()
+    // data is null if no row exists yet (streak not started)
+    setCurrentStreak(data?.current_streak ?? 0)
   }
 
   async function fetchPosts() {
@@ -109,7 +123,7 @@ export function HomeFeedPage() {
   }
 
   function handleComment(postId) {
-    navigate(`/posts/${postId}/comments`)
+    navigate(`/post/${postId}`)
   }
 
   async function handleShare(post) {
@@ -169,7 +183,6 @@ export function HomeFeedPage() {
           <Link to="/quests" className="flex items-center gap-3 px-4 py-3 rounded hover:bg-[#182634] border-l-4 border-transparent hover:border-slate-600 text-slate-400 hover:text-white transition-all">
             <span className="material-symbols-outlined">assignment</span>
             <span>Quest Log</span>
-            <span className="ml-auto bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded">3</span>
           </Link>
           <Link to="/guilds" className="flex items-center gap-3 px-4 py-3 rounded hover:bg-[#182634] border-l-4 border-transparent hover:border-slate-600 text-slate-400 hover:text-white transition-all">
             <span className="material-symbols-outlined">group</span>
@@ -181,20 +194,29 @@ export function HomeFeedPage() {
           </Link>
         </div>
 
-        {/* Login Streak Widget */}
-        <div className="mt-4 p-4 rounded bg-[#182634]/50 border border-[#314d68]/50">
+        {/* Real Login Streak Widget */}
+        <Link to="/streaks" className="mt-4 p-4 rounded bg-[#182634]/50 border border-[#314d68]/50 hover:border-primary/40 transition-colors group block">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-xs text-slate-400 uppercase font-bold">Login Streak</span>
-            <span className="text-xs text-primary font-bold">Day 24</span>
+            <span className="text-xs text-slate-400 uppercase font-bold flex items-center gap-1">
+              <span className="material-symbols-outlined text-orange-500 text-sm">local_fire_department</span>
+              Streak
+            </span>
+            {currentStreak !== null ? (
+              <span className="text-xs text-orange-400 font-bold">Day {currentStreak}</span>
+            ) : (
+              <span className="text-xs text-gray-600 font-mono">—</span>
+            )}
           </div>
-          <div className="flex gap-1">
-            <div className="h-2 flex-1 bg-primary rounded-sm shadow-[0_0_5px_#258cf4]"></div>
-            <div className="h-2 flex-1 bg-primary rounded-sm shadow-[0_0_5px_#258cf4]"></div>
-            <div className="h-2 flex-1 bg-primary rounded-sm shadow-[0_0_5px_#258cf4]"></div>
-            <div className="h-2 flex-1 bg-primary/30 rounded-sm"></div>
-            <div className="h-2 flex-1 bg-[#101a23] rounded-sm"></div>
-          </div>
-        </div>
+          {currentStreak !== null && currentStreak > 0 ? (
+            <p className="text-[10px] text-gray-500 group-hover:text-gray-400 transition-colors">
+              Keep it up! Check in daily.
+            </p>
+          ) : (
+            <p className="text-[10px] text-gray-500 group-hover:text-gray-400 transition-colors">
+              Start your streak today →
+            </p>
+          )}
+        </Link>
       </nav>
 
       {/* Center Feed */}

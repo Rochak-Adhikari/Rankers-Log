@@ -42,10 +42,10 @@ export function AdminPage() {
     ])
 
     setStats({
-      users: users.count || 1234,
-      posts: posts.count || 5678,
-      reports: reports.count || 12,
-      guilds: guilds.count || 89
+      users: users.count || 0,
+      posts: posts.count || 0,
+      reports: reports.count || 0,
+      guilds: guilds.count || 0
     })
   }
 

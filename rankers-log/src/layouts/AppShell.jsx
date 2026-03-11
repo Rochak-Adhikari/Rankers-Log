@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { supabase } from '../lib/supabase'
+import { ProfileProvider, useProfile } from '../hooks/useProfile'
 import { PostCreatorModal } from '../components/PostCreatorModal'
 
-export function AppShell() {
-  const { user, signOut } = useAuth()
+// Inner shell component — must be inside ProfileProvider to use useProfile
+function AppShellInner() {
+  const { signOut } = useAuth()
+  const { avatarUrl } = useProfile()
   const navigate = useNavigate()
   const [showMobileNav, setShowMobileNav] = useState(true)
-  const [profileData, setProfileData] = useState(null)
   const [showPostModal, setShowPostModal] = useState(false)
   const lastScrollY = useRef(0)
   const navScrollRef = useRef(null)
@@ -16,24 +17,6 @@ export function AppShell() {
   const handleSignOut = async () => {
     await signOut()
     navigate('/')
-  }
-
-  useEffect(() => {
-    if (user) {
-      fetchProfile()
-    }
-  }, [user])
-
-  async function fetchProfile() {
-    const { data } = await supabase
-      .from('profiles')
-      .select('avatar_url, username, display_name')
-      .eq('id', user.id)
-      .single()
-    
-    if (data) {
-      setProfileData(data)
-    }
   }
 
   useEffect(() => {
@@ -133,11 +116,11 @@ export function AppShell() {
               </NavLink>
 
               <NavLink to="/profile" className="w-10 h-10 hexagon bg-slate-700 border-2 border-primary/50 cursor-pointer hover:scale-105 transition-transform flex items-center justify-center overflow-hidden">
-                {profileData?.avatar_url ? (
+                {avatarUrl ? (
                   <img
                     alt="User Avatar"
                     className="w-full h-full object-cover hexagon"
-                    src={profileData.avatar_url}
+                    src={avatarUrl}
                   />
                 ) : (
                   <span className="material-symbols-outlined text-gray-500">person</span>
@@ -191,11 +174,11 @@ export function AppShell() {
         <NavLink data-testid="nav-profile" to="/profile" className={mobileNavClass}>
           {({ isActive }) => (
             <div className="size-6 bg-slate-700 hexagon p-[1px] flex items-center justify-center overflow-hidden">
-              {profileData?.avatar_url ? (
+              {avatarUrl ? (
                 <img
                   alt="Profile"
                   className="w-full h-full object-cover hexagon"
-                  src={profileData.avatar_url}
+                  src={avatarUrl}
                 />
               ) : (
                 <span className="material-symbols-outlined text-gray-500 text-xs">person</span>
@@ -215,5 +198,15 @@ export function AppShell() {
         }}
       />
     </div>
+  )
+}
+
+// Public export — wraps AppShellInner with ProfileProvider so all
+// child pages can safely call useProfile() without it throwing.
+export function AppShell() {
+  return (
+    <ProfileProvider>
+      <AppShellInner />
+    </ProfileProvider>
   )
 }
