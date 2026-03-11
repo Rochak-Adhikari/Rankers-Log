@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Data Vaults</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "primary-glow": "#258cf480",
+                        "void": "#050505",
+                        "glass": "#101a23e6",
+                        "accent-green": "#0bda5b",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Space Grotesk", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'neon': '0 0 10px rgba(37, 140, 244, 0.5)',
+                        'neon-strong': '0 0 20px rgba(37, 140, 244, 0.7)',
+                    },
+                    backgroundImage: {
+                        'scanlines': 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06))',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: white;
+        }
+        .clip-corner-br {
+            clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+        }
+        .clip-corner-tl {
+            clip-path: polygon(0 0, 10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0f14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #223649;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4;
+        }
+    </style>
+</head>
+<body class="font-display antialiased selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Background Decoration -->
+<div class="fixed inset-0 pointer-events-none z-0 bg-[url('https://placeholder.pics/svg/1920x1080/050505/0A0F14/grid-pattern')] opacity-20 bg-repeat" data-alt="Subtle grid pattern background"></div>
+<div class="fixed inset-0 pointer-events-none z-50 bg-scanlines bg-[length:100%_4px,3px_100%] opacity-10"></div>
+<div class="relative flex min-h-screen w-full flex-col z-10">
+<!-- Top Navigation (HUD) -->
+<header class="sticky top-0 z-40 w-full backdrop-blur-md bg-[#050505]/80 border-b border-[#223649]">
+<div class="flex items-center justify-between px-6 py-3 max-w-[1400px] mx-auto w-full">
+<!-- Logo & HUD ID -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl animate-pulse">hexagon</span>
+<div>
+<h1 class="text-white text-lg font-bold leading-none tracking-widest">RANKERS LOG</h1>
+<span class="text-[#90adcb] text-[10px] font-bold tracking-[0.2em] uppercase">HUD System v2.4</span>
+</div>
+</div>
+<!-- Main Nav Links -->
+<nav class="hidden md:flex items-center gap-1 bg-[#101a23] p-1 rounded-lg border border-[#223649]">
+<a class="px-4 py-1.5 text-xs font-bold text-[#90adcb] hover:text-white hover:bg-[#223649] rounded transition-all" href="#">HOME BASE</a>
+<a class="px-4 py-1.5 text-xs font-bold text-[#90adcb] hover:text-white hover:bg-[#223649] rounded transition-all" href="#">QUESTS</a>
+<a class="px-4 py-1.5 text-xs font-bold text-white bg-primary/20 border border-primary/50 shadow-neon rounded transition-all" href="#">VAULTS</a>
+<a class="px-4 py-1.5 text-xs font-bold text-[#90adcb] hover:text-white hover:bg-[#223649] rounded transition-all" href="#">SOCIAL</a>
+</nav>
+</div>
+<!-- Right Side Tools -->
+<div class="flex items-center gap-4">
+<!-- Search -->
+<div class="hidden lg:flex items-center bg-[#101a23] border border-[#223649] rounded-md h-9 w-64 focus-within:border-primary focus-within:shadow-neon transition-all">
+<span class="material-symbols-outlined text-[#90adcb] px-3 text-[20px]">search</span>
+<input class="bg-transparent border-none text-sm text-white placeholder-[#58738e] w-full focus:ring-0 p-0 pr-2 font-mono h-full" placeholder="Search Database..." type="text"/>
+</div>
+<!-- User Actions -->
+<div class="flex items-center gap-2">
+<button class="relative flex items-center justify-center size-9 bg-[#101a23] border border-[#223649] hover:border-primary hover:text-primary rounded text-[#90adcb] transition-colors group">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 size-1.5 bg-primary rounded-full animate-ping"></span>
+<span class="absolute top-1.5 right-1.5 size-1.5 bg-primary rounded-full"></span>
+</button>
+<div class="h-9 pl-1 pr-3 bg-[#101a23] border border-[#223649] rounded flex items-center gap-3 cursor-pointer hover:border-[#90adcb] transition-colors">
+<div class="size-6 rounded bg-cover bg-center" data-alt="User Avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAVpmTWPsHvZC8byR6k3IFlJQb2xUdBltvpMENIGeLwCBinwUFWQj7-O9oks2XapFGnp-EUZyrQjToX9IV3Y74oYlzBoFgnUVQZYYxMA4OuixtgqpvK29XfUXwgRRsmwiY2CNmees18kobGCmvZyPLBeb0tg0q7UmXI7Wfs0xZ5Dah_BqRfg_6jPKKP7Xc5BLjyXAPdag0t51cdpHKF9ywiQ9vrFd6Zz70nZVRueU9NQ9KgDOONLG3d9okbZBLGR8SyYxklRq2k05oA');"></div>
+<div class="flex flex-col items-start">
+<span class="text-[10px] text-[#90adcb] leading-none uppercase tracking-wider">Player</span>
+<span class="text-xs font-bold text-white leading-none">KAI_RO</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Layout -->
+<main class="flex-grow flex justify-center py-8 px-4 sm:px-6">
+<div class="w-full max-w-[1400px] flex flex-col gap-8">
+<!-- Page Header -->
+<div class="flex flex-wrap justify-between items-end gap-4 border-b border-[#223649] pb-6">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-primary text-sm font-mono mb-1">
+<span class="material-symbols-outlined text-[16px]">folder_open</span>
+<span>ROOT / COLLECTIONS / VAULTS</span>
+</div>
+<h2 class="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
+                            DATA <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-white">VAULTS</span>
+</h2>
+<p class="text-[#90adcb] max-w-lg mt-2">Manage your curated archives and trophies. Access secure folders for specific genres and tracking lists.</p>
+</div>
+<div class="flex gap-3">
+<button class="clip-corner-br group relative flex items-center gap-3 bg-primary hover:bg-blue-600 text-white h-12 px-6 font-bold tracking-wider transition-all shadow-neon hover:shadow-neon-strong">
+<span class="material-symbols-outlined group-hover:rotate-90 transition-transform">add</span>
+                            INITIALIZE NEW VAULT
+                        </button>
+</div>
+</div>
+<!-- Stats Dashboard -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Stat Card 1 -->
+<div class="bg-[#101a23]/50 backdrop-blur border border-[#223649] p-5 rounded relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">inventory_2</span>
+</div>
+<p class="text-[#90adcb] text-xs font-bold tracking-widest uppercase mb-1">Total Vaults</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black text-white">12</span>
+<span class="text-accent-green text-xs font-bold bg-accent-green/10 px-1.5 py-0.5 rounded">+1 New</span>
+</div>
+<div class="w-full bg-[#223649] h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[40%]"></div>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-[#101a23]/50 backdrop-blur border border-[#223649] p-5 rounded relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">pie_chart</span>
+</div>
+<p class="text-[#90adcb] text-xs font-bold tracking-widest uppercase mb-1">Completion Rate</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black text-white">68%</span>
+<span class="text-accent-green text-xs font-bold bg-accent-green/10 px-1.5 py-0.5 rounded">+2.4%</span>
+</div>
+<div class="w-full bg-[#223649] h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-accent-green h-full w-[68%]"></div>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-[#101a23]/50 backdrop-blur border border-[#223649] p-5 rounded relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">database</span>
+</div>
+<p class="text-[#90adcb] text-xs font-bold tracking-widest uppercase mb-1">Archived Items</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black text-white">1,402</span>
+<span class="text-primary text-xs font-bold bg-primary/10 px-1.5 py-0.5 rounded">Stable</span>
+</div>
+<div class="w-full bg-[#223649] h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-white h-full w-[80%] opacity-50"></div>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="bg-[#101a23]/50 backdrop-blur border border-[#223649] p-5 rounded relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">share</span>
+</div>
+<p class="text-[#90adcb] text-xs font-bold tracking-widest uppercase mb-1">Public Signals</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black text-white">3</span>
+<span class="text-[#90adcb] text-xs font-medium">Active Links</span>
+</div>
+<div class="w-full bg-[#223649] h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-purple-500 h-full w-[20%]"></div>
+</div>
+</div>
+</div>
+<!-- Shelves Interface -->
+<div class="flex flex-col gap-6">
+<!-- Toolbar -->
+<div class="flex flex-wrap justify-between items-center gap-4 bg-[#101a23]/80 p-3 rounded border border-[#223649]">
+<div class="flex gap-2">
+<button class="flex items-center justify-center size-10 bg-[#223649] hover:bg-primary text-white rounded transition-colors" title="Sort Ascending">
+<span class="material-symbols-outlined">sort</span>
+</button>
+<button class="flex items-center justify-center size-10 bg-[#223649] hover:bg-primary text-white rounded transition-colors" title="Filter">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+<div class="h-10 border-r border-[#223649] mx-2"></div>
+<button class="px-4 h-10 bg-[#223649] hover:bg-[#314d68] text-white rounded text-sm font-bold tracking-wide transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+                                ALL
+                            </button>
+<button class="px-4 h-10 bg-transparent hover:bg-[#223649] text-[#90adcb] rounded text-sm font-bold tracking-wide transition-colors">
+                                COMPLETED
+                            </button>
+</div>
+<button class="flex items-center gap-2 px-4 h-10 border border-primary/50 text-primary hover:bg-primary/10 rounded text-sm font-bold tracking-wider transition-all uppercase">
+<span class="material-symbols-outlined text-[18px]">rss_feed</span>
+                            Broadcast Signal
+                        </button>
+</div>
+<!-- Shelf Grid (Upper Section) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Shelf Card 1 (Active/Expanded) -->
+<div class="relative group cursor-pointer">
+<div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-blue-600 rounded-lg blur opacity-75 animate-pulse group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+<div class="relative h-full bg-[#101922] border border-primary rounded-lg p-5 flex flex-col justify-between overflow-hidden clip-corner-tl">
+<!-- Decoration -->
+<div class="absolute top-0 right-0 p-3">
+<div class="bg-primary/20 text-primary text-[10px] font-bold px-2 py-1 rounded border border-primary/30">EXPANDED</div>
+</div>
+<div>
+<h3 class="text-xl font-bold text-white mb-1">JRPG GRIND</h3>
+<p class="text-[#90adcb] text-sm mb-4">Current playthroughs &amp; backlog.</p>
+<!-- Mini Preview Grid -->
+<div class="grid grid-cols-4 gap-1 mb-4 opacity-50 grayscale group-hover:grayscale-0 transition-all duration-300">
+<div class="aspect-[2/3] bg-gray-700 rounded-sm bg-cover" data-alt="Game cover art thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuANmX0BDFAx4OiceK9WLajwydtqTFrKeNNRM3UIbUt6xqDtd69f3h2yUy72jrTMzRJ0jJWpccDjWSYTCTvvcOY5HIZFbvVLUd_pzxBMO1_GYjQIX6IEW1zW6PrEegXkzKZ9y7A_U_0-EtOLlaFpC30UgdM7CzhwgU-x9tKcJ0LFv0TjpviMfu_AelG_FO2VSPwMQwu2xzs4jxzeCCLoR4aocGL5JOTMjm5yiDoJCDXuKUDKnwHoGn54_8jEqL2CC7QmE2Y1BOnt3qiE');"></div>
+<div class="aspect-[2/3] bg-gray-700 rounded-sm bg-cover" data-alt="Game cover art thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDd8uPs0_VAY04FhYilvtPoWY-prwErYdKu7S4Cn0ZWC9RL-vheXXzJg86HUXFdWFG7x_U2p_eH0uc7qcrY267B6u9ox1XXsq1Q8bHJ3lkLV0qlfqOiH4kExifMtIcFFNi-mSspg3L0tRLHfIsH_9ALIEp3nsEV_wZ2wXwRtYFzXfxDFjOjkwMiEhuqEfuddzZGOGP8UXDTKuwghUtu1ECyDV8OmAi1Dp-uf3Ir0nV9bi5G29n50pMK1fRAijLYQGFpFOMPkCitmtzq');"></div>
+<div class="aspect-[2/3] bg-gray-700 rounded-sm bg-cover" data-alt="Game cover art thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBH4AlkmZ2HK1EBReXFsX49S3PPh0-D1_cg8D7ATCnaajhaDm788SWrY_rtCFlTqVY0UMhO63AK1_WsP4ognqSfMMtsfx1sNbgU4li4WgtJ-ARS8ENjQJUqT9LzzC8W8CNnT19yM1XwpVktnvL7Bfl2EE7LS7QM4TF3eQgkKpVX2KYQMMkmOtDOuzdWP0dSHzPukhmZ9mlscKNDPOzF25U32-6qFmjfhAbvjvUlA-bx3NswGzay3xZznxgp6bWhIAa9Cf1ZkhvehfkC');"></div>
+<div class="aspect-[2/3] bg-gray-800 rounded-sm flex items-center justify-center text-[10px] text-white font-mono">+9</div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-mono text-[#90adcb]">
+<span>PROGRESS</span>
+<span class="text-white">12%</span>
+</div>
+<div class="h-1.5 w-full bg-[#050505] rounded-full overflow-hidden border border-[#223649]">
+<div class="h-full bg-primary w-[12%] shadow-[0_0_10px_#258cf4]"></div>
+</div>
+<div class="text-[10px] text-[#58738e] font-mono mt-2">LAST UPDATED: 2H AGO</div>
+</div>
+</div>
+<!-- Connector to expanded view -->
+<div class="absolute bottom-[-24px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-t-[12px] border-t-primary z-20"></div>
+</div>
+<!-- Shelf Card 2 -->
+<div class="relative group cursor-pointer hover:-translate-y-1 transition-transform duration-300">
+<div class="h-full bg-[#101a23]/60 backdrop-blur border border-[#223649] group-hover:border-[#90adcb] rounded-lg p-5 flex flex-col justify-between overflow-hidden">
+<div>
+<h3 class="text-xl font-bold text-white mb-1 group-hover:text-primary transition-colors">PEAK FICTION</h3>
+<p class="text-[#90adcb] text-sm mb-4">Top rated narrative experiences.</p>
+<!-- Mini Preview Grid -->
+<div class="grid grid-cols-4 gap-1 mb-4 opacity-40 group-hover:opacity-80 transition-opacity">
+<div class="aspect-[2/3] bg-gray-700 rounded-sm bg-cover" data-alt="Anime cover thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDFyfPlwCWhP8Z3s9Dv8ufC1hyoHmHP4pUsFvvJ8edYTPeozpU2s-Qqm9tWEW14_SXBEyBefgfOWpWgLYmfHLIPFgJNQRyY2T73WryZPlS2ta4q7fFkxy1RFYATs4wIRRyG1gGynznUqdE9V_MKO6WG6BFWSuLVKHUussElPyNALn5bDbLPqnDgOs_AsqDXf-n-n2pjnvexrqpT1rMhzlnR2SrtVLErcvBz6chH8kgk3wBSpsfyPlAsReuRpwniqebD2RDYFnRiGJb8');"></div>
+<div class="aspect-[2/3] bg-gray-700 rounded-sm bg-cover" data-alt="Anime cover thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBZqupVnTylcj0bGN0V2Ak99egWPxlR8n6NVTXWUqQe7fpW3cYOxtqBw5JFepY0ExaRP1CDmUImmxCGJ6Q4CewvcQn9TAC35LL2VVxc4BIiLfZNl7Miq8LWh2T00bXb4O59WGEaARROXWT4XVNib4Vn6mcuzJuxCpKgA5f8uHI9x3AHM8uGm3KdLkPcDzc4arpdb3_R0WDTut19EvSd0hoyUJg4DPlkwz4thKWyZi3xBQ6WAot3jTWZkedEkSM2EACqmvSt6AaPc61b');"></div>
+<div class="aspect-[2/3] bg-gray-700 rounded-sm bg-cover" data-alt="Anime cover thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDfsnorea-OU2H4dGawstxlUwbk6X-QrRId9eqBICeUBFsd51A0jsec3U1bw04GoOtogbsDYvpGBxMQk_-pMxad_fJo5gbYt9upqqKazwhLjFRf2Axwo_rBkVLKC85OfdNiAERHC5OURBnIaPrZH_8pgnSS86-AVsFXbSLGlkg4ARW5n370xSNsYRuZ2TsnA5K01_SsRoFv0PQi40qmKMyfOwa41cYRhVM3smCM4EehALn9a_z3I19VxYNVBHtAyzTGQeWRYPKJUjwY');"></div>
+<div class="aspect-[2/3] bg-gray-800 rounded-sm flex items-center justify-center text-[10px] text-white font-mono">+29</div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-mono text-[#90adcb]">
+<span>PROGRESS</span>
+<span class="text-accent-green">85%</span>
+</div>
+<div class="h-1.5 w-full bg-[#050505] rounded-full overflow-hidden border border-[#223649]">
+<div class="h-full bg-accent-green w-[85%]"></div>
+</div>
+<div class="text-[10px] text-[#58738e] font-mono mt-2">LAST UPDATED: 2D AGO</div>
+</div>
+</div>
+</div>
+<!-- Shelf Card 3 -->
+<div class="relative group cursor-pointer hover:-translate-y-1 transition-transform duration-300">
+<div class="h-full bg-[#101a23]/60 backdrop-blur border border-[#223649] group-hover:border-[#90adcb] rounded-lg p-5 flex flex-col justify-between overflow-hidden">
+<div>
+<h3 class="text-xl font-bold text-white mb-1 group-hover:text-primary transition-colors">WINTER 2024</h3>
+<p class="text-[#90adcb] text-sm mb-4">Seasonal watchlist.</p>
+<!-- Mini Preview Grid -->
+<div class="grid grid-cols-4 gap-1 mb-4 opacity-40 group-hover:opacity-80 transition-opacity">
+<div class="aspect-[2/3] bg-gray-700 rounded-sm bg-cover" data-alt="Show cover thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA8OZkr09ku77pyjNjam-jHc0qlrX367NQXvJTZItiReTtQUaJUOZlmqUaR60JWb8nxnV6Pvylj1idc9a2nn5_xpQDP-618VeoBdCbZQ9owyTa3Iaq7fBYorhtM-noi68Zee82dSEaxULO7B-v1ETeXcrNuxLeA3lUzcrATyn7dStGZAHSJQLd2umFucBBawwPl4Zz-cjKMGGUWk5MpKqowoPmALKZF4IEWYtqs3DXCumDEcFFGL5sZtHxzn3zL2-1XoJUwOZS_rmT3');"></div>
+<div class="aspect-[2/3] bg-gray-800 rounded-sm"></div>
+<div class="aspect-[2/3] bg-gray-800 rounded-sm"></div>
+<div class="aspect-[2/3] bg-gray-800 rounded-sm flex items-center justify-center text-[10px] text-white font-mono">+2</div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-mono text-[#90adcb]">
+<span>PROGRESS</span>
+<span class="text-white">0%</span>
+</div>
+<div class="h-1.5 w-full bg-[#050505] rounded-full overflow-hidden border border-[#223649]">
+<div class="h-full bg-white/20 w-[0%]"></div>
+</div>
+<div class="text-[10px] text-[#58738e] font-mono mt-2">LAST UPDATED: 5M AGO</div>
+</div>
+</div>
+</div>
+</div>
+<!-- EXPANDED CONTENT AREA -->
+<div class="mt-4 p-6 border border-primary/30 bg-[#101a23]/90 rounded-xl relative shadow-neon overflow-hidden">
+<!-- Decorative background elements inside the expanded view -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex justify-between items-center mb-6 border-b border-[#223649] pb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl animate-spin" style="animation-duration: 3s;">data_usage</span>
+<h3 class="text-2xl font-black text-white tracking-wide">VAULT CONTENTS: JRPG GRIND</h3>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:text-white text-[#90adcb] transition-colors"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-2 hover:text-white text-[#90adcb] transition-colors"><span class="material-symbols-outlined">delete</span></button>
+<button class="p-2 hover:text-white text-[#90adcb] transition-colors"><span class="material-symbols-outlined">close</span></button>
+</div>
+</div>
+<!-- Data Slates Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+<!-- Slate 1 -->
+<div class="group relative flex flex-col gap-2 cursor-pointer">
+<div class="relative aspect-[2/3] rounded-lg overflow-hidden border border-[#223649] group-hover:border-primary transition-all shadow-lg group-hover:shadow-neon">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Cover art for Fantasy RPG game" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYah9jvHqwQxBvx4jQBRPFt1nz8ssICQsc-EjvCy78Mbi5H7kOiAGgiYFUAfTExNrYvFIMP7efA11M0uzUrZaymEQM5smZEYsVDxNMNg5I6DX-XTaQhsf5K4LxTUKliuzyrNxssqzH0-yT8tUOj5UEUnqLGxNMBqM6IM0m3vj3t7Fr6CYgaq64oV_i4zDPnVDv3OW7xQPH-GQ6-JpHmWRmGeOe45IGpb1-zM3hcYf4yUti3DLSqmbxYsFUpydsWFZCW2vPlp-2Ffzp');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-60"></div>
+<!-- Rank Badge -->
+<div class="absolute top-2 right-2 size-8 bg-[#101a23]/90 border border-primary text-primary flex items-center justify-center font-black text-sm clip-corner-br backdrop-blur-sm shadow-lg">S</div>
+<!-- Platform Icon -->
+<div class="absolute top-2 left-2 p-1 rounded bg-black/50 backdrop-blur">
+<span class="material-symbols-outlined text-white text-[14px]">sports_esports</span>
+</div>
+<div class="absolute bottom-3 left-3 right-3">
+<div class="w-full bg-gray-700 h-1 rounded-full overflow-hidden mb-1">
+<div class="bg-primary w-[45%] h-full"></div>
+</div>
+<p class="text-[10px] text-gray-300 font-mono">LVL 45 // 120HRS</p>
+</div>
+</div>
+<h4 class="text-sm font-bold text-white truncate px-1 group-hover:text-primary transition-colors">Elden Ring</h4>
+</div>
+<!-- Slate 2 -->
+<div class="group relative flex flex-col gap-2 cursor-pointer">
+<div class="relative aspect-[2/3] rounded-lg overflow-hidden border border-[#223649] group-hover:border-primary transition-all shadow-lg group-hover:shadow-neon">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Cover art for Sci-fi RPG" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBoJj1aDTESfkOnYHglQNSg-BI5TqnwK7EF-iL2Tw4dVsR-1kcDUjKFHbWhFUuXBwib8lvftTwz4c8pBji2NiDga3fZlZ0IRP53OngSZnDD3PFmwa5YZ-S5Ep_ricz5mjeYLJDKxkdm7C2LV5XHb2ID9jaIiUgyuJmFuPoff_LW6pPivOTHT1LU6GMABv0YFzj-9QniS43i_M5TNGx2o03ogXG-ZX48qnsN4mXTBNF7_gkcZdYBzbqeZanYabmeEyEyEttJtNMSuZ3N');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-60"></div>
+<!-- Rank Badge -->
+<div class="absolute top-2 right-2 size-8 bg-[#101a23]/90 border border-[#90adcb] text-white flex items-center justify-center font-black text-sm clip-corner-br backdrop-blur-sm shadow-lg">A</div>
+<div class="absolute bottom-3 left-3 right-3">
+<div class="w-full bg-gray-700 h-1 rounded-full overflow-hidden mb-1">
+<div class="bg-accent-green w-[100%] h-full"></div>
+</div>
+<p class="text-[10px] text-accent-green font-mono">COMPLETED</p>
+</div>
+</div>
+<h4 class="text-sm font-bold text-white truncate px-1 group-hover:text-primary transition-colors">Star Ocean: The Second Story R</h4>
+</div>
+<!-- Slate 3 -->
+<div class="group relative flex flex-col gap-2 cursor-pointer">
+<div class="relative aspect-[2/3] rounded-lg overflow-hidden border border-[#223649] group-hover:border-primary transition-all shadow-lg group-hover:shadow-neon">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Cover art for Turn-based Strategy" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBvW2UrmD1f79Fu2-5XEosQQwYV1j1JnncWIWQpracAfTbQ615qskIoA-gajIc33kj_tFa816D8jeOdc7mLklWlAh-85bOUWhFjld2XsHb3of1ICmAoNQ5jVK-c8Qz1pT_c229KizD2qVf7KF8kAijPBLw0GoEZ9fP1F1AXVs1UdAUrRomKvxBKtWG5MUpetDrf1A1d5iRBzL4VGW5-XHP7n3WQWgW-nF3HE8_JhdzFjvqqr4p5q668OZeIACnwc-mvCLACMGk3DBh5');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-60"></div>
+<!-- Rank Badge -->
+<div class="absolute top-2 right-2 size-8 bg-[#101a23]/90 border border-transparent text-gray-500 flex items-center justify-center font-black text-sm clip-corner-br backdrop-blur-sm shadow-lg">-</div>
+<div class="absolute bottom-3 left-3 right-3">
+<div class="w-full bg-gray-700 h-1 rounded-full overflow-hidden mb-1">
+<div class="bg-gray-500 w-[5%] h-full"></div>
+</div>
+<p class="text-[10px] text-gray-300 font-mono">QUEUED</p>
+</div>
+</div>
+<h4 class="text-sm font-bold text-white truncate px-1 group-hover:text-primary transition-colors">Sea of Stars</h4>
+</div>
+<!-- Slate 4 -->
+<div class="group relative flex flex-col gap-2 cursor-pointer">
+<div class="relative aspect-[2/3] rounded-lg overflow-hidden border border-[#223649] group-hover:border-primary transition-all shadow-lg group-hover:shadow-neon">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Cover art for Action RPG" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBwJzagZwEKFUDskrD53ReZnW6Y9NMrbO2OkAqfv5J0y1Ah8v3whsRddxEIjX8E2HCYkZdIQdOAZv_NAiHyk_32cNDVaRk5-fN-TPoonPtlpSmD3ahJkBzb0aah8TpdnVc1OxPRaOtTZU_INeoN_YHM0e1zZUFtzTKQ8JvHmJF5x89lldq4YoyyO5r_sb1kjacNhaAEow6jWaP3jhlZziwUSv82K0iSDYybChzbdu_SZQVv1-IoPObRcjqUAQHclBJID7D03yep7Cgs');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-60"></div>
+<div class="absolute top-2 right-2 size-8 bg-[#101a23]/90 border border-[#90adcb] text-white flex items-center justify-center font-black text-sm clip-corner-br backdrop-blur-sm shadow-lg">A</div>
+<div class="absolute bottom-3 left-3 right-3">
+<div class="w-full bg-gray-700 h-1 rounded-full overflow-hidden mb-1">
+<div class="bg-primary w-[75%] h-full"></div>
+</div>
+<p class="text-[10px] text-gray-300 font-mono">LVL 60 // ENDGAME</p>
+</div>
+</div>
+<h4 class="text-sm font-bold text-white truncate px-1 group-hover:text-primary transition-colors">Final Fantasy XVI</h4>
+</div>
+<!-- Slate 5 -->
+<div class="group relative flex flex-col gap-2 cursor-pointer">
+<div class="relative aspect-[2/3] rounded-lg overflow-hidden border border-[#223649] group-hover:border-primary transition-all shadow-lg group-hover:shadow-neon">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110 grayscale" data-alt="Cover art for Retro RPG" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdOa1DlsnaTv9F6yTbRsiqzP37lRLuCZK6mib73Ql1v2B6TTBCTqRcJoxB8Sm4jsl25xyUhbzeCltjFNizsOkkH3Zq9E16V_lLfWG9aqV3bNc1_2FBN1Eh-qOfisiU3hgATEkEL0oMVL57llGhoF8cvylDBcNCRbsHj-HJ5dafNQKmqONOt9dIYiZe4ZkncoHtogeIfCyrP8PmHsmfk7iRm14qvnWDsuq49TvetWTOEOPooIrMnDcu23uktxVHXrNsSjvXv37Rf6gu');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-60"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-white/50 group-hover:text-white transition-colors">lock</span>
+</div>
+<div class="absolute bottom-3 left-3 right-3">
+<p class="text-[10px] text-center text-gray-400 font-mono">UNRELEASED</p>
+</div>
+</div>
+<h4 class="text-sm font-bold text-white truncate px-1 group-hover:text-primary transition-colors">Metaphor: ReFantazio</h4>
+</div>
+<!-- Add New Slate -->
+<div class="group relative flex flex-col gap-2 cursor-pointer h-full">
+<div class="relative aspect-[2/3] rounded-lg overflow-hidden border-2 border-dashed border-[#223649] group-hover:border-primary transition-all flex flex-col items-center justify-center bg-[#101a23]/30 hover:bg-[#101a23]/80">
+<span class="material-symbols-outlined text-4xl text-[#223649] group-hover:text-primary transition-colors">add_circle</span>
+<p class="text-xs font-bold text-[#90adcb] mt-2 group-hover:text-white">ADD ITEM</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

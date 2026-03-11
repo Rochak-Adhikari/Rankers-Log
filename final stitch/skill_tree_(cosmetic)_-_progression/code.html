@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Skill Tree</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505", /* Deep void per request */
+                        "hud-dark": "#0f161e",
+                        "hud-border": "#1e2e3e",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    boxShadow: {
+                        "glow-primary": "0 0 15px rgba(37, 140, 244, 0.5), 0 0 5px rgba(37, 140, 244, 0.3)",
+                        "glow-white": "0 0 10px rgba(255, 255, 255, 0.3)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e2e3e; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+
+        /* Diagonal lines pattern for background */
+        .bg-grid-pattern {
+            background-image: linear-gradient(rgba(30, 46, 62, 0.15) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(30, 46, 62, 0.15) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* HUD Glass Effect */
+        .hud-glass {
+            background: rgba(16, 25, 34, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Node Animations */
+        @keyframes pulse-border {
+            0% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 0 rgba(37, 140, 244, 0); }
+            50% { border-color: rgba(37, 140, 244, 0.6); box-shadow: 0 0 10px rgba(37, 140, 244, 0.3); }
+            100% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 0 rgba(37, 140, 244, 0); }
+        }
+        
+        .animate-pulse-border {
+            animation: pulse-border 2s infinite;
+        }
+
+        /* Connecting Lines Animation Simulator */
+        .connection-line {
+            stroke-dasharray: 10;
+            animation: dash 30s linear infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -1000;
+            }
+        }
+    </style>
+</head>
+<body class="font-display bg-background-dark text-white overflow-hidden h-screen w-screen flex flex-col relative">
+<!-- Background Decoration -->
+<div class="absolute inset-0 z-0 bg-grid-pattern pointer-events-none opacity-40"></div>
+<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[150px] pointer-events-none"></div>
+<!-- Top HUD Bar -->
+<header class="relative z-20 w-full hud-glass border-b border-white/5 px-6 py-4 flex items-center justify-between shadow-lg">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary flex items-center justify-center bg-primary/10 rounded border border-primary/30 shadow-glow-primary">
+<span class="material-symbols-outlined text-xl">hub</span>
+</div>
+<div>
+<h2 class="text-white text-lg font-bold leading-none tracking-widest uppercase">Rankers Log // Sys_Tree</h2>
+<p class="text-xs text-blue-300/60 font-mono mt-1 tracking-wider">V.4.2.0 • COSMETIC MATRIX</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<!-- Available SP -->
+<div class="flex flex-col items-end mr-4">
+<span class="text-[10px] text-blue-300/70 uppercase tracking-widest font-bold">Available SP</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm animate-pulse">bolt</span>
+<span class="text-2xl font-bold text-white tabular-nums tracking-tighter shadow-black drop-shadow-md">350</span>
+</div>
+</div>
+<div class="h-8 w-px bg-white/10 mx-2"></div>
+<!-- Profile Snippet -->
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-white">Kairos_01</p>
+<p class="text-xs text-blue-400">Lvl. 42 Vanguard</p>
+</div>
+<div class="size-10 rounded bg-center bg-cover border border-white/20 relative group cursor-pointer overflow-hidden" data-alt="User profile avatar showing a cyberpunk character" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBr5kZLc0KTtkdROGO4Kxav0ijQqfJQC7Zl7qoWy5GLKT0UmELHrZ3qz1SKXGjHNuCWz-vKIg8jKviCLwViMeGyjW0E6HzIXwofm_CKgNW97Cyg7vYqlNfZOahMDICFu26z0zX1zyycVpAlxWOOE9x-z8PtOdPfFzM_tMKcqt7pHhhEi3U70yZzcAFO0Ksn9AdIygt8KZ2l1CRDlwY3rJjYhesc7LsoE2H2h9fpFl6ydaYBDXnEIAOk_v0c9z-CJLxUq2eFetRu0Hdg')">
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area: Skill Tree & Panels -->
+<main class="flex-1 relative z-10 overflow-hidden flex w-full">
+<!-- Interactive Tree Canvas Area -->
+<div class="flex-1 relative overflow-hidden bg-[#050505] cursor-grab active:cursor-grabbing group/canvas">
+<!-- Floating Tree Controls -->
+<div class="absolute top-6 left-6 z-30 flex flex-col gap-2">
+<button class="size-10 hud-glass rounded-lg flex items-center justify-center text-white/70 hover:text-white hover:bg-white/5 transition-colors border border-white/10 hover:border-primary/50">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="size-10 hud-glass rounded-lg flex items-center justify-center text-white/70 hover:text-white hover:bg-white/5 transition-colors border border-white/10 hover:border-primary/50">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="size-10 hud-glass rounded-lg flex items-center justify-center text-white/70 hover:text-white hover:bg-white/5 transition-colors border border-white/10 hover:border-primary/50 mt-4">
+<span class="material-symbols-outlined">center_focus_strong</span>
+</button>
+</div>
+<!-- The Skill Tree (Simulated with absolute positioning and SVG lines) -->
+<div class="absolute inset-0 flex items-center justify-center min-w-[1200px] min-h-[800px] scale-100 origin-center transition-transform duration-300">
+<!-- SVG Connecting Lines -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
+<!-- Line from Center to Top -->
+<path class="opacity-80 drop-shadow-[0_0_5px_rgba(37,140,244,0.8)]" d="M 600 400 L 600 250" fill="none" stroke="#258cf4" stroke-width="2"></path>
+<path d="M 600 250 L 450 150" fill="none" stroke="#334155" stroke-dasharray="4 4" stroke-width="2"></path>
+<path d="M 600 250 L 750 150" fill="none" stroke="#334155" stroke-dasharray="4 4" stroke-width="2"></path>
+<!-- Line from Center to Left -->
+<path class="opacity-80 drop-shadow-[0_0_5px_rgba(37,140,244,0.8)]" d="M 600 400 L 350 400" fill="none" stroke="#258cf4" stroke-width="2"></path>
+<path class="opacity-50 drop-shadow-[0_0_3px_rgba(37,140,244,0.5)]" d="M 350 400 L 250 300" fill="none" stroke="#258cf4" stroke-width="2"></path>
+<path d="M 350 400 L 250 500" fill="none" stroke="#334155" stroke-dasharray="4 4" stroke-width="2"></path>
+<!-- Line from Center to Right -->
+<path class="opacity-80 drop-shadow-[0_0_5px_rgba(37,140,244,0.8)]" d="M 600 400 L 850 400" fill="none" stroke="#258cf4" stroke-width="2"></path>
+<path class="opacity-50 drop-shadow-[0_0_3px_rgba(37,140,244,0.5)]" d="M 850 400 L 950 300" fill="none" stroke="#258cf4" stroke-width="2"></path>
+<path d="M 850 400 L 950 500" fill="none" stroke="#334155" stroke-dasharray="4 4" stroke-width="2"></path>
+<path d="M 950 300 L 1050 300" fill="none" stroke="#334155" stroke-width="2"></path>
+</svg>
+<!-- ROOT NODE (CENTER) -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center gap-2">
+<div class="relative group cursor-pointer">
+<div class="absolute inset-0 bg-primary rounded-full blur-md opacity-40 animate-pulse"></div>
+<div class="size-20 bg-hud-dark border-2 border-primary rounded-full flex items-center justify-center shadow-glow-primary relative z-10">
+<span class="material-symbols-outlined text-primary text-4xl">emoji_events</span>
+</div>
+</div>
+<span class="text-primary text-xs font-bold tracking-widest bg-black/50 px-2 py-0.5 rounded border border-primary/30 backdrop-blur-sm uppercase">Rank: Vanguard</span>
+</div>
+<!-- TOP BRANCH (Visuals) -->
+<!-- Node 1: Unlocked -->
+<div class="absolute top-[210px] left-[560px] z-10 flex flex-col items-center gap-2 group cursor-pointer">
+<div class="size-16 bg-hud-dark border border-primary/80 rounded-lg flex items-center justify-center shadow-[0_0_10px_rgba(37,140,244,0.3)] hover:scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined text-primary text-2xl">palette</span>
+</div>
+<span class="text-white/80 text-[10px] font-medium tracking-wider bg-black/50 px-1 rounded backdrop-blur-sm">Themes</span>
+</div>
+<!-- Node 2: Locked -->
+<div class="absolute top-[110px] left-[410px] z-10 flex flex-col items-center gap-2 group cursor-pointer opacity-60 hover:opacity-100 transition-opacity">
+<div class="size-14 bg-hud-dark border border-white/10 rounded-lg flex items-center justify-center grayscale">
+<span class="material-symbols-outlined text-white/40 text-xl">contrast</span>
+</div>
+<span class="text-white/40 text-[10px] font-medium tracking-wider">Dark Mode+</span>
+</div>
+<!-- LEFT BRANCH (Profile) -->
+<!-- Node 3: Unlocked -->
+<div class="absolute top-[360px] left-[310px] z-10 flex flex-col items-center gap-2 group cursor-pointer">
+<div class="size-16 bg-hud-dark border border-primary/80 rounded-lg flex items-center justify-center shadow-[0_0_10px_rgba(37,140,244,0.3)] hover:scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined text-primary text-2xl">badge</span>
+</div>
+<span class="text-white/80 text-[10px] font-medium tracking-wider bg-black/50 px-1 rounded backdrop-blur-sm">Avatar</span>
+</div>
+<!-- Node 4: Unlocked -->
+<div class="absolute top-[260px] left-[210px] z-10 flex flex-col items-center gap-2 group cursor-pointer">
+<div class="size-14 bg-hud-dark border border-primary/50 rounded-lg flex items-center justify-center shadow-[0_0_5px_rgba(37,140,244,0.2)] hover:scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined text-primary/80 text-xl">filter_frames</span>
+</div>
+<span class="text-white/60 text-[10px] font-medium tracking-wider">Frames I</span>
+</div>
+<!-- Node 5: Locked -->
+<div class="absolute top-[460px] left-[210px] z-10 flex flex-col items-center gap-2 group cursor-pointer opacity-60 hover:opacity-100 transition-opacity">
+<div class="size-14 bg-hud-dark border border-white/10 rounded-lg flex items-center justify-center grayscale">
+<span class="material-symbols-outlined text-white/40 text-xl">stars</span>
+</div>
+<span class="text-white/40 text-[10px] font-medium tracking-wider">Particles</span>
+</div>
+<!-- RIGHT BRANCH (Social) -->
+<!-- Node 6: Active Selection Target -->
+<div class="absolute top-[360px] left-[810px] z-20 flex flex-col items-center gap-2 group cursor-pointer">
+<div class="relative">
+<div class="absolute -inset-1 rounded-lg border border-primary animate-ping opacity-20"></div>
+<div class="absolute -inset-2 rounded-xl border border-primary/30 animate-pulse"></div>
+<div class="size-16 bg-hud-dark border-2 border-primary rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(37,140,244,0.6)] hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined text-primary text-3xl">forum</span>
+</div>
+</div>
+<span class="text-primary text-xs font-bold tracking-wider bg-black/80 px-2 py-0.5 rounded border border-primary/30 backdrop-blur-sm shadow-glow-primary">Social Flares</span>
+</div>
+<!-- Node 7: Unlockable -->
+<div class="absolute top-[260px] left-[910px] z-10 flex flex-col items-center gap-2 group cursor-pointer">
+<div class="size-14 bg-hud-dark border-2 border-white/50 animate-pulse-border rounded-lg flex items-center justify-center hover:scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined text-white text-xl">chat_bubble</span>
+</div>
+<span class="text-white text-[10px] font-medium tracking-wider">Chat Bubble</span>
+</div>
+<!-- Node 8: Locked -->
+<div class="absolute top-[460px] left-[910px] z-10 flex flex-col items-center gap-2 group cursor-pointer opacity-60 hover:opacity-100 transition-opacity">
+<div class="size-14 bg-hud-dark border border-white/10 rounded-lg flex items-center justify-center grayscale">
+<span class="material-symbols-outlined text-white/40 text-xl">verified</span>
+</div>
+<span class="text-white/40 text-[10px] font-medium tracking-wider">Badges</span>
+</div>
+<!-- Node 9: Deep Locked -->
+<div class="absolute top-[260px] left-[1010px] z-10 flex flex-col items-center gap-2 group cursor-pointer opacity-30">
+<div class="size-12 bg-hud-dark border border-white/5 rounded-lg flex items-center justify-center grayscale">
+<span class="material-symbols-outlined text-white/20 text-lg">lock</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side Panel / Inspector -->
+<aside class="w-[380px] h-full hud-glass border-l border-white/10 flex flex-col relative z-20 shrink-0 shadow-[-10px_0_30px_rgba(0,0,0,0.5)] transition-all duration-300 transform translate-x-0">
+<!-- Header -->
+<div class="p-6 border-b border-white/5">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-mono text-primary/80 border border-primary/30 px-2 py-1 rounded bg-primary/5">NODE_ID: SF-01</span>
+<button class="text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+<h3 class="text-2xl font-bold text-white mb-1 uppercase tracking-tight">Social Flares</h3>
+<p class="text-sm text-blue-200/60 font-light">Interactive profile effects visible to friends.</p>
+</div>
+<!-- Preview Area -->
+<div class="p-6 flex-1 overflow-y-auto">
+<div class="w-full aspect-video rounded-lg bg-[#0a1016] border border-white/10 relative overflow-hidden group mb-6">
+<!-- Preview Image -->
+<img alt="Abstract neon light flare effect preview" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5Rd7P_gpPweL47qWDitw2U6PshY1uRTJX1egZWYI8iqO1AkeVhb_224s7Td-K5JxBbUzWoze4UrZjPf1QCczBeBJxbSyJyu88lhI9SJ5xbv-f_M_9zTG_ZeYXG5FZ9tQrNANiwcAmrRGmwUVOb0RKhpj4Z6yguxB7gXaJpUipuc4PrlxW7BzgGQc5ZzmOZz5TUOO_k4KyBX3WOSI6vOAHOYGK8MahvxVz0pV79OSmuIPOWXP4gJPe9VJlHZ0bKVF4X5zTg6QIfuFp"/>
+<div class="absolute bottom-2 right-2">
+<span class="bg-black/80 backdrop-blur text-[10px] text-white px-2 py-1 rounded border border-white/10">PREVIEW</span>
+</div>
+<!-- Grid overlay on preview -->
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none"></div>
+</div>
+<!-- Stats / Requirements -->
+<div class="space-y-4">
+<div>
+<h4 class="text-xs uppercase tracking-widest text-white/40 font-bold mb-2">Requirements</h4>
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between bg-white/5 p-2 rounded border border-white/5">
+<span class="text-sm text-white/80">Rank Level</span>
+<span class="text-sm text-primary font-mono font-bold">LVL 10</span>
+</div>
+<div class="flex items-center justify-between bg-white/5 p-2 rounded border border-white/5">
+<span class="text-sm text-white/80">Prerequisite</span>
+<span class="text-sm text-green-400 font-mono font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">check_circle</span> UNLOCKED
+                                </span>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-xs uppercase tracking-widest text-white/40 font-bold mb-2">Description</h4>
+<p class="text-sm text-white/60 leading-relaxed">
+                            Unlocks the ability to equip "Flare" effects on your profile card. Flares activate when other users hover over your name in the global chat or leaderboards.
+                        </p>
+</div>
+<div>
+<h4 class="text-xs uppercase tracking-widest text-white/40 font-bold mb-2">Attributes</h4>
+<div class="flex gap-2 flex-wrap">
+<span class="text-[10px] bg-blue-500/10 text-blue-300 border border-blue-500/20 px-2 py-1 rounded uppercase">Cosmetic</span>
+<span class="text-[10px] bg-purple-500/10 text-purple-300 border border-purple-500/20 px-2 py-1 rounded uppercase">Rare</span>
+<span class="text-[10px] bg-white/5 text-white/50 border border-white/10 px-2 py-1 rounded uppercase">Social</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="p-6 border-t border-white/10 bg-[#0f161e]/90 backdrop-blur-md absolute bottom-0 w-full">
+<div class="flex items-center justify-between mb-3 text-sm">
+<span class="text-white/60">Unlock Cost</span>
+<span class="text-white font-mono font-bold">50 SP</span>
+</div>
+<button class="w-full h-12 bg-primary hover:bg-blue-600 active:scale-[0.98] transition-all rounded text-white font-bold uppercase tracking-widest flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(37,140,244,0.4)] group overflow-hidden relative">
+<span class="relative z-10">Initialize Unlock</span>
+<span class="material-symbols-outlined relative z-10 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+<!-- Button Glitch Effect layer -->
+<div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-12"></div>
+</button>
+</div>
+</aside>
+</main>
+<!-- Bottom Command Deck (Floating Navigation) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+<nav class="bg-[#101a23]/80 backdrop-blur-xl border border-white/10 rounded-full px-2 py-2 flex items-center gap-1 shadow-2xl shadow-black/50">
+<a class="size-10 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors group relative" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="absolute -top-10 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Dashboard</span>
+</a>
+<a class="size-10 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors group relative" href="#">
+<span class="material-symbols-outlined">library_books</span>
+<span class="absolute -top-10 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Logs</span>
+</a>
+<!-- Active Item -->
+<div class="relative group">
+<div class="absolute inset-0 bg-primary/20 blur-md rounded-full"></div>
+<a class="size-12 rounded-full flex items-center justify-center bg-primary text-white shadow-lg relative z-10 border border-white/20" href="#">
+<span class="material-symbols-outlined">hub</span>
+</a>
+<span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">SKILL TREE</span>
+</div>
+<a class="size-10 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors group relative" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="absolute -top-10 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Profile</span>
+</a>
+<a class="size-10 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors group relative" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="absolute -top-10 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Settings</span>
+</a>
+</nav>
+</div>
+</body></html>

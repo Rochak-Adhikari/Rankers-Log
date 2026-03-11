@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Search Results</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505", // Deep void dark as requested
+                        "hud-bg": "#101922",
+                        "hud-glass": "rgba(16, 25, 34, 0.8)",
+                        "accent-glow": "rgba(37, 140, 244, 0.3)",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                    boxShadow: {
+                        "glow": "0 0 10px rgba(37, 140, 244, 0.5)",
+                        "glow-sm": "0 0 5px rgba(37, 140, 244, 0.3)",
+                        "glass": "0 4px 30px rgba(0, 0, 0, 0.1)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #223649; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+        
+        .glass-panel {
+            background: rgba(20, 30, 40, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(37, 140, 244, 0.1);
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(37, 140, 244, 0.4);
+            box-shadow: 0 0 15px rgba(37, 140, 244, 0.15);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(37, 140, 244, 0.5);
+        }
+        
+        .active-tab-glow {
+            box-shadow: 0 4px 0 -1px #258cf4;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#90adcb] font-display overflow-hidden h-screen w-screen flex flex-col">
+<!-- Top Navigation / Search Bar HUD -->
+<header class="w-full h-20 shrink-0 z-50 px-6 flex items-center justify-between border-b border-[#223649] bg-[#0a0f16]">
+<div class="flex items-center gap-4 w-1/3">
+<div class="text-white font-bold text-2xl tracking-widest text-glow">RANKERS LOG</div>
+<div class="h-6 w-px bg-[#223649] mx-2"></div>
+<div class="flex items-center gap-2 text-xs font-mono text-primary tracking-wider">
+<span class="material-symbols-outlined text-sm">wifi</span>
+                ONLINE
+            </div>
+</div>
+<div class="w-1/3 flex justify-center">
+<div class="relative w-full max-w-lg group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-primary group-focus-within:text-glow">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border border-[#223649] rounded-lg leading-5 bg-[#101922] text-white placeholder-gray-500 focus:outline-none focus:bg-[#15202b] focus:border-primary focus:ring-1 focus:ring-primary sm:text-sm transition-all duration-300 shadow-inner" placeholder="INITIATE DATABASE QUERY..." type="text" value="Cyberpunk"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+<kbd class="inline-flex items-center border border-[#314d68] rounded px-2 text-xs font-sans font-medium text-gray-400">⌘K</kbd>
+</div>
+</div>
+</div>
+<div class="w-1/3 flex justify-end items-center gap-6">
+<div class="flex flex-col items-end">
+<span class="text-xs text-[#90adcb]">SYS.TIME</span>
+<span class="text-sm text-white font-mono">14:02:59 UTC</span>
+</div>
+<div class="flex items-center gap-3 pl-6 border-l border-[#223649]">
+<div class="flex flex-col items-end">
+<h1 class="text-white text-sm font-bold leading-none">Operator</h1>
+<p class="text-primary text-xs font-medium leading-none mt-1">LVL 54</p>
+</div>
+<div class="bg-center bg-no-repeat bg-cover rounded-lg size-10 border border-[#223649]" data-alt="User profile avatar showing a futuristic helmet" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCB7mbjOk3yZtOCZm0YDzudSiEKPdFHBNJqUZrIq7usPstYWuJS4MS99bZ5nBKKjBP4ZxXBy9D97Ij5bd9He6NPJ0Zb7SrNEaa8c-HwoudCEDhab18J7gM0qheeVBKMy4VRuKCbkatjUd4SWvd1DppwJWdv54-Waw1eDPmym-e2SfBHyBY75qJzeiSAvP57j1QqDeRHZQvL_boIJcqhsbTu0zh_pb6lSaBd7YzAPmmvA0wc9NPKXoJuh_3vb72rJ3t8TNJ0fi9V06kY");'></div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative">
+<!-- Sidebar Navigation (Left Command Deck) -->
+<nav class="w-64 hidden md:flex flex-col justify-between border-r border-[#223649] bg-[#0a0f16]/90 backdrop-blur-sm z-40 p-4">
+<div class="flex flex-col gap-2">
+<p class="text-xs font-bold text-[#4a6b8a] uppercase tracking-wider mb-2 px-3">Main Deck</p>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#152230] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#5c7c9b] group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#152230] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#5c7c9b] group-hover:text-primary transition-colors">explore</span>
+<span class="text-sm font-medium">Explore</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/10 border border-primary/20 text-white shadow-glow-sm" href="#">
+<span class="material-symbols-outlined text-primary fill-1">search</span>
+<span class="text-sm font-medium">Search</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#152230] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#5c7c9b] group-hover:text-primary transition-colors">library_books</span>
+<span class="text-sm font-medium">Library</span>
+</a>
+</div>
+<div class="flex flex-col gap-2">
+<p class="text-xs font-bold text-[#4a6b8a] uppercase tracking-wider mb-2 px-3">System</p>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#152230] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#5c7c9b] group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<div class="mt-4 p-4 rounded-lg bg-gradient-to-br from-primary/20 to-transparent border border-primary/20">
+<p class="text-xs text-primary font-bold mb-1">XP BOOST ACTIVE</p>
+<div class="w-full bg-[#101922] rounded-full h-1.5 mb-2">
+<div class="bg-primary h-1.5 rounded-full" style="width: 70%"></div>
+</div>
+<p class="text-[10px] text-[#90adcb]">3h 24m remaining</p>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto relative bg-[url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5980?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=80')] bg-cover bg-fixed" data-alt="Abstract dark starry void background">
+<!-- Dark Overlay for readability -->
+<div class="absolute inset-0 bg-[#050505]/90 z-0"></div>
+<div class="relative z-10 p-8 max-w-7xl mx-auto flex flex-col h-full min-h-screen">
+<!-- Page Heading & Stats -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4 border-b border-[#223649] pb-6">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-3xl">data_exploration</span>
+<h1 class="text-white text-4xl font-bold tracking-tight uppercase">Search Results</h1>
+</div>
+<p class="text-[#90adcb] font-mono text-sm tracking-wide">QUERY: "CYBERPUNK" • FOUND 142 ENTRIES • PING: 24ms</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-[#15202b] hover:bg-[#223649] border border-[#314d68] text-white rounded text-sm font-medium transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">save</span>
+                            SAVE QUERY
+                        </button>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex mb-6 overflow-x-auto pb-2 scrollbar-hide">
+<nav aria-label="Tabs" class="flex space-x-8">
+<a aria-current="page" class="border-b-2 border-primary py-4 px-1 text-sm font-bold text-white flex items-center gap-2 active-tab-glow" href="#">
+<span class="material-symbols-outlined text-lg">movie</span>
+                            TITLES (84)
+                        </a>
+<a class="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-[#90adcb] hover:border-gray-300 hover:text-white flex items-center gap-2 transition-all" href="#">
+<span class="material-symbols-outlined text-lg">group</span>
+                            USERS (12)
+                        </a>
+<a class="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-[#90adcb] hover:border-gray-300 hover:text-white flex items-center gap-2 transition-all" href="#">
+<span class="material-symbols-outlined text-lg">shield</span>
+                            GUILDS (5)
+                        </a>
+<a class="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-[#90adcb] hover:border-gray-300 hover:text-white flex items-center gap-2 transition-all" href="#">
+<span class="material-symbols-outlined text-lg">forum</span>
+                            FORUM (41)
+                        </a>
+</nav>
+</div>
+<!-- Filters & Sort Chips -->
+<div class="flex flex-wrap items-center gap-3 mb-8">
+<span class="text-xs font-bold text-[#4a6b8a] uppercase mr-2">Filters:</span>
+<button class="glass-panel h-8 px-4 rounded-full flex items-center gap-2 text-white text-xs font-medium hover:bg-primary/20 transition-all group">
+<span>Sort: Relevance</span>
+<span class="material-symbols-outlined text-sm text-primary group-hover:text-white">expand_more</span>
+</button>
+<button class="glass-panel h-8 px-4 rounded-full flex items-center gap-2 text-white text-xs font-medium hover:bg-primary/20 transition-all group">
+<span>Media: All</span>
+<span class="material-symbols-outlined text-sm text-primary group-hover:text-white">expand_more</span>
+</button>
+<button class="glass-panel h-8 px-4 rounded-full flex items-center gap-2 text-white text-xs font-medium hover:bg-primary/20 transition-all group">
+<span>Status: Released</span>
+<span class="material-symbols-outlined text-sm text-primary group-hover:text-white">expand_more</span>
+</button>
+<button class="glass-panel h-8 px-4 rounded-full flex items-center gap-2 text-white text-xs font-medium hover:bg-primary/20 transition-all group">
+<span>Genre: Sci-Fi</span>
+<span class="material-symbols-outlined text-sm text-primary group-hover:text-white">close</span>
+</button>
+<div class="ml-auto flex items-center gap-2">
+<button class="p-2 rounded bg-[#15202b] text-white hover:bg-primary hover:text-white transition-colors" title="Grid View">
+<span class="material-symbols-outlined text-sm">grid_view</span>
+</button>
+<button class="p-2 rounded bg-transparent text-[#5c7c9b] hover:bg-[#15202b] hover:text-white transition-colors" title="List View">
+<span class="material-symbols-outlined text-sm">view_list</span>
+</button>
+</div>
+</div>
+<!-- Results Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-12">
+<!-- Card 1: Anime -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col group relative transition-transform duration-300 hover:-translate-y-1">
+<div class="h-48 bg-cover bg-center relative" data-alt="Cyberpunk Edgerunners anime cover art" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZrv8JvC59Fi-Ckhb_UtVdyIMnP_l9n-w3Up94gchEfVf5sGrVCCTLpvB2XkO3IJZU7A1POc8gCvjWOCd2DhBkTXFFRrHZgjgKELnSw1-hGc__TCJsf1UkV4LlsfD7MCN-tFyGdswjT-rLntf0LdbwNpP3SH0G_9b0d69POcEI5xRi1fsL24u-bzSjAI6NOcuvm0UZMiralK_0ZwgRhWsPosrO7Dbzd0zwOFYJMN6Ao91JT7ZUbGaWdVhVKSLUmQ9Qp_rv6V3twOOf");'>
+<div class="absolute top-2 left-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-primary uppercase border border-primary/30">
+                                Anime
+                            </div>
+<div class="absolute top-2 right-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded flex items-center gap-1 border border-[#314d68]">
+<span class="material-symbols-outlined text-yellow-400 text-[14px] fill-1">star</span>
+<span class="text-xs font-bold text-white">9.2</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#101922] to-transparent opacity-80"></div>
+</div>
+<div class="p-4 flex flex-col flex-1 relative">
+<div class="absolute -top-6 right-4 size-10 rounded-full border-2 border-[#101922] bg-[#223649] flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform cursor-pointer hover:bg-primary z-10">
+<span class="material-symbols-outlined text-lg">add</span>
+</div>
+<h3 class="text-white text-lg font-bold truncate pr-8 group-hover:text-primary transition-colors">Cyberpunk: Edgerunners</h3>
+<p class="text-xs text-[#90adcb] mb-3 font-mono">2022 • Studio Trigger</p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="text-[10px] px-2 py-1 rounded bg-[#15202b] border border-[#223649] text-[#90adcb]">Sci-Fi</span>
+<span class="text-[10px] px-2 py-1 rounded bg-[#15202b] border border-[#223649] text-[#90adcb]">Action</span>
+</div>
+</div>
+<!-- Glow effect on hover -->
+<div class="absolute inset-0 border-2 border-transparent group-hover:border-primary/50 rounded-xl pointer-events-none transition-colors duration-300"></div>
+</div>
+<!-- Card 2: Game -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col group relative transition-transform duration-300 hover:-translate-y-1">
+<div class="h-48 bg-cover bg-center relative" data-alt="Cyberpunk 2077 game promotional art" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDRTDOd37dFIWJpnKyy3Zywub5cKPmIoQfYLdklx3FxonSaGhxUh1rgYk1YCwSFPU0AgG3nBqAWcmC7Li4PshhDXNUqD0RD4IQvXPdeCPEkwhhBfPaB3VLVgS-Tpra5fstk8Crtt2wo906AcqQMpqLBwMRsNGKWfnximW_nLik2Jctb8jDSMtQLTPt7aVK43VRF86LdlpqAalV95mq0r-XkaNjp6b7oZd8Q59_XB6egsuXLz95SvhBjQXA7_1g_LrDF-1nVMQtqC9dF");'>
+<div class="absolute top-2 left-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-green-400 uppercase border border-green-400/30">
+                                Game
+                            </div>
+<div class="absolute top-2 right-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded flex items-center gap-1 border border-[#314d68]">
+<span class="material-symbols-outlined text-yellow-400 text-[14px] fill-1">star</span>
+<span class="text-xs font-bold text-white">8.5</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#101922] to-transparent opacity-80"></div>
+</div>
+<div class="p-4 flex flex-col flex-1 relative">
+<div class="absolute -top-6 right-4 size-10 rounded-full border-2 border-[#101922] bg-[#223649] flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform cursor-pointer hover:bg-primary z-10">
+<span class="material-symbols-outlined text-lg">add</span>
+</div>
+<h3 class="text-white text-lg font-bold truncate pr-8 group-hover:text-primary transition-colors">Cyberpunk 2077</h3>
+<p class="text-xs text-[#90adcb] mb-3 font-mono">2020 • CD Projekt Red</p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="text-[10px] px-2 py-1 rounded bg-[#15202b] border border-[#223649] text-[#90adcb]">RPG</span>
+<span class="text-[10px] px-2 py-1 rounded bg-[#15202b] border border-[#223649] text-[#90adcb]">Open World</span>
+</div>
+</div>
+<div class="absolute inset-0 border-2 border-transparent group-hover:border-primary/50 rounded-xl pointer-events-none transition-colors duration-300"></div>
+</div>
+<!-- Card 3: Novel -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col group relative transition-transform duration-300 hover:-translate-y-1">
+<div class="h-48 bg-cover bg-center relative" data-alt="Abstract digital network representing Neuromancer" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCV4p_iOwL_b9nv27wFiEX09jf2Ie4JJVuseVz6vDCf9w6UFOI0S3Mx-8I7ZkBpxgB4KCdnNTHuvPR8bQVyekxlbKkblBkcw2r46ht9Ze-XZ8LoQhnZCbwxYaZh3_s5Iyh4R9JmABr-aCiOhsTdMgh-a7wrPWWc7wM09D48vI6mYGs2R0rv2n7tSPjwa9G0KGIHI4ApH0J6VieHNnEBhV3RcMJs9si2rpwJx3v_1sEOnAeXZC58s1pgYRfjPt8NRODNT-5DMwr_6I8i");'>
+<div class="absolute top-2 left-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-purple-400 uppercase border border-purple-400/30">
+                                Novel
+                            </div>
+<div class="absolute top-2 right-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded flex items-center gap-1 border border-[#314d68]">
+<span class="material-symbols-outlined text-yellow-400 text-[14px] fill-1">star</span>
+<span class="text-xs font-bold text-white">9.0</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#101922] to-transparent opacity-80"></div>
+</div>
+<div class="p-4 flex flex-col flex-1 relative">
+<div class="absolute -top-6 right-4 size-10 rounded-full border-2 border-[#101922] bg-[#223649] flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform cursor-pointer hover:bg-primary z-10">
+<span class="material-symbols-outlined text-lg">add</span>
+</div>
+<h3 class="text-white text-lg font-bold truncate pr-8 group-hover:text-primary transition-colors">Neuromancer</h3>
+<p class="text-xs text-[#90adcb] mb-3 font-mono">1984 • William Gibson</p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="text-[10px] px-2 py-1 rounded bg-[#15202b] border border-[#223649] text-[#90adcb]">Classic</span>
+<span class="text-[10px] px-2 py-1 rounded bg-[#15202b] border border-[#223649] text-[#90adcb]">Cyberpunk</span>
+</div>
+</div>
+<div class="absolute inset-0 border-2 border-transparent group-hover:border-primary/50 rounded-xl pointer-events-none transition-colors duration-300"></div>
+</div>
+<!-- Card 4: Manga -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col group relative transition-transform duration-300 hover:-translate-y-1">
+<div class="h-48 bg-cover bg-center relative" data-alt="Ghost in the Shell manga art style image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAe7HDdOQqXk9H67dHAv08orbOcLBbnD2Y9_iKyWjti_6xFINel-wA1Cz_2yJQ-PODcf1W6HBlDoPQ4S5QwOFG12xKwWirftbkxkRxoP6pTpXXp9QIXXuwnwFM3aVRbVH5YNdwblA2bF5HVPCH3jcvtmNZU3MOZHEvlenDD_-7J-6qrEkGF2f0DFlVN9wMUigulURaLYwfWGr9N4XrxSw51BNhOd0Ij3aOmRD8_5JcGzNyYf8FE9FaREN77Ton3BjuHtXMle2RNUSj9");'>
+<div class="absolute top-2 left-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-pink-400 uppercase border border-pink-400/30">
+                                Manga
+                            </div>
+<div class="absolute top-2 right-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded flex items-center gap-1 border border-[#314d68]">
+<span class="material-symbols-outlined text-yellow-400 text-[14px] fill-1">star</span>
+<span class="text-xs font-bold text-white">8.9</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#101922] to-transparent opacity-80"></div>
+</div>
+<div class="p-4 flex flex-col flex-1 relative">
+<div class="absolute -top-6 right-4 size-10 rounded-full border-2 border-[#101922] bg-[#223649] flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform cursor-pointer hover:bg-primary z-10">
+<span class="material-symbols-outlined text-lg">add</span>
+</div>
+<h3 class="text-white text-lg font-bold truncate pr-8 group-hover:text-primary transition-colors">Ghost in the Shell</h3>
+<p class="text-xs text-[#90adcb] mb-3 font-mono">1989 • Masamune Shirow</p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="text-[10px] px-2 py-1 rounded bg-[#15202b] border border-[#223649] text-[#90adcb]">Seinen</span>
+<span class="text-[10px] px-2 py-1 rounded bg-[#15202b] border border-[#223649] text-[#90adcb]">Philosophical</span>
+</div>
+</div>
+<div class="absolute inset-0 border-2 border-transparent group-hover:border-primary/50 rounded-xl pointer-events-none transition-colors duration-300"></div>
+</div>
+<!-- Card 5: User Result (Mixed type) -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col justify-center p-6 group relative transition-transform duration-300 hover:-translate-y-1 border-l-4 border-l-transparent hover:border-l-primary">
+<div class="flex items-center gap-4">
+<div class="size-14 rounded-lg bg-cover bg-center border border-[#314d68]" data-alt="User avatar for CyberNinja99" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFmF_FJxzrYcZ3vzJQOCDrHC2cNGAhaGLk0ivo3uPesoUNck2w-jLDvKFLaFlmhWAEVecovpoVosIdoCRat0Qm6w6wbqPLr4zljyqi_U8vypyBxi9klqBm6WN-_lI36V_UOdUFOoHn1litMa9SZ0JC-vlkcgMD6y4Q4D5pzQ9Q5ck1ZLDz4rcle3JZuWsc60JgcpH5cN5_27-dyAkHhx15z0E2nd4T_pVnORGK9Y7CSqywZpWAAwQZg30DspcE1WrWq2QMLTyAuTNX");'></div>
+<div>
+<h3 class="text-white text-base font-bold group-hover:text-primary transition-colors">CyberNinja99</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] font-mono bg-primary/20 text-primary px-1.5 rounded">LVL 82</span>
+<span class="text-[10px] text-[#90adcb]">S-Rank Explorer</span>
+</div>
+</div>
+</div>
+<div class="mt-4 flex gap-2">
+<button class="flex-1 py-1.5 rounded bg-[#15202b] hover:bg-primary hover:text-white border border-[#314d68] hover:border-primary text-xs font-bold text-[#90adcb] transition-colors">VIEW PROFILE</button>
+<button class="size-8 flex items-center justify-center rounded bg-[#15202b] hover:bg-primary hover:text-white border border-[#314d68] hover:border-primary text-[#90adcb] transition-colors">
+<span class="material-symbols-outlined text-sm">person_add</span>
+</button>
+</div>
+<div class="absolute top-2 right-2">
+<span class="text-[10px] text-[#5c7c9b] uppercase font-bold tracking-wider">User</span>
+</div>
+</div>
+<!-- Card 6: Guild Result -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col justify-center p-6 group relative transition-transform duration-300 hover:-translate-y-1 border-l-4 border-l-transparent hover:border-l-primary">
+<div class="flex items-center gap-4">
+<div class="size-14 rounded-lg bg-cover bg-center border border-[#314d68] relative" data-alt="Guild emblem for Neo Tokyo Drifters" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAqD2cx_09VW7zpJ-_GCq88gChxPSZQNoJDINNnPj-UC9niirXeTikgPVNYVQ-UL2SPmTbubuawswILIbaibTsiJwZDtqTfOX0v7ag7Qx7QN_ImtBxBgiGo_XrnmphBNRdZFQWxAMSZZvSPyvu2oVgErzNiMPlFiqxb730-CaxQU4E-mEgrkHDo54rY1CPxg5tt208XYRkzIEJy3uHz64oVB09m366ibPQihTakRcqitFVM1BD-RCi0ob20roydeBDhF6KIfrKu7NfT");'>
+<div class="absolute -bottom-1 -right-1 size-4 bg-green-500 rounded-full border-2 border-[#101922]"></div>
+</div>
+<div>
+<h3 class="text-white text-base font-bold group-hover:text-primary transition-colors">Neo Tokyo Drifters</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] text-[#90adcb] flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">group</span> 128 Members
+                                    </span>
+</div>
+</div>
+</div>
+<div class="mt-4">
+<button class="w-full py-1.5 rounded bg-primary/20 hover:bg-primary border border-primary/50 hover:border-primary text-xs font-bold text-white transition-colors uppercase tracking-wider">Request Access</button>
+</div>
+<div class="absolute top-2 right-2">
+<span class="text-[10px] text-[#5c7c9b] uppercase font-bold tracking-wider">Guild</span>
+</div>
+</div>
+</div>
+<!-- Pagination / Load More -->
+<div class="flex justify-center pb-12">
+<button class="group relative px-8 py-3 bg-[#101922] overflow-hidden rounded-lg border border-[#314d68] hover:border-primary transition-colors">
+<div class="absolute inset-0 w-0 bg-primary/10 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+<span class="relative text-white font-mono text-sm tracking-wider flex items-center gap-2">
+                            SCANNING FOR MORE DATA...
+                            <span class="material-symbols-outlined text-sm animate-pulse">radar</span>
+</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

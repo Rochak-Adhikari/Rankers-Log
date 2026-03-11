@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Home Feed</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "primary-glow": "rgba(37, 140, 244, 0.5)",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505",
+                        "hud-dark": "#0a0f16",
+                        "glass-border": "rgba(255, 255, 255, 0.1)",
+                        "glass-bg": "rgba(16, 25, 35, 0.6)",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Scrollbar for Webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151; 
+        }
+
+        /* Chamfered Edge Utility Class */
+        .chamfered {
+            clip-path: polygon(
+                12px 0, 100% 0, 
+                100% calc(100% - 12px), calc(100% - 12px) 100%, 
+                0 100%, 0 12px
+            );
+        }
+        
+        .chamfered-border {
+             /* A pseudo-element approach would be needed for a perfect border on clip-path, 
+                but for simplicity in tailwind-only, we'll use a wrapper or simple borders */
+             position: relative;
+        }
+
+        .hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 10px rgba(37, 140, 244, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-200 font-display min-h-screen overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Background Grid Effect -->
+<div class="fixed inset-0 z-0 pointer-events-none bg-grid-pattern bg-[size:40px_40px] opacity-20"></div>
+<div class="fixed inset-0 z-0 pointer-events-none bg-gradient-to-b from-transparent via-background-dark/80 to-background-dark"></div>
+<!-- Main Layout Wrapper -->
+<div class="relative z-10 flex flex-col h-screen w-full max-w-[1600px] mx-auto">
+<!-- HUD Header -->
+<header class="flex-none flex items-center justify-between px-6 py-4 border-b border-white/5 bg-hud-dark/80 backdrop-blur-md sticky top-0 z-50">
+<!-- Brand -->
+<div class="flex items-center gap-3">
+<div class="size-10 flex items-center justify-center bg-primary/20 rounded-lg border border-primary/50 shadow-[0_0_15px_rgba(37,140,244,0.3)]">
+<span class="material-symbols-outlined text-primary text-2xl">swords</span>
+</div>
+<div>
+<h1 class="text-white text-xl font-bold tracking-tight uppercase leading-none">Rankers Log</h1>
+<span class="text-xs text-primary tracking-[0.2em] opacity-80">SYSTEM ONLINE</span>
+</div>
+</div>
+<!-- Stats & XP -->
+<div class="flex-1 max-w-2xl px-12 hidden md:flex items-center gap-6">
+<!-- Level Badge -->
+<div class="flex flex-col items-end min-w-[60px]">
+<span class="text-[10px] text-slate-400 uppercase tracking-widest">LVL</span>
+<span class="text-2xl font-bold text-white leading-none">42</span>
+</div>
+<!-- XP Bar Container -->
+<div class="flex-1 flex flex-col gap-1">
+<div class="flex justify-between text-[10px] uppercase font-medium tracking-wide text-slate-400">
+<span>XP Progress</span>
+<span class="text-primary">75%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden relative">
+<div class="absolute inset-y-0 left-0 bg-primary shadow-[0_0_10px_#258cf4] w-[75%] rounded-full"></div>
+</div>
+</div>
+<!-- Currency -->
+<div class="flex items-center gap-3 border-l border-white/10 pl-6">
+<div class="flex flex-col">
+<span class="text-[10px] text-slate-400 uppercase tracking-widest">Credits</span>
+<span class="text-sm font-bold text-yellow-400 font-mono">4,050</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-slate-400 uppercase tracking-widest">Rank</span>
+<span class="text-sm font-bold text-white tracking-widest">E-CLASS</span>
+</div>
+</div>
+</div>
+<!-- User Profile Hex -->
+<div class="flex items-center gap-4">
+<button class="relative group">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">notifications</span>
+<span class="absolute top-0 right-0 size-2 bg-red-500 rounded-full animate-pulse"></span>
+</button>
+<div class="hexagon w-10 h-10 bg-slate-700 p-0.5 relative overflow-hidden group cursor-pointer border-2 border-primary/30 hover:border-primary transition-colors">
+<div class="w-full h-full bg-slate-800 hexagon overflow-hidden">
+<img alt="User Avatar Profile Picture" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwrBnB-xHXtls2PUKZ3mwDLANV8YMDjPAwm3KE15c6enpciKO7Nmtp7O_PdB8CGayPLObyReAXcaHFC8nsspqUhP_WXeZIiEAK11ywoYSTRIylBOW_-2jibnJ4biVSeNHyuzRLayh-bNfdVsJZGcPe7ivZ7sxsYZeHfOOXbrnFYfWWdjkRBb_LFFfhowtafeaJ-hpHf-AjsjW-bsowfxsmIqN5YHPKN4Fz96jzvUs3xIj02HomDJoS4VPTgVlYopcf4GwSwIJXrhby"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-hidden flex relative">
+<!-- Side Navigation (Desktop Only) -->
+<nav class="w-20 hidden lg:flex flex-col items-center py-8 border-r border-white/5 bg-hud-dark/50 backdrop-blur-sm gap-8 z-20">
+<a class="flex flex-col items-center gap-1 group text-primary" href="#">
+<span class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">home_app_logo</span>
+<span class="text-[10px] font-bold tracking-wider opacity-0 group-hover:opacity-100 transition-opacity absolute top-12 bg-black px-2 py-1 rounded border border-primary/20">HOME</span>
+</a>
+<a class="flex flex-col items-center gap-1 group text-slate-500 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">swords</span>
+</a>
+<a class="flex flex-col items-center gap-1 group text-slate-500 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">menu_book</span>
+</a>
+<a class="flex flex-col items-center gap-1 group text-slate-500 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">stadia_controller</span>
+</a>
+<div class="mt-auto flex flex-col items-center gap-6">
+<div class="h-px w-8 bg-white/10"></div>
+<a class="flex flex-col items-center gap-1 group text-slate-500 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-3xl">settings</span>
+</a>
+</div>
+</nav>
+<!-- Scrollable Feed Area -->
+<div class="flex-1 overflow-y-auto relative scroll-smooth pb-32 lg:pb-10">
+<div class="max-w-4xl mx-auto px-4 md:px-8 py-8 flex flex-col gap-8">
+<!-- Filter Tabs -->
+<div class="flex overflow-x-auto gap-4 pb-2 scrollbar-hide sticky top-0 z-30 pt-4 bg-gradient-to-b from-background-dark via-background-dark/95 to-transparent pb-6 -mx-4 px-4 md:-mx-8 md:px-8 items-center">
+<button class="whitespace-nowrap px-5 py-2 rounded-full bg-primary/20 border border-primary/50 text-white text-xs font-bold tracking-wider hover:bg-primary/30 transition-all shadow-[0_0_10px_rgba(37,140,244,0.2)] flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">dashboard</span>
+                            ALL LOGS
+                        </button>
+<button class="whitespace-nowrap px-5 py-2 rounded-full bg-white/5 border border-white/10 text-slate-400 text-xs font-bold tracking-wider hover:bg-white/10 hover:text-white transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">movie</span>
+                            ANIME
+                        </button>
+<button class="whitespace-nowrap px-5 py-2 rounded-full bg-white/5 border border-white/10 text-slate-400 text-xs font-bold tracking-wider hover:bg-white/10 hover:text-white transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+                            MANGA
+                        </button>
+<button class="whitespace-nowrap px-5 py-2 rounded-full bg-white/5 border border-white/10 text-slate-400 text-xs font-bold tracking-wider hover:bg-white/10 hover:text-white transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">sports_esports</span>
+                            GAMES
+                        </button>
+<button class="whitespace-nowrap px-5 py-2 rounded-full bg-white/5 border border-white/10 text-slate-400 text-xs font-bold tracking-wider hover:bg-white/10 hover:text-white transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">book</span>
+                            NOVELS
+                        </button>
+</div>
+<!-- Post Composer (Quick Log) -->
+<div class="relative group/composer">
+<!-- Decorative spine connector -->
+<div class="absolute left-[-29px] top-1/2 w-8 h-[2px] bg-primary opacity-50 hidden md:block group-hover/composer:shadow-[0_0_8px_#258cf4] transition-all"></div>
+<div class="absolute left-[-33px] top-1/2 -translate-y-1/2 size-2 rounded-full bg-primary hidden md:block shadow-[0_0_8px_#258cf4]"></div>
+<div class="chamfered bg-glass-bg backdrop-blur-xl border border-primary/30 p-1">
+<div class="chamfered bg-hud-dark/50 p-4 flex gap-4 items-start">
+<div class="hexagon w-12 h-12 shrink-0 bg-slate-700 p-0.5 relative overflow-hidden">
+<img alt="User avatar small" class="w-full h-full object-cover hexagon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYq9-YQqFNButCIEqVgjoG-R1FcgAQ94NkL9ZFN57SQIwxXntiOdx0q4c_FqM16Rox9_MnI9vTHF-GMjRxhAnPkYtR31dDvBPOqjNRAhdbSvWYCakeIXFsXfrj97BJHKxXipFX2HbxSk3bNqOf4lxmo04MnwAM5LEN6dGRTncKxZtVaOZoWB6hi6hWp9wUkuJeAEiWSNlo5D0aTuGdwFdbOdbQKYNgRaXBnOxXzJLhwcIC3eei78w7O-AKHOKRaSZ9WgF9plRD6nAJ"/>
+</div>
+<div class="flex-1">
+<textarea class="w-full bg-transparent border-none text-white placeholder-slate-500 focus:ring-0 resize-none text-sm font-light" placeholder="Log active mission data..." rows="2"></textarea>
+<div class="flex justify-between items-center mt-2 border-t border-white/5 pt-2">
+<div class="flex gap-2 text-slate-500">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">image</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">gif</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">tag</span></button>
+</div>
+<button class="bg-primary hover:bg-blue-600 text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-sm clip-button hover:shadow-[0_0_15px_rgba(37,140,244,0.4)] transition-all">
+                                            Initialize Log
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Section -->
+<div class="relative pl-0 md:pl-8">
+<!-- The Spine Line -->
+<div class="absolute left-[-1px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary via-primary/20 to-transparent hidden md:block"></div>
+<div class="flex flex-col gap-8">
+<!-- Post 1: Anime -->
+<div class="relative group">
+<!-- Node Connection Point -->
+<div class="absolute left-[-41px] top-8 w-10 h-[2px] bg-gradient-to-r from-primary/80 to-primary/20 hidden md:block group-hover:w-14 group-hover:left-[-45px] transition-all duration-300"></div>
+<div class="absolute left-[-37px] top-[30px] size-3 bg-primary rounded-full shadow-[0_0_10px_#258cf4] hidden md:block border-2 border-background-dark z-10"></div>
+<article class="chamfered bg-glass-bg backdrop-blur-md border border-white/10 hover:border-primary/40 transition-colors duration-300">
+<!-- Post Header -->
+<div class="p-4 border-b border-white/5 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-primary tracking-widest uppercase">Anime Log</span>
+<span class="size-1 bg-slate-500 rounded-full"></span>
+<span class="text-xs text-slate-400">2h ago</span>
+</div>
+<h3 class="text-lg text-white font-bold leading-tight">Solo Leveling</h3>
+</div>
+</div>
+<div class="px-3 py-1 bg-primary/20 border border-primary/50 text-primary text-xs font-bold rounded flex items-center gap-1 shadow-[0_0_8px_rgba(37,140,244,0.2)]">
+<span class="material-symbols-outlined text-sm">stars</span>
+                                            S-RANK
+                                        </div>
+</div>
+<!-- Post Content -->
+<div class="p-4 flex flex-col md:flex-row gap-4">
+<div class="w-full md:w-48 aspect-video md:aspect-[4/3] rounded overflow-hidden relative border border-white/10 shrink-0 group-hover:shadow-[0_0_15px_rgba(37,140,244,0.2)] transition-shadow">
+<img alt="Abstract glowing anime scene" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClUXMOMOxvmbmns_vVvSKHBUTHBRhlixsCoqxlD5aSp6-kpPCHpiBV9eJ8T0Iax2OwQvd_biLWLzruwV1sxrHjf5G6pVVoA0fTVVcixlFPkDNzsSbJ7SRF2Yk9caw3-DPRZs-ZlZKBEUfP1i82j2LGD1BDR9wf3pZ8oHDDXVNnYRkFLnC300tASU_wvK0dAWlHt2OLO_yRTwDmKW22Le-wdgLhb0F4Oynt-ushhex0XY4C_jETtxm7CfGokzOdN4K_aD9_mhkAVan6"/>
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+<p class="text-xs text-white font-medium">Episode 12</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between gap-3">
+<p class="text-slate-300 text-sm leading-relaxed font-body">
+                                                The animation in this episode was absolutely insane. The shadow extraction scene gave me chills. Definitely a contender for anime of the year. Jinwoo is overpowered but it feels earned.
+                                            </p>
+<!-- Interactive Stats -->
+<div class="flex items-center gap-4 mt-2">
+<button class="flex items-center gap-1.5 text-slate-400 hover:text-primary transition-colors text-xs font-medium group/btn">
+<span class="material-symbols-outlined text-lg group-hover/btn:scale-110 transition-transform">thumb_up</span>
+<span>1.2k</span>
+</button>
+<button class="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors text-xs font-medium group/btn">
+<span class="material-symbols-outlined text-lg group-hover/btn:scale-110 transition-transform">chat_bubble</span>
+<span>42</span>
+</button>
+<button class="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors text-xs font-medium group/btn ml-auto">
+<span class="material-symbols-outlined text-lg group-hover/btn:scale-110 transition-transform">share</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Post 2: Game -->
+<div class="relative group">
+<div class="absolute left-[-41px] top-8 w-10 h-[2px] bg-gradient-to-r from-primary/80 to-primary/20 hidden md:block group-hover:w-14 group-hover:left-[-45px] transition-all duration-300"></div>
+<div class="absolute left-[-37px] top-[30px] size-3 bg-purple-500 rounded-full shadow-[0_0_10px_purple] hidden md:block border-2 border-background-dark z-10"></div>
+<article class="chamfered bg-glass-bg backdrop-blur-md border border-white/10 hover:border-purple-500/40 transition-colors duration-300">
+<div class="p-4 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-purple-500/10 to-transparent">
+<div class="flex items-center gap-3">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-purple-400 tracking-widest uppercase">Game Log</span>
+<span class="size-1 bg-slate-500 rounded-full"></span>
+<span class="text-xs text-slate-400">5h ago</span>
+</div>
+<h3 class="text-lg text-white font-bold leading-tight">Elden Ring</h3>
+</div>
+</div>
+<div class="px-3 py-1 bg-purple-500/20 border border-purple-500/50 text-purple-300 text-xs font-bold rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trophy</span>
+                                            BOSS DEFEATED
+                                        </div>
+</div>
+<div class="p-4 flex flex-col md:flex-row gap-4">
+<div class="w-full md:w-48 aspect-video md:aspect-[4/3] rounded overflow-hidden relative border border-white/10 shrink-0">
+<img alt="Dark fantasy castle silhouette" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDE9om2Ev_2qlvchchEXOXkhALhDGjtB8sEu_8rxFZq9YYFkom_llizJdr6tue-SRA0I0ulH4SYP3B97pIg_U5tqRwbq53y5dx2nE0qYp_Aox67Ai39Cf36l01Ur6IYI9bDrxOge1W4wl0Ph8ozyJyujNlG6gVjvCUcoEpfWngISzfyi2KTeK11cHC_sd-FgPhrr5wvQpDvOe1HQnGdpPoq3wMrpYcWhJgX0VJsCJ26PIEM5K2N9T_doGU2wtMEOR6DhA3l999xhcjr"/>
+</div>
+<div class="flex-1 flex flex-col justify-between gap-3">
+<p class="text-slate-300 text-sm leading-relaxed font-body">
+                                                Finally took down Malenia! It took over 50 attempts but that feeling of victory is unmatched. Used a dex build with Rivers of Blood (don't judge me).
+                                            </p>
+<div class="flex items-center gap-4 mt-2">
+<button class="flex items-center gap-1.5 text-slate-400 hover:text-purple-400 transition-colors text-xs font-medium">
+<span class="material-symbols-outlined text-lg">thumb_up</span>
+<span>856</span>
+</button>
+<button class="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors text-xs font-medium">
+<span class="material-symbols-outlined text-lg">chat_bubble</span>
+<span>120</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Post 3: Manga -->
+<div class="relative group">
+<div class="absolute left-[-41px] top-8 w-10 h-[2px] bg-gradient-to-r from-primary/80 to-primary/20 hidden md:block group-hover:w-14 group-hover:left-[-45px] transition-all duration-300"></div>
+<div class="absolute left-[-37px] top-[30px] size-3 bg-green-500 rounded-full shadow-[0_0_10px_green] hidden md:block border-2 border-background-dark z-10"></div>
+<article class="chamfered bg-glass-bg backdrop-blur-md border border-white/10 hover:border-green-500/40 transition-colors duration-300">
+<div class="p-4 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-green-500/10 to-transparent">
+<div class="flex items-center gap-3">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-green-400 tracking-widest uppercase">Manga Log</span>
+<span class="size-1 bg-slate-500 rounded-full"></span>
+<span class="text-xs text-slate-400">1d ago</span>
+</div>
+<h3 class="text-lg text-white font-bold leading-tight">Berserk</h3>
+</div>
+</div>
+<div class="px-3 py-1 bg-green-500/20 border border-green-500/50 text-green-300 text-xs font-bold rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                            COMPLETED
+                                        </div>
+</div>
+<div class="p-4 flex flex-col md:flex-row gap-4">
+<div class="w-full md:w-28 aspect-[3/4] rounded overflow-hidden relative border border-white/10 shrink-0">
+<img alt="Black and white sketch art" class="w-full h-full object-cover grayscale contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGa-UWTCH4b_m7iHMqpOwqKZ3_3xD78h6J7AtYQEx2EOqd5PqJBkcoB57CVEXnR5b6UmmjTENhZJbkKQcu5MD_V2v0ym2lT_6S9EjrqDIzhUcE4LiPtXB8mdUIeIHa88Uhj8GNDc1T8zsPIf7HC9qfF3XefkPi-CDM6ltDJCG0vou_cAi0wdfJFnYLAxp3VuMx-c2aN_e1c5sQAferTmlpLKuUqGVWtO0qtXFaSn95jZABMBOC-g1WByd2HM0MsVo_tuDNillXm9aF"/>
+</div>
+<div class="flex-1 flex flex-col justify-between gap-3">
+<p class="text-slate-300 text-sm leading-relaxed font-body">
+                                                Volume 41. A masterpiece. The art detail is just on another level entirely. Rest in peace Miura-sensei. The storytelling reaches its peak here.
+                                            </p>
+<div class="flex items-center gap-4 mt-2">
+<button class="flex items-center gap-1.5 text-slate-400 hover:text-green-400 transition-colors text-xs font-medium">
+<span class="material-symbols-outlined text-lg">thumb_up</span>
+<span>3.5k</span>
+</button>
+<button class="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors text-xs font-medium">
+<span class="material-symbols-outlined text-lg">chat_bubble</span>
+<span>240</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar (Widget Area) -->
+<aside class="w-80 hidden xl:block p-6 border-l border-white/5 bg-hud-dark/30 backdrop-blur-sm z-20">
+<div class="sticky top-6 flex flex-col gap-6">
+<!-- Daily Quests Widget -->
+<div class="border border-primary/20 bg-background-dark/50 p-5 rounded-lg relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary via-transparent to-transparent"></div>
+<h3 class="text-white font-bold text-sm tracking-wider uppercase mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">assignment</span>
+                            Daily Quests
+                        </h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<div class="mt-1 size-3 rounded-sm border border-slate-600 bg-transparent flex items-center justify-center cursor-pointer hover:border-primary"></div>
+<div class="flex-1">
+<p class="text-sm text-slate-300">Log 3 Anime episodes</p>
+<div class="w-full bg-slate-800 h-1 mt-1 rounded-full">
+<div class="bg-primary w-2/3 h-full rounded-full"></div>
+</div>
+<p class="text-[10px] text-slate-500 mt-0.5 text-right">2/3</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<div class="mt-1 size-3 rounded-sm border border-slate-600 bg-transparent flex items-center justify-center cursor-pointer hover:border-primary"></div>
+<div class="flex-1">
+<p class="text-sm text-slate-300">Rate a Manga chapter</p>
+<div class="w-full bg-slate-800 h-1 mt-1 rounded-full">
+<div class="bg-slate-700 w-0 h-full rounded-full"></div>
+</div>
+<p class="text-[10px] text-slate-500 mt-0.5 text-right">0/1</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- Top Rankers Widget -->
+<div class="border border-white/10 bg-background-dark/50 p-5 rounded-lg">
+<h3 class="text-white font-bold text-sm tracking-wider uppercase mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-yellow-500 text-base">leaderboard</span>
+                            Top Hunters
+                        </h3>
+<ul class="space-y-4">
+<li class="flex items-center gap-3">
+<div class="text-yellow-500 font-bold font-mono text-sm">01</div>
+<div class="size-8 rounded bg-slate-700 overflow-hidden">
+<img alt="Rank 1 user" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDue12T0pmXfQp-Vgvw7gvMTYxCRUvlCulBFU4ufEfykShcRBLxyQMRn00rFXoLGk_JmctFeCS6WUPbBloo7bB6DXjhrfIa6FsNbm9uu1fUUWHQsLukjBpC-1UckswIZmgIec_OZFNovN_HuroUD-kniDHrGM-dIdnIhk2uHrv4DSM6mWQcMBFWWOBnsqourpIVIFS0omFZq4AJsrEt1Ow4k4oMXHShVloavfh__NnYsEHV7vNutzj-LZDZ1PetmYW0OiRxEY0W59NR"/>
+</div>
+<div class="flex-1">
+<p class="text-sm text-white font-medium">Kairos</p>
+<p class="text-[10px] text-slate-400">Lvl 99 • S-Class</p>
+</div>
+</li>
+<li class="flex items-center gap-3">
+<div class="text-slate-400 font-bold font-mono text-sm">02</div>
+<div class="size-8 rounded bg-slate-700 overflow-hidden">
+<img alt="Rank 2 user" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF1JN3OAXB7uGxbNNugdVjeijtH9Fgj0clPodAFejs7FNpbXGKSp8fz8V5B14OjzoikeJciNeEypg5QGzo2kDqcxD6LL03O-IwJhFQC0IKfMgM76bopRaIMSMkMnEDyfyTZfhFLDcenCD6b8HGPfd49bQVAi-tMVym1T1UQXkKSE5U3yskWKveOlDDSA4LW2Jn52fqVkAykndcfztvugKHisb9ZrgKaROgZMJ6fHA_rjVBLXnIbu0RQEPp_N22CryIiQ-hEAzzMky-"/>
+</div>
+<div class="flex-1">
+<p class="text-sm text-white font-medium">Neo_Jin</p>
+<p class="text-[10px] text-slate-400">Lvl 86 • S-Class</p>
+</div>
+</li>
+<li class="flex items-center gap-3">
+<div class="text-orange-700 font-bold font-mono text-sm">03</div>
+<div class="size-8 rounded bg-slate-700 overflow-hidden">
+<img alt="Rank 3 user" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUJrdomrnlHXhOkcsxlNHsik0A-fEikqAGhAgSuy9kCLo7OmhIwzYX27t1CA9jxZTjmR3uWdV2EcKutRcNnyBcPgttix6NcwuWqLPj442MwqxiNJQueiYeGZd9-nedN_3xJ2gyR4FeV-ea2sqQ7hcJV_sFxqKUDMRaSvXAmVN37nREFrRifAPYExcyAeRV4tJ6ffknbbClilcTKdsvU-j74CCLkQNfU9znglGdtpRrc7sh4OPrQpB8CZdymc2TP0vBSUaBU_9Ocncc"/>
+</div>
+<div class="flex-1">
+<p class="text-sm text-white font-medium">Elara</p>
+<p class="text-[10px] text-slate-400">Lvl 82 • A-Class</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</aside>
+</main>
+<!-- Command Deck (Bottom Nav - Mobile/Tablet mainly but visible on desktop for aesthetic) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-auto">
+<div class="bg-hud-dark/70 backdrop-blur-xl border border-primary/40 rounded-full px-8 py-3 flex items-center gap-8 shadow-[0_0_20px_rgba(0,0,0,0.5)] ring-1 ring-white/5">
+<button class="flex flex-col items-center gap-0.5 group text-primary relative">
+<span class="absolute -top-1 size-1 bg-primary rounded-full shadow-[0_0_5px_#258cf4]"></span>
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">home</span>
+<!-- <span class="text-[8px] font-bold uppercase tracking-widest opacity-60">Home</span> -->
+</button>
+<button class="flex flex-col items-center gap-0.5 group text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">search</span>
+</button>
+<!-- Center Action Button -->
+<div class="relative -mt-10 mx-2 group cursor-pointer">
+<div class="absolute inset-0 bg-primary blur-md rounded-full opacity-40 group-hover:opacity-60 transition-opacity animate-pulse"></div>
+<div class="hexagon w-14 h-14 bg-primary flex items-center justify-center shadow-[0_0_15px_#258cf4] relative z-10 hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined text-white text-3xl">add</span>
+</div>
+</div>
+<button class="flex flex-col items-center gap-0.5 group text-slate-400 hover:text-white transition-colors relative">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">notifications</span>
+<span class="absolute top-0 right-0 size-2 bg-red-500 rounded-full border border-black"></span>
+</button>
+<button class="flex flex-col items-center gap-0.5 group text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">person</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

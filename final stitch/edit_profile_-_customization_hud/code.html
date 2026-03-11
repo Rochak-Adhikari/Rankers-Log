@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Edit Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                        "void": "#050505",
+                        "glass": "rgba(16, 25, 34, 0.6)",
+                        "glass-border": "rgba(255, 255, 255, 0.1)"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    boxShadow: {
+                        "neon": "0 0 10px rgba(37, 140, 244, 0.5), 0 0 20px rgba(37, 140, 244, 0.3)",
+                        "neon-sm": "0 0 5px rgba(37, 140, 244, 0.5)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for that tech feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e2d3d; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+        
+        .tech-border {
+            position: relative;
+            clip-path: polygon(
+                0 0, 
+                100% 0, 
+                100% calc(100% - 12px), 
+                calc(100% - 12px) 100%, 
+                0 100%
+            );
+        }
+
+        .tech-corner::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, transparent 50%, #258cf4 50%);
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body class="bg-void text-white font-display overflow-x-hidden antialiased selection:bg-primary selection:text-white pb-32">
+<!-- Top HUD Header -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-void/90 backdrop-blur-md border-b border-white/10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<!-- Left: Title -->
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-2xl">terminal</span>
+<div class="flex flex-col">
+<h1 class="text-sm font-bold tracking-[0.15em] leading-none text-white">EDIT MODE</h1>
+<span class="text-[10px] tracking-widest text-primary/70">SYSTEM // RANKER_ID_992</span>
+</div>
+</div>
+<!-- Right: Close Button -->
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/5 transition-colors group">
+<span class="material-symbols-outlined text-white/50 group-hover:text-white transition-colors">close</span>
+</button>
+</div>
+</div>
+<!-- Decorative tech line -->
+<div class="h-[1px] w-full bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+</header>
+<main class="relative mt-16 max-w-5xl mx-auto p-4 md:p-8 space-y-8 animate-fade-in">
+<!-- Banner & Avatar Zone -->
+<section class="relative group rounded-xl overflow-hidden border border-white/10 bg-glass tech-border">
+<!-- Banner -->
+<div class="relative h-48 md:h-64 w-full bg-cover bg-center overflow-hidden" data-alt="Abstract dark blue and purple digital gradient background representing a cybernetic void" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDAWg14_AAwOn6nTK1M891wHtDz4Dz1xLj0vyS2Fui6_G2eOK9en7xXFkYoVevTkCcYK4c7sF4LFUggur5VJvxeQC1BndvFtJMCUuORRu14fkZ_sR8oFz_PxFGtt-R6x_nQJejrSAF6Dqgc_lMmxgCRG3XRoLGEKfS0U0gIS3JYy0Ay-wEaLe5Z0hNohU17gfDIm_LLp2XbQe84cCaSmCornaV6Ta58yyiSW3nNrAiAd_YJ0bK0mOZ8CZQNMVbRgMfqNYLm6Ga20ti8');">
+<div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"></div>
+<div class="absolute top-4 right-4 bg-black/60 backdrop-blur px-3 py-1 rounded text-xs font-bold tracking-wider text-white border border-white/10 flex items-center gap-2 cursor-pointer hover:bg-primary/20 hover:border-primary transition-all">
+<span class="material-symbols-outlined text-sm">edit</span> EDIT BANNER
+                </div>
+</div>
+<!-- Avatar Container -->
+<div class="absolute -bottom-12 left-8 md:left-12 flex items-end">
+<div class="relative w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-void p-1 bg-void group/avatar cursor-pointer">
+<div class="w-full h-full rounded-full bg-cover bg-center overflow-hidden relative" data-alt="Portrait of a young man with glasses looking confident" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQc89u_ZDV0sQRWSnIR_-j0FJzkUcSD7Jd6lek_dFxOU7ioBhZOMI4LDY6pmPoawIncC-LgeXjHGRetBMScN-c2t9FsZai3WbNWd2JrFwShp8GWWfBrxBu92W5TWm4Zyp0IlfsutDrJ73rNg-Uh9kmEzSikeEeQ6hyBLs6SdSiGZXX1HZ-2uDiG7mhqYnZBud8sWZM6ZFvL0qbycsiOjOywW3Q7vv3EOkbUFUhtjON-2fI0mI4YfHmIs_FACdjgH1s76vqQ-qZ4_Kt');">
+<!-- Overlay -->
+<div class="absolute inset-0 bg-primary/40 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity backdrop-blur-[2px]">
+<span class="material-symbols-outlined text-white text-3xl drop-shadow-md">photo_camera</span>
+</div>
+</div>
+<!-- Status Indicator -->
+<div class="absolute bottom-2 right-2 w-5 h-5 bg-green-500 rounded-full border-4 border-void shadow-[0_0_10px_rgba(34,197,94,0.6)]"></div>
+</div>
+</div>
+<!-- Stats/Info filler text (Decorative) -->
+<div class="hidden md:flex absolute bottom-4 right-6 text-right gap-6 text-[10px] text-white/40 font-mono tracking-widest">
+<div>
+<span class="block text-primary">SYNC_RATE</span>
+                    98.4%
+                </div>
+<div>
+<span class="block text-primary">DATA_VER</span>
+                    v.4.0.2
+                </div>
+</div>
+</section>
+<!-- Spacer for Avatar overflow -->
+<div class="h-12 md:h-16"></div>
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- LEFT COLUMN: Identity Data -->
+<div class="lg:col-span-7 space-y-6">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-sm">id_card</span>
+<h2 class="text-xs font-bold tracking-widest text-white/70">IDENTITY MODULE</h2>
+<div class="h-[1px] flex-grow bg-white/10"></div>
+</div>
+<!-- Display Name -->
+<div class="relative">
+<label class="block text-xs font-medium text-primary mb-2 tracking-wide uppercase">Code Name</label>
+<div class="relative group">
+<input class="w-full bg-[#0a1118] border border-[#1e2d3d] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all font-display tracking-wide placeholder-white/20 group-hover:border-white/20" type="text" value="ShadowHunter_99"/>
+<div class="absolute right-3 top-3 text-white/20">
+<span class="material-symbols-outlined text-sm">edit</span>
+</div>
+</div>
+</div>
+<!-- Hunter Class (Select) -->
+<div class="relative">
+<label class="block text-xs font-medium text-primary mb-2 tracking-wide uppercase">Hunter Class</label>
+<div class="relative">
+<select class="appearance-none w-full bg-[#0a1118] border border-[#1e2d3d] rounded-lg px-4 py-3 pr-10 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all font-display tracking-wide cursor-pointer">
+<option value="s-rank">S-Rank // National Level</option>
+<option selected="" value="a-rank">A-Rank // Elite Guild Master</option>
+<option value="b-rank">B-Rank // Veteran Raider</option>
+<option value="solo">Solo Leveler // Awakening</option>
+</select>
+<div class="absolute right-3 top-3 pointer-events-none text-primary">
+<span class="material-symbols-outlined">arrow_drop_down</span>
+</div>
+</div>
+</div>
+<!-- Bio Data (Textarea) -->
+<div class="relative">
+<label class="block text-xs font-medium text-primary mb-2 tracking-wide uppercase">Bio Log</label>
+<textarea class="w-full bg-[#0a1118] border border-[#1e2d3d] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all font-display tracking-wide min-h-[140px] resize-none placeholder-white/20" placeholder="Enter system logs here...">Just a casual ranker looking for the next dungeon break. Currently grinding the Demon Castle arc.</textarea>
+<div class="absolute bottom-3 right-3 text-[10px] text-white/30 font-mono">
+                        124/500 CHARS
+                    </div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Network & Config -->
+<div class="lg:col-span-5 space-y-8">
+<!-- Links Matrix -->
+<div class="space-y-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-sm">hub</span>
+<h2 class="text-xs font-bold tracking-widest text-white/70">LINK MATRIX</h2>
+<div class="h-[1px] flex-grow bg-white/10"></div>
+</div>
+<!-- MAL Link -->
+<div class="relative flex items-center group">
+<div class="absolute left-3 text-[#2e51a2] z-10">
+<span class="material-symbols-outlined text-[20px]">movie</span>
+</div>
+<input class="w-full bg-[#0a1118] border border-[#1e2d3d] rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-[#2e51a2] focus:shadow-[0_0_10px_rgba(46,81,162,0.3)] transition-all placeholder-white/20" placeholder="MyAnimeList Username" type="text"/>
+</div>
+<!-- Steam Link -->
+<div class="relative flex items-center group">
+<div class="absolute left-3 text-[#1b2838] z-10"> <!-- Steam-ish color -->
+<span class="material-symbols-outlined text-[20px] text-white/60">sports_esports</span>
+</div>
+<input class="w-full bg-[#0a1118] border border-[#1e2d3d] rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-white/40 focus:shadow-[0_0_10px_rgba(255,255,255,0.1)] transition-all placeholder-white/20" placeholder="Steam ID" type="text"/>
+</div>
+<!-- Discord Link -->
+<div class="relative flex items-center group">
+<div class="absolute left-3 text-[#5865F2] z-10">
+<span class="material-symbols-outlined text-[20px]">forum</span>
+</div>
+<input class="w-full bg-[#0a1118] border border-[#1e2d3d] rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-[#5865F2] focus:shadow-[0_0_10px_rgba(88,101,242,0.3)] transition-all placeholder-white/20" placeholder="Discord Handle" type="text" value="Hunter#9999"/>
+</div>
+</div>
+<!-- Privacy Controls -->
+<div class="space-y-4 p-5 bg-white/5 rounded-xl border border-white/5 relative overflow-hidden">
+<!-- Decor background -->
+<div class="absolute top-0 right-0 p-2 opacity-10">
+<span class="material-symbols-outlined text-6xl text-white">lock</span>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-sm">encrypted</span>
+<h2 class="text-xs font-bold tracking-widest text-white/70">PRIVACY PROTOCOLS</h2>
+</div>
+<!-- Toggle 1 -->
+<label class="flex items-center justify-between cursor-pointer group">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-white group-hover:text-primary transition-colors">Public Ranks</span>
+<span class="text-xs text-white/40">Allow others to view your stats</span>
+</div>
+<div class="relative">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-[#1e2d3d] rounded-full peer peer-focus:ring-2 peer-focus:ring-primary/50 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary peer-checked:shadow-neon-sm"></div>
+</div>
+</label>
+<!-- Toggle 2 -->
+<label class="flex items-center justify-between cursor-pointer group">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-white group-hover:text-primary transition-colors">Show Recent Loot</span>
+<span class="text-xs text-white/40">Display recent additions on profile</span>
+</div>
+<div class="relative">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-[#1e2d3d] rounded-full peer peer-focus:ring-2 peer-focus:ring-primary/50 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary peer-checked:shadow-neon-sm"></div>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="mt-12 flex justify-end">
+<button class="relative group w-full md:w-auto overflow-hidden rounded-lg bg-primary px-8 py-4 transition-all hover:bg-primary/90 hover:shadow-neon hover:-translate-y-0.5 active:translate-y-0">
+<div class="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+<div class="flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">save</span>
+<span class="text-base font-bold tracking-widest text-white uppercase">Save System Changes</span>
+</div>
+</button>
+</div>
+</main>
+<!-- Floating Command Deck (Navigation) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+<div class="flex items-center gap-1 p-2 bg-[#0a1118]/90 backdrop-blur-xl border border-white/10 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] tech-border">
+<button class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full text-white/50 hover:bg-white/5 hover:text-white transition-all tooltip-trigger" title="Home">
+<span class="material-symbols-outlined text-[20px] md:text-[24px]">home</span>
+</button>
+<button class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full text-white/50 hover:bg-white/5 hover:text-white transition-all" title="Inventory">
+<span class="material-symbols-outlined text-[20px] md:text-[24px]">backpack</span>
+</button>
+<!-- Active State Profile -->
+<div class="relative">
+<button class="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-primary text-white shadow-neon transition-all hover:scale-105 active:scale-95" title="Profile">
+<span class="material-symbols-outlined text-[24px] md:text-[28px]">person</span>
+</button>
+<div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-white rounded-full"></div>
+</div>
+<button class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full text-white/50 hover:bg-white/5 hover:text-white transition-all" title="Rankings">
+<span class="material-symbols-outlined text-[20px] md:text-[24px]">leaderboard</span>
+</button>
+<button class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full text-white/50 hover:bg-white/5 hover:text-white transition-all" title="Settings">
+<span class="material-symbols-outlined text-[20px] md:text-[24px]">settings</span>
+</button>
+</div>
+</div>
+</body></html>

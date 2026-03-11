@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Privacy Skill Tree</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#258cf4",
+              "background-light": "#f5f7f8",
+              "background-dark": "#050505",
+              "hud-glass": "rgba(16, 26, 35, 0.7)",
+              "hud-border": "rgba(37, 140, 244, 0.3)",
+            },
+            fontFamily: {
+              "display": ["Rajdhani", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+            },
+            backgroundImage: {
+              'grid-pattern': "radial-gradient(circle, rgba(37, 140, 244, 0.1) 1px, transparent 1px)",
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+        }
+        
+        /* Custom scrollbar for HUD feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a1016;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e3a52;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4;
+        }
+
+        .hud-panel {
+            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(16, 26, 35, 0.8) 0%, rgba(5, 5, 5, 0.9) 100%);
+            border: 1px solid rgba(37, 140, 244, 0.2);
+            box-shadow: 0 0 15px rgba(37, 140, 244, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .hud-panel:hover {
+            border-color: rgba(37, 140, 244, 0.6);
+            box-shadow: 0 0 20px rgba(37, 140, 244, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* The glowing spine */
+        .spine-glow {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(37,140,244,0) 0%, rgba(37,140,244,0.5) 20%, rgba(37,140,244,0.8) 50%, rgba(37,140,244,0.5) 80%, rgba(37,140,244,0) 100%);
+            box-shadow: 0 0 10px #258cf4;
+            z-index: 0;
+        }
+
+        .connection-line {
+            position: absolute;
+            height: 1px;
+            background: rgba(37, 140, 244, 0.3);
+            top: 50%;
+            z-index: 0;
+        }
+        
+        .connection-dot {
+            width: 8px;
+            height: 8px;
+            background: #050505;
+            border: 2px solid #258cf4;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            box-shadow: 0 0 8px #258cf4;
+        }
+
+        /* Custom Radio Button styling */
+        .tech-radio:checked + div {
+            background-color: rgba(37, 140, 244, 0.15);
+            border-color: #258cf4;
+            color: #258cf4;
+            box-shadow: 0 0 10px rgba(37, 140, 244, 0.2) inset;
+        }
+
+        /* Clip path for angular corners */
+        .clip-tech {
+            clip-path: polygon(
+                10px 0, 100% 0, 
+                100% calc(100% - 10px), calc(100% - 10px) 100%, 
+                0 100%, 0 10px
+            );
+        }
+    </style>
+</head>
+<body class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden text-slate-200">
+<!-- Background Grid Effect -->
+<div class="fixed inset-0 pointer-events-none z-0 bg-grid-pattern bg-[length:40px_40px] opacity-20"></div>
+<!-- Main Content Wrapper -->
+<div class="layout-container flex h-full grow flex-col z-10 relative">
+<!-- Header / HUD Top Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-[#223649]/50 bg-[#050505]/90 backdrop-blur-md px-10 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-6">
+<!-- Back Navigation Node -->
+<button class="flex items-center justify-center size-10 rounded-full border border-[#258cf4]/30 hover:bg-[#258cf4]/10 hover:border-[#258cf4] transition-all group">
+<span class="material-symbols-outlined text-[#258cf4] group-hover:drop-shadow-[0_0_5px_rgba(37,140,244,0.8)]">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<div class="flex items-center gap-2 text-[#258cf4]">
+<span class="material-symbols-outlined text-sm">shield</span>
+<h2 class="font-display text-lg font-bold tracking-widest uppercase">SYSTEM // PRIVACY</h2>
+</div>
+<div class="text-xs text-slate-500 font-mono tracking-wider">PROTOCOL: V.2.0.4 // SECURE</div>
+</div>
+</div>
+<!-- Header Navigation -->
+<div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-1 bg-[#101a23]/50 p-1 rounded-lg border border-[#223649]">
+<a class="text-slate-400 hover:text-white hover:bg-[#258cf4]/10 px-4 py-2 rounded-md text-sm font-medium transition-colors" href="#">Overview</a>
+<a class="text-white bg-[#258cf4]/20 border border-[#258cf4]/30 px-4 py-2 rounded-md text-sm font-medium shadow-[0_0_10px_rgba(37,140,244,0.2)]" href="#">Privacy</a>
+<a class="text-slate-400 hover:text-white hover:bg-[#258cf4]/10 px-4 py-2 rounded-md text-sm font-medium transition-colors" href="#">Security</a>
+</nav>
+<div class="h-8 w-px bg-[#223649]"></div>
+<div class="flex items-center gap-3">
+<span class="text-right text-xs text-slate-400 hidden lg:block">
+<span class="block text-white font-bold">RANKER ID: 8944</span>
+<span class="text-[#258cf4]">ONLINE</span>
+</span>
+<div class="relative group cursor-pointer">
+<div class="absolute -inset-0.5 bg-gradient-to-r from-[#258cf4] to-blue-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-200"></div>
+<div class="relative bg-center bg-no-repeat bg-cover aspect-square rounded-full size-10 border-2 border-[#101a23]" data-alt="User avatar showing a stylized anime character profile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCnjdiQDJ-fa7-cHLGaReMHNO5SfkBVUK_Q7ab8Eb52AVmEiwhPX0USsJXi-CJoRCET2CFIIeORSBak_Yyrlu7VJxeCXXRjLNCALqy8Ijh_eyNiNvTzgbh9y5rVbGunfU5zD2yE8wiOS3UUBQOcphBtBsPWfFKxrZJcXlCK_UmTHBR8t5e9rEcRNVz-zqzCA7TxRwlPqsVcpvu0U46aWc7lqwndFMYb_7dEUtVZl4jDzp9yZPur8GjTuaBKSS0OD21Rgv3OCcX2Mzv_");'></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Scrollable Area -->
+<main class="flex-1 flex flex-col items-center py-10 px-4 md:px-10 overflow-y-auto">
+<div class="w-full max-w-5xl relative pb-32">
+<!-- Page Title -->
+<div class="text-center mb-16 relative z-10">
+<h1 class="text-4xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">PRIVACY MATRIX</h1>
+<p class="text-[#90adcb] mt-2 font-mono text-sm">Configuring data emission levels and social visibility parameters.</p>
+</div>
+<!-- The Vertical Spine -->
+<div class="spine-glow h-[calc(100%-100px)]"></div>
+<!-- Node 1: Profile Visibility (Left Branch) -->
+<div class="relative w-full flex justify-start mb-12 group">
+<div class="hidden md:block absolute left-1/2 w-1/2 h-px bg-gradient-to-r from-[#258cf4]/40 to-transparent top-12 -translate-y-1/2 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 delay-100"></div>
+<div class="absolute left-1/2 -translate-x-1/2 top-12 -translate-y-1/2 connection-dot group-hover:bg-[#258cf4] transition-colors duration-300"></div>
+<div class="w-full md:w-[45%] md:mr-auto pr-0 md:pr-12 relative">
+<!-- Connector Line for Desktop -->
+<div class="hidden md:block absolute right-0 top-12 w-12 h-px bg-[#258cf4]/30 group-hover:bg-[#258cf4] group-hover:shadow-[0_0_8px_#258cf4] transition-all duration-300"></div>
+<div class="hud-panel p-6 clip-tech relative">
+<div class="absolute top-0 right-0 p-2 text-[#258cf4]/30">
+<span class="material-symbols-outlined text-4xl">visibility</span>
+</div>
+<h3 class="font-display text-xl font-bold text-white mb-1 tracking-wide">PROFILE VISIBILITY</h3>
+<p class="text-xs text-slate-400 mb-6 font-mono">Control who can access your stats and skill tree.</p>
+<div class="flex flex-col gap-2">
+<label class="cursor-pointer group/option">
+<input checked="" class="tech-radio hidden" name="profile_vis" type="radio" value="public"/>
+<div class="flex items-center justify-between p-3 rounded bg-[#101a23] border border-[#223649] text-slate-400 group-hover/option:border-[#258cf4]/50 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm">public</span>
+<span class="text-sm font-bold uppercase tracking-wider">Public Network</span>
+</div>
+<div class="w-2 h-2 rounded-full bg-current opacity-50 group-hover/option:opacity-100"></div>
+</div>
+</label>
+<label class="cursor-pointer group/option">
+<input class="tech-radio hidden" name="profile_vis" type="radio" value="friends"/>
+<div class="flex items-center justify-between p-3 rounded bg-[#101a23] border border-[#223649] text-slate-400 group-hover/option:border-[#258cf4]/50 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm">group</span>
+<span class="text-sm font-bold uppercase tracking-wider">Allies Only</span>
+</div>
+<div class="w-2 h-2 rounded-full bg-current opacity-50 group-hover/option:opacity-100"></div>
+</div>
+</label>
+<label class="cursor-pointer group/option">
+<input class="tech-radio hidden" name="profile_vis" type="radio" value="private"/>
+<div class="flex items-center justify-between p-3 rounded bg-[#101a23] border border-[#223649] text-slate-400 group-hover/option:border-[#258cf4]/50 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm">lock</span>
+<span class="text-sm font-bold uppercase tracking-wider">Stealth Mode</span>
+</div>
+<div class="w-2 h-2 rounded-full bg-current opacity-50 group-hover/option:opacity-100"></div>
+</div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Node 2: Activity Log (Right Branch) -->
+<div class="relative w-full flex justify-end mb-12 group">
+<div class="hidden md:block absolute right-1/2 w-1/2 h-px bg-gradient-to-l from-[#258cf4]/40 to-transparent top-12 -translate-y-1/2 origin-right scale-x-0 group-hover:scale-x-100 transition-transform duration-500 delay-100"></div>
+<div class="absolute left-1/2 -translate-x-1/2 top-12 -translate-y-1/2 connection-dot group-hover:bg-[#258cf4] transition-colors duration-300"></div>
+<div class="w-full md:w-[45%] md:ml-auto pl-0 md:pl-12 relative">
+<!-- Connector Line for Desktop -->
+<div class="hidden md:block absolute left-0 top-12 w-12 h-px bg-[#258cf4]/30 group-hover:bg-[#258cf4] group-hover:shadow-[0_0_8px_#258cf4] transition-all duration-300"></div>
+<div class="hud-panel p-6 clip-tech relative">
+<div class="absolute top-0 right-0 p-2 text-[#258cf4]/30">
+<span class="material-symbols-outlined text-4xl">history</span>
+</div>
+<h3 class="font-display text-xl font-bold text-white mb-1 tracking-wide">ACTIVITY LOG</h3>
+<p class="text-xs text-slate-400 mb-6 font-mono">Broadcast range for your achievements and logs.</p>
+<!-- Segmented Control Style -->
+<div class="flex p-1 bg-[#101a23] rounded-lg border border-[#223649]">
+<label class="flex-1 cursor-pointer">
+<input class="peer hidden" name="activity_log" type="radio" value="everyone"/>
+<div class="h-9 flex items-center justify-center rounded text-xs font-bold uppercase text-slate-500 peer-checked:bg-[#258cf4] peer-checked:text-white peer-checked:shadow-[0_0_10px_rgba(37,140,244,0.4)] transition-all">
+                                        Global
+                                    </div>
+</label>
+<label class="flex-1 cursor-pointer">
+<input checked="" class="peer hidden" name="activity_log" type="radio" value="guild"/>
+<div class="h-9 flex items-center justify-center rounded text-xs font-bold uppercase text-slate-500 peer-checked:bg-[#258cf4] peer-checked:text-white peer-checked:shadow-[0_0_10px_rgba(37,140,244,0.4)] transition-all">
+                                        Guild
+                                    </div>
+</label>
+<label class="flex-1 cursor-pointer">
+<input class="peer hidden" name="activity_log" type="radio" value="none"/>
+<div class="h-9 flex items-center justify-center rounded text-xs font-bold uppercase text-slate-500 peer-checked:bg-[#258cf4] peer-checked:text-white peer-checked:shadow-[0_0_10px_rgba(37,140,244,0.4)] transition-all">
+                                        None
+                                    </div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Node 3: Comms & Permissions (Left Branch) -->
+<div class="relative w-full flex justify-start mb-12 group">
+<div class="hidden md:block absolute left-1/2 w-1/2 h-px bg-gradient-to-r from-[#258cf4]/40 to-transparent top-12 -translate-y-1/2 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 delay-100"></div>
+<div class="absolute left-1/2 -translate-x-1/2 top-12 -translate-y-1/2 connection-dot group-hover:bg-[#258cf4] transition-colors duration-300"></div>
+<div class="w-full md:w-[45%] md:mr-auto pr-0 md:pr-12 relative">
+<!-- Connector Line -->
+<div class="hidden md:block absolute right-0 top-12 w-12 h-px bg-[#258cf4]/30 group-hover:bg-[#258cf4] group-hover:shadow-[0_0_8px_#258cf4] transition-all duration-300"></div>
+<div class="hud-panel p-6 clip-tech relative">
+<div class="absolute top-0 right-0 p-2 text-[#258cf4]/30">
+<span class="material-symbols-outlined text-4xl">chat</span>
+</div>
+<h3 class="font-display text-xl font-bold text-white mb-1 tracking-wide">COMMS PERMISSIONS</h3>
+<p class="text-xs text-slate-400 mb-6 font-mono">Incoming transmission filtering protocols.</p>
+<div class="space-y-4">
+<!-- Switch 1 -->
+<div class="flex items-center justify-between group/switch">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-300 group-hover/switch:text-[#258cf4] transition-colors">Direct Messages</span>
+<span class="text-[10px] text-slate-500">Allow strangers to open channels</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-[#101a23] peer-focus:outline-none rounded-full peer border border-[#223649] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-slate-400 after:border-slate-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#258cf4]/20 peer-checked:border-[#258cf4] peer-checked:after:bg-[#258cf4] peer-checked:shadow-[0_0_10px_rgba(37,140,244,0.3)]"></div>
+</label>
+</div>
+<!-- Switch 2 -->
+<div class="flex items-center justify-between group/switch">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-300 group-hover/switch:text-[#258cf4] transition-colors">Comment Access</span>
+<span class="text-[10px] text-slate-500">Public comments on your logs</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-[#101a23] peer-focus:outline-none rounded-full peer border border-[#223649] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-slate-400 after:border-slate-400 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#258cf4]/20 peer-checked:border-[#258cf4] peer-checked:after:bg-[#258cf4] peer-checked:shadow-[0_0_10px_rgba(37,140,244,0.3)]"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Node 4: Data Telemetry (Right Branch) -->
+<div class="relative w-full flex justify-end mb-16 group">
+<div class="hidden md:block absolute right-1/2 w-1/2 h-px bg-gradient-to-l from-[#258cf4]/40 to-transparent top-12 -translate-y-1/2 origin-right scale-x-0 group-hover:scale-x-100 transition-transform duration-500 delay-100"></div>
+<div class="absolute left-1/2 -translate-x-1/2 top-12 -translate-y-1/2 connection-dot group-hover:bg-[#258cf4] transition-colors duration-300"></div>
+<div class="w-full md:w-[45%] md:ml-auto pl-0 md:pl-12 relative">
+<!-- Connector Line -->
+<div class="hidden md:block absolute left-0 top-12 w-12 h-px bg-[#258cf4]/30 group-hover:bg-[#258cf4] group-hover:shadow-[0_0_8px_#258cf4] transition-all duration-300"></div>
+<div class="hud-panel p-6 clip-tech relative">
+<div class="absolute top-0 right-0 p-2 text-[#258cf4]/30">
+<span class="material-symbols-outlined text-4xl">share</span>
+</div>
+<h3 class="font-display text-xl font-bold text-white mb-1 tracking-wide">DATA TELEMETRY</h3>
+<p class="text-xs text-slate-400 mb-6 font-mono">External data sharing preferences.</p>
+<div class="space-y-3">
+<label class="flex items-center p-2 rounded cursor-pointer hover:bg-[#258cf4]/5 transition-colors border border-transparent hover:border-[#258cf4]/30">
+<input class="w-4 h-4 rounded border-slate-600 text-[#258cf4] focus:ring-[#258cf4] bg-[#101a23]" type="checkbox"/>
+<span class="ml-3 text-sm text-slate-300">Share usage statistics</span>
+</label>
+<label class="flex items-center p-2 rounded cursor-pointer hover:bg-[#258cf4]/5 transition-colors border border-transparent hover:border-[#258cf4]/30">
+<input checked="" class="w-4 h-4 rounded border-slate-600 text-[#258cf4] focus:ring-[#258cf4] bg-[#101a23]" type="checkbox"/>
+<span class="ml-3 text-sm text-slate-300">Allow personalized content</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Terminal Node: Save Button -->
+<div class="relative z-20 flex justify-center mt-8">
+<!-- Ending of spine -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full h-16 w-px bg-gradient-to-b from-[#258cf4] to-[#258cf4]/20"></div>
+<button class="relative group overflow-hidden bg-[#050505] rounded-xl px-12 py-5 border-2 border-[#258cf4] text-white font-display font-bold text-lg tracking-[0.2em] shadow-[0_0_20px_rgba(37,140,244,0.3)] hover:shadow-[0_0_40px_rgba(37,140,244,0.6)] transition-all duration-300 active:scale-95">
+<div class="absolute inset-0 w-full h-full bg-[#258cf4] opacity-10 group-hover:opacity-20 transition-opacity"></div>
+<div class="absolute bottom-0 left-0 h-1 w-full bg-[#258cf4]"></div>
+<span class="relative z-10 flex items-center gap-3">
+<span class="material-symbols-outlined animate-pulse">memory</span>
+                            INITIALIZE PROTOCOLS
+                        </span>
+<!-- Corner accents -->
+<div class="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-white opacity-50"></div>
+<div class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-white opacity-50"></div>
+</button>
+</div>
+<div class="text-center mt-6">
+<p class="text-[10px] text-[#223649] font-mono">SYSTEM INTEGRITY: 100% // NO VULNERABILITIES DETECTED</p>
+</div>
+</div>
+</main>
+<!-- Floating Command Deck (Bottom Nav) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+<div class="flex items-center gap-1 p-2 bg-[#050505]/90 border border-[#258cf4]/30 rounded-full backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+<button class="size-12 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-[#258cf4]/20 transition-all">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="size-12 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-[#258cf4]/20 transition-all">
+<span class="material-symbols-outlined">book</span>
+</button>
+<div class="w-px h-6 bg-[#223649]"></div>
+<!-- Active pulsing button -->
+<button class="size-14 rounded-full flex items-center justify-center bg-[#258cf4] text-white shadow-[0_0_15px_#258cf4] hover:shadow-[0_0_25px_#258cf4] hover:scale-105 transition-all relative">
+<div class="absolute inset-0 rounded-full border border-white opacity-30 animate-ping"></div>
+<span class="material-symbols-outlined text-3xl">settings</span>
+</button>
+<div class="w-px h-6 bg-[#223649]"></div>
+<button class="size-12 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-[#258cf4]/20 transition-all">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button class="size-12 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-[#258cf4]/20 transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

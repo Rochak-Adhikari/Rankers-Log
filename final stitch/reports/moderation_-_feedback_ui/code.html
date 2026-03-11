@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Moderation Interface</title>
+<!-- TAILWIND CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- GOOGLE FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- MATERIAL SYMBOLS -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- THEME CONFIG -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#258cf4",
+                "background-light": "#f5f7f8",
+                "background-dark": "#101922",
+                "hud-black": "#0b1219",
+                "hud-glass": "rgba(16, 26, 35, 0.85)",
+              },
+              fontFamily: {
+                "display": ["Space Grotesk", "sans-serif"],
+                "body": ["Noto Sans", "sans-serif"],
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+              boxShadow: {
+                "glow": "0 0 15px -3px rgba(37, 140, 244, 0.3)",
+                "glow-sm": "0 0 8px -2px rgba(37, 140, 244, 0.3)",
+                "glow-lg": "0 0 25px -5px rgba(37, 140, 244, 0.4)",
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for HUD feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101a23; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #314d68; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(21, 32, 43, 0.95) 0%, rgba(16, 26, 35, 0.98) 100%);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-white overflow-hidden h-screen w-screen relative selection:bg-primary selection:text-white">
+<!-- BACKGROUND APP MOCKUP (Blurred Layer) -->
+<!-- This represents the underlying application that is being obstructed by the modal -->
+<div class="absolute inset-0 z-0 flex flex-col h-full w-full filter blur-[8px] opacity-40 pointer-events-none scale-[1.02]">
+<!-- Mock Top Bar -->
+<header class="flex items-center justify-between border-b border-[#223649] px-10 py-3 bg-[#101a23]">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary material-symbols-outlined">api</div>
+<h2 class="text-white text-lg font-bold">RANKERS LOG</h2>
+</div>
+<div class="flex gap-4">
+<div class="w-64 h-10 bg-[#223649] rounded-lg"></div>
+<div class="size-10 bg-[#223649] rounded-full"></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Mock Side Nav -->
+<div class="w-64 bg-[#101a23] border-r border-[#223649] p-4 flex flex-col gap-4">
+<div class="h-16 bg-[#223649] rounded-lg w-full"></div>
+<div class="h-8 bg-[#223649]/50 rounded w-3/4"></div>
+<div class="h-8 bg-[#223649]/50 rounded w-full"></div>
+<div class="h-8 bg-[#223649]/50 rounded w-5/6"></div>
+<div class="mt-auto h-12 bg-[#223649] rounded-lg"></div>
+</div>
+<!-- Mock Main Content -->
+<div class="flex-1 bg-[#101922] p-10 flex flex-col gap-6">
+<div class="h-32 bg-[#1a2633] rounded-xl border border-[#223649]"></div>
+<div class="h-64 bg-[#1a2633] rounded-xl border border-[#223649] flex p-6 gap-6">
+<div class="w-1/3 bg-[#223649] rounded-lg h-full"></div>
+<div class="flex-1 flex flex-col gap-4">
+<div class="h-6 bg-[#223649] w-1/2 rounded"></div>
+<div class="h-4 bg-[#223649] w-full rounded"></div>
+<div class="h-4 bg-[#223649] w-full rounded"></div>
+<div class="h-4 bg-[#223649] w-2/3 rounded"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- END BACKGROUND MOCKUP -->
+<!-- MAIN INTERFACE OVERLAY -->
+<div class="relative z-10 w-full h-full flex items-center justify-center bg-[#05090c]/60 backdrop-blur-sm p-4">
+<!-- HUD MODAL CONTAINER -->
+<div class="glass-panel w-full max-w-[800px] rounded-xl border border-[#314d68] shadow-glow-lg flex flex-col overflow-hidden relative group animate-in fade-in zoom-in duration-300">
+<!-- Tech Details / Borders -->
+<div class="absolute top-0 left-0 w-24 h-[2px] bg-primary z-20 shadow-[0_0_10px_#258cf4]"></div>
+<div class="absolute bottom-0 right-0 w-24 h-[2px] bg-primary z-20 shadow-[0_0_10px_#258cf4]"></div>
+<div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#314d68] m-2"></div>
+<div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#314d68] m-2"></div>
+<!-- HEADER -->
+<div class="px-8 py-5 border-b border-[#314d68] bg-[#101a23]/50 flex justify-between items-start">
+<div class="flex flex-col">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-sm animate-pulse">emergency_home</span>
+<h2 class="text-primary text-xs font-bold tracking-[0.2em] uppercase">System Flag // Moderation Protocol</h2>
+</div>
+<h1 class="text-2xl font-bold text-white tracking-tight flex items-center gap-3">
+                        INITIATE REPORT SEQUENCE
+                    </h1>
+</div>
+<button class="group/close p-2 hover:bg-[#314d68] rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[#90adcb] group-hover/close:text-white">close</span>
+</button>
+</div>
+<!-- SCROLLABLE BODY -->
+<div class="p-8 flex flex-col gap-8 overflow-y-auto max-h-[70vh]">
+<!-- TARGET DISPLAY -->
+<div class="relative bg-[#1a2633] border border-[#314d68] rounded-lg p-4 flex items-center gap-5 shadow-inner">
+<div class="absolute -left-[1px] top-4 bottom-4 w-1 bg-red-500 rounded-r shadow-[0_0_8px_rgba(239,68,68,0.5)]"></div>
+<div class="bg-center bg-no-repeat bg-cover rounded-md size-12 border border-[#314d68] shrink-0 grayscale opacity-80" data-alt="Avatar of the user being reported, silhouette style" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAbD6gtikKvKCV46yk3Dcx-ehDmbW1ZkoLpCX0L3VMkkqYj_sO7Qq0LlZHkqcM1hNNxjScWyf4GCrjC9aOzNuCOkbV-sOPliGb4GkFtOgGUCOCUEveWyzYKgrqzQ5U3JKxKqD3tc0Po9NfQoat-MLDZ3fwZEzvguyoyYSYf5mpTPSp8Cdl2sR5RixW3DkRvdEOMR7xmJl0S1QZS13A51l4N2hOkAMcjnhyPCLWsYLLeYvvNLgSBOndIJUlwHY-goPvYCv5smJkdqgaJ");'>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<span class="text-xs text-[#90adcb] uppercase tracking-wider font-semibold">Target Entity</span>
+<span class="h-px flex-1 bg-[#314d68]"></span>
+</div>
+<p class="text-white text-lg font-medium truncate font-display">
+                            User <span class="text-primary">[ShadowWalker]</span> <span class="text-[#587392]"> // </span> Post #4429
+                        </p>
+</div>
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/30 rounded text-red-400 text-xs font-bold uppercase tracking-widest">
+<span class="material-symbols-outlined text-sm">warning</span> Flagged
+                    </div>
+</div>
+<!-- FORM GRID -->
+<div class="grid lg:grid-cols-2 gap-8">
+<!-- LEFT COL: REASONS -->
+<div class="flex flex-col gap-4">
+<h3 class="text-white text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-[#90adcb]">
+<span class="material-symbols-outlined text-base">format_list_bulleted</span>
+                            Select Violation Type
+                        </h3>
+<div class="flex flex-col gap-3" style="--radio-dot-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(37,141,244)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%273%27/%3e%3c/svg%3e');">
+<!-- Radio Item 1 -->
+<label class="group relative flex items-center gap-4 rounded-lg border border-[#314d68] bg-[#15202b] p-3 cursor-pointer hover:border-primary/50 hover:bg-[#1a2633] transition-all hover:shadow-glow-sm">
+<input checked="" class="peer h-5 w-5 border-2 border-[#587392] bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:ring-0 focus:ring-offset-0 checked:focus:border-primary" name="report-reason" type="radio"/>
+<div class="flex grow flex-col">
+<p class="text-gray-300 font-medium group-hover:text-white transition-colors peer-checked:text-primary">Harassment / Griefing</p>
+</div>
+<div class="absolute right-3 opacity-0 peer-checked:opacity-100 transition-opacity text-primary">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</label>
+<!-- Radio Item 2 -->
+<label class="group relative flex items-center gap-4 rounded-lg border border-[#314d68] bg-[#15202b] p-3 cursor-pointer hover:border-primary/50 hover:bg-[#1a2633] transition-all hover:shadow-glow-sm">
+<input class="peer h-5 w-5 border-2 border-[#587392] bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:ring-0 focus:ring-offset-0 checked:focus:border-primary" name="report-reason" type="radio"/>
+<div class="flex grow flex-col">
+<p class="text-gray-300 font-medium group-hover:text-white transition-colors peer-checked:text-primary">Spam / Bot Activity</p>
+</div>
+<div class="absolute right-3 opacity-0 peer-checked:opacity-100 transition-opacity text-primary">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</label>
+<!-- Radio Item 3 -->
+<label class="group relative flex items-center gap-4 rounded-lg border border-[#314d68] bg-[#15202b] p-3 cursor-pointer hover:border-primary/50 hover:bg-[#1a2633] transition-all hover:shadow-glow-sm">
+<input class="peer h-5 w-5 border-2 border-[#587392] bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:ring-0 focus:ring-offset-0 checked:focus:border-primary" name="report-reason" type="radio"/>
+<div class="flex grow flex-col">
+<p class="text-gray-300 font-medium group-hover:text-white transition-colors peer-checked:text-primary">Inappropriate Content</p>
+</div>
+<div class="absolute right-3 opacity-0 peer-checked:opacity-100 transition-opacity text-primary">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</label>
+<!-- Radio Item 4 -->
+<label class="group relative flex items-center gap-4 rounded-lg border border-[#314d68] bg-[#15202b] p-3 cursor-pointer hover:border-primary/50 hover:bg-[#1a2633] transition-all hover:shadow-glow-sm">
+<input class="peer h-5 w-5 border-2 border-[#587392] bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:ring-0 focus:ring-offset-0 checked:focus:border-primary" name="report-reason" type="radio"/>
+<div class="flex grow flex-col">
+<p class="text-gray-300 font-medium group-hover:text-white transition-colors peer-checked:text-primary">Spoiler Violation</p>
+</div>
+<div class="absolute right-3 opacity-0 peer-checked:opacity-100 transition-opacity text-primary">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</label>
+</div>
+</div>
+<!-- RIGHT COL: DETAILS & EXTRAS -->
+<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-4 flex-1">
+<h3 class="text-white text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-[#90adcb]">
+<span class="material-symbols-outlined text-base">terminal</span>
+                                Additional Intel
+                            </h3>
+<div class="relative flex-1">
+<textarea class="w-full h-full min-h-[140px] bg-[#0b1219] border border-[#314d68] rounded-lg p-4 text-white placeholder-[#587392] focus:border-primary focus:ring-1 focus:ring-primary focus:shadow-glow-sm outline-none resize-none font-mono text-sm" placeholder="Provide context for the moderation team..."></textarea>
+<div class="absolute bottom-3 right-3 text-[10px] text-[#314d68]">0/500 CHARS</div>
+</div>
+</div>
+</div>
+</div>
+<!-- COUNTERMEASURES (Secondary Actions) -->
+<div class="border-t border-[#314d68] pt-6">
+<h3 class="text-white text-xs font-bold uppercase tracking-widest mb-4 text-[#587392]">Optional Countermeasures</h3>
+<div class="flex flex-wrap gap-4">
+<button class="flex-1 min-w-[200px] flex items-center justify-between gap-3 px-4 py-3 rounded-lg border border-[#314d68] bg-[#15202b] text-[#90adcb] hover:text-white hover:border-red-500/50 hover:bg-red-500/5 transition-all group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined group-hover:text-red-500 transition-colors">block</span>
+<span class="font-bold text-sm">Block User</span>
+</div>
+<div class="size-4 border border-[#587392] rounded group-hover:border-red-500"></div>
+</button>
+<button class="flex-1 min-w-[200px] flex items-center justify-between gap-3 px-4 py-3 rounded-lg border border-[#314d68] bg-[#15202b] text-[#90adcb] hover:text-white hover:border-orange-500/50 hover:bg-orange-500/5 transition-all group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined group-hover:text-orange-500 transition-colors">visibility_off</span>
+<span class="font-bold text-sm">Hide Content</span>
+</div>
+<div class="size-4 border border-[#587392] rounded group-hover:border-orange-500"></div>
+</button>
+</div>
+</div>
+</div>
+<!-- FOOTER -->
+<div class="p-6 bg-[#0b1219] border-t border-[#314d68] flex justify-end gap-4 items-center relative">
+<!-- Decorative scanning line in footer -->
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#258cf4] to-transparent opacity-20"></div>
+<button class="text-[#90adcb] hover:text-white font-bold text-sm tracking-widest px-6 py-3 uppercase hover:underline underline-offset-4 transition-all">
+                    Abort
+                </button>
+<button class="relative overflow-hidden bg-primary hover:bg-[#1a7cdb] text-white font-bold text-sm tracking-widest uppercase px-8 py-3 rounded shadow-glow transition-all flex items-center gap-3 group active:scale-95">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+<span class="material-symbols-outlined group-hover:animate-ping absolute opacity-0 group-hover:opacity-100">send</span>
+<span class="material-symbols-outlined group-hover:opacity-0 transition-opacity">send</span>
+<span>Submit Report</span>
+</button>
+</div>
+</div>
+<!-- END MODAL -->
+</div>
+</body></html>

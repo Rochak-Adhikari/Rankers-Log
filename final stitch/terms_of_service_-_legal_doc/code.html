@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Terms of Service</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                        "void": "#050505",
+                        "panel": "#0f1216",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Scrollbar for the HUD feel */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(16, 28, 34, 0.5);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #0da6f2;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(13, 166, 242, 0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+
+        /* Scanline effect */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        /* Subtle glowing text animation for 'System Online' */
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; text-shadow: 0 0 5px rgba(13, 166, 242, 0.5); }
+            50% { opacity: 0.7; text-shadow: 0 0 2px rgba(13, 166, 242, 0.2); }
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 3s infinite;
+        }
+    </style>
+</head>
+<body class="bg-void text-white font-display overflow-hidden h-screen flex flex-col md:flex-row antialiased selection:bg-primary/30 selection:text-white">
+<!-- Mobile Header (Visible only on small screens) -->
+<div class="md:hidden flex items-center justify-between p-4 border-b border-primary/20 bg-background-dark">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">hub</span>
+<span class="font-bold text-lg tracking-tight">Rankers Log</span>
+</div>
+<button class="text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<!-- Sidebar Navigation (Hidden on mobile, block on desktop) -->
+<nav class="hidden md:flex w-72 flex-col justify-between bg-background-dark border-r border-white/5 h-full z-20 relative">
+<div class="flex flex-col gap-8 p-6">
+<!-- User Profile Summary -->
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-12 border-2 border-primary shadow-[0_0_15px_rgba(13,166,242,0.4)]" data-alt="Futuristic anime style avatar of a young man with glowing blue eyes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAnPdh6vQZySHvNQvJxWwd_VXF6nNfk61zGaJ0wENOT801VPdbOLIzLHIYJI-AYwGKvJ9r4LqDWqtpDJYZSisOXB9u5S0WF5vJ-mWu1SY8WaxdNad8ySDZ3gCrtn7kylE5phpkHyZy30xrja74M8-naO2r8kh0C523pLOuG9s_lsjNR7JKOwVibVI9Ice6ExhjUmeN43IUlmzRlmiR3wi19Bzz13qVOfUrseASwpVw-qqZDvcJn2s-uzgdbrX1-r1CgZ4goKWmuWpPg");'>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-lg font-bold leading-tight">Player One</h1>
+<p class="text-primary text-xs font-medium tracking-wider animate-pulse-glow">SYSTEM ONLINE</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">person</span>
+<span class="text-sm font-medium">Profile</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">inventory_2</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">trophy</span>
+<span class="text-sm font-medium">Quests</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Social</span>
+</a>
+<!-- Divider -->
+<div class="h-px w-full bg-white/10 my-2"></div>
+<!-- Active Settings Link -->
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary/20 text-white border border-primary/30 shadow-[inset_0_0_20px_rgba(13,166,242,0.1)]" href="#">
+<span class="material-symbols-outlined text-primary fill-current">settings</span>
+<span class="text-sm font-bold">Settings</span>
+</a>
+</div>
+</div>
+<!-- Logout / Footer -->
+<div class="p-6">
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg h-10 px-4 border border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors text-sm font-bold tracking-wide uppercase">
+<span class="material-symbols-outlined text-[18px]">power_settings_new</span>
+<span>Log Out</span>
+</button>
+<div class="mt-4 text-xs text-gray-600 font-mono text-center">
+                v2.4.0-stable
+            </div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col relative overflow-hidden bg-void">
+<!-- Background Grid Pattern -->
+<div class="absolute inset-0 z-0 opacity-[0.03]" style="background-size: 40px 40px; background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px);"></div>
+<!-- Top HUD Header -->
+<header class="flex items-center justify-between px-8 py-4 border-b border-white/10 bg-void/80 backdrop-blur-sm z-10">
+<div class="flex items-center gap-4 text-white">
+<div class="flex items-center justify-center size-8 rounded bg-primary/20 border border-primary/50 text-primary">
+<span class="material-symbols-outlined text-sm">gavel</span>
+</div>
+<div>
+<h2 class="text-lg font-bold leading-none tracking-tight">System Protocol</h2>
+<p class="text-xs text-gray-500 font-mono mt-1">LEGAL_DOC_REF_0042</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<!-- Status Pill -->
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20">
+<div class="size-1.5 rounded-full bg-green-500 animate-pulse"></div>
+<span class="text-green-500 text-xs font-bold tracking-wider uppercase">Network Stable</span>
+</div>
+<!-- Notification Bell -->
+<button class="relative text-gray-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 size-2 bg-primary rounded-full shadow-[0_0_8px_#0da6f2]"></span>
+</button>
+</div>
+</header>
+<!-- Terms of Service Terminal Container -->
+<div class="flex-1 overflow-hidden p-4 md:p-8 lg:px-16 lg:py-10 z-10 relative">
+<!-- Terminal Box -->
+<div class="flex flex-col h-full max-w-5xl mx-auto bg-background-dark/90 border border-primary/30 rounded-xl shadow-[0_0_50px_-10px_rgba(13,166,242,0.15)] relative backdrop-blur-xl overflow-hidden group/terminal">
+<!-- Decorative Corner Accents -->
+<div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary rounded-tl-lg"></div>
+<div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary rounded-tr-lg"></div>
+<div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary rounded-bl-lg"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary rounded-br-lg"></div>
+<!-- Terminal Content Header -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 p-6 sm:p-8 border-b border-white/10 bg-gradient-to-r from-primary/5 to-transparent">
+<div class="space-y-2">
+<div class="inline-flex items-center gap-2 px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase bg-primary/20 text-primary w-fit border border-primary/20">
+                            Required Reading
+                        </div>
+<h1 class="text-3xl md:text-4xl font-black tracking-tight text-white drop-shadow-lg">
+                            Terms of Service
+                        </h1>
+<p class="text-gray-400 text-sm max-w-lg">
+                            Review the operational guidelines for the Rankers Log network. Acceptance is mandatory for system access.
+                        </p>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-[#1a2c38] hover:bg-[#223c49] border border-white/10 rounded-lg text-sm font-medium transition-all group-hover/btn:border-primary/50">
+<span class="material-symbols-outlined text-primary text-base">download</span>
+<span>Download Copy</span>
+</button>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto custom-scrollbar relative">
+<!-- Scanline Overlay on content -->
+<div class="absolute inset-0 scanlines opacity-30 pointer-events-none sticky top-0"></div>
+<div class="p-6 sm:p-10 space-y-12 max-w-4xl mx-auto font-body">
+<!-- TOC -->
+<div class="p-6 rounded-lg bg-void border border-white/5">
+<h3 class="text-primary font-display font-bold mb-4 uppercase tracking-widest text-xs">Quick Navigation</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+<a class="text-gray-400 hover:text-white hover:translate-x-1 transition-all flex items-center gap-2" href="#intro">
+<span class="text-primary/50">01.</span> The Game World
+                                </a>
+<a class="text-gray-400 hover:text-white hover:translate-x-1 transition-all flex items-center gap-2" href="#conduct">
+<span class="text-primary/50">02.</span> Player Conduct
+                                </a>
+<a class="text-gray-400 hover:text-white hover:translate-x-1 transition-all flex items-center gap-2" href="#assets">
+<span class="text-primary/50">03.</span> Inventory &amp; Assets
+                                </a>
+<a class="text-gray-400 hover:text-white hover:translate-x-1 transition-all flex items-center gap-2" href="#termination">
+<span class="text-primary/50">04.</span> System Termination
+                                </a>
+</div>
+</div>
+<!-- Section 1 -->
+<div class="space-y-4" id="intro">
+<div class="flex items-center gap-3">
+<span class="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary font-display font-bold border border-primary/20">1</span>
+<h3 class="text-xl font-display font-bold text-white">The Game World (Introduction)</h3>
+</div>
+<p class="text-gray-300 leading-relaxed pl-11">
+                                Welcome to Rankers Log. By accessing the System, you agree to abide by these protocols. The System provides tracking for anime, manga, and literary progression. This is a living digital ecosystem; your actions within the UI reflect your standing. Unauthorized manipulation of the DOM or injection of malicious scripts will result in immediate ejection from the server.
+                            </p>
+<p class="text-gray-300 leading-relaxed pl-11">
+                                We reserve the right to update the "Game World" parameters (App Features) at any time. Significant patches (updates to these terms) will be broadcasted to your notification deck.
+                            </p>
+</div>
+<!-- Section 2 -->
+<div class="space-y-4" id="conduct">
+<div class="flex items-center gap-3">
+<span class="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary font-display font-bold border border-primary/20">2</span>
+<h3 class="text-xl font-display font-bold text-white">Player Conduct (Rules of Behavior)</h3>
+</div>
+<div class="pl-11 space-y-3">
+<p class="text-gray-300 leading-relaxed">
+                                    Users must maintain civil communication channels. Harassment, hate speech, or griefing other users will result in immediate suspension of System privileges.
+                                </p>
+<ul class="list-disc list-inside text-gray-400 space-y-1 ml-2">
+<li>Do not impersonate System Administrators or Game Masters.</li>
+<li>Do not exploit bugs or glitches for leaderboard advancement.</li>
+<li>Respect the privacy of other Rankers. Doxxing is a permaban offense.</li>
+</ul>
+</div>
+</div>
+<!-- Section 3 -->
+<div class="space-y-4" id="assets">
+<div class="flex items-center gap-3">
+<span class="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary font-display font-bold border border-primary/20">3</span>
+<h3 class="text-xl font-display font-bold text-white">Inventory &amp; Assets (Virtual Items)</h3>
+</div>
+<p class="text-gray-300 leading-relaxed pl-11">
+                                All virtual items, badges, and achievements remain the property of Rankers Log. While you hold the license to use these assets on your profile, trading of account credentials or selling in-game items for real-world currency (RMT) is strictly prohibited.
+                            </p>
+<div class="pl-11 mt-4">
+<div class="p-4 bg-yellow-500/10 border-l-2 border-yellow-500 rounded-r-lg">
+<p class="text-yellow-200 text-sm font-medium">
+<span class="material-symbols-outlined align-middle mr-1 text-sm">warning</span> 
+                                        Note: Assets lost due to unauthorized account sharing cannot be restored by Support.
+                                    </p>
+</div>
+</div>
+</div>
+<!-- Section 4 -->
+<div class="space-y-4" id="termination">
+<div class="flex items-center gap-3">
+<span class="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary font-display font-bold border border-primary/20">4</span>
+<h3 class="text-xl font-display font-bold text-white">System Termination (Banning Policy)</h3>
+</div>
+<p class="text-gray-300 leading-relaxed pl-11">
+                                Administrators reserve the right to terminate access for any violation of these terms without prior notice. Appeals may be submitted via the Support Portal, but decisions regarding "Cheating" (use of bots/scripts) are final.
+                            </p>
+</div>
+<!-- Spacer -->
+<div class="h-10"></div>
+</div>
+</div>
+<!-- Terminal Footer -->
+<div class="p-6 border-t border-white/10 bg-[#0a0f14] flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex flex-col">
+<p class="text-gray-500 text-xs font-mono">Last Updated: Cycle 4.2 | Version 2.4 - System Standard</p>
+<p class="text-gray-600 text-[10px] mt-1">UUID: 8f92-a1b2-c3d4-e5f6</p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-auto">
+<button class="flex-1 md:flex-none h-11 px-6 rounded-lg border border-white/10 text-gray-300 hover:bg-white/5 hover:text-white font-bold text-sm transition-colors uppercase tracking-wide">
+                            Decline
+                        </button>
+<button class="flex-1 md:flex-none h-11 px-8 rounded-lg bg-primary hover:bg-[#38bdf8] text-white shadow-[0_0_20px_rgba(13,166,242,0.4)] hover:shadow-[0_0_30px_rgba(13,166,242,0.6)] font-bold text-sm transition-all uppercase tracking-wide flex items-center justify-center gap-2 group">
+<span>Acknowledge Protocol</span>
+<span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

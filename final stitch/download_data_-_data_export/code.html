@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Data Export</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                        "void": "#050505", // Specific deep dark background requested
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                        "mono": ["monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    boxShadow: {
+                        "glow": "0 0 20px rgba(37, 106, 244, 0.5)",
+                        "glow-sm": "0 0 10px rgba(37, 106, 244, 0.3)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for terminal feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222f49; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #314368; 
+        }
+        
+        .scanline {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-void text-white font-display min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-white/10 px-6 py-4 lg:px-10 bg-void/95 backdrop-blur-sm sticky top-0 z-50">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">deployed_code</span>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-wider uppercase">Rankers Log</h2>
+</div>
+<div class="flex items-center gap-4 lg:gap-8">
+<div class="hidden md:flex items-center gap-6 lg:gap-9">
+<a class="text-white/70 hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
+<a class="text-white/70 hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Library</a>
+<a class="text-white/70 hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Community</a>
+<a class="text-white text-sm font-medium leading-normal border-b-2 border-primary pb-0.5" href="#">Settings</a>
+</div>
+<div class="flex gap-3">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white/10" data-alt="User avatar showing a stylized anime character" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAXJz5_lis6N4j0U5ZsWhzldq9QxfBKMzvfDiPjY_6pXCpsAvq1_Th-2-NwttyCQORP9e9UPQRrL8RjZbOW7pXfjroPqiuZB64S33iq3HEqHBN89B-wOenpaBKGQ3ZBQ53AmqtyrXrg10SZvg3iJoVsnDNqgdawgCZQv9feEvKnjT6iGvIFxmI1WRctGygw0Fs3cwZRqiEVEuSdEaSdSeUWmmYptMWpOvZGvHs09IuBP1yOO89Y2EblUo_N2-NWUS2xm9QV8dPrElC5");'></div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col relative">
+<!-- Background Grid Effect -->
+<div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#256af4 1px, transparent 1px); background-size: 32px 32px;">
+</div>
+<div class="layout-container flex h-full grow flex-col relative z-10">
+<div class="px-4 md:px-20 lg:px-40 flex flex-1 justify-center py-10">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1 gap-8">
+<!-- Page Heading & Status -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-white/5 pb-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-primary text-3xl">database</span>
+<h1 class="text-white text-4xl md:text-5xl font-black leading-tight tracking-tight uppercase drop-shadow-[0_0_10px_rgba(37,106,244,0.5)]">Data Export Terminal</h1>
+</div>
+<p class="text-slate-400 text-base md:text-lg font-normal max-w-2xl">
+                                Select specific memory banks to archive. This process will compile your Rankers Log history into a portable format.
+                            </p>
+</div>
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary/10 border border-primary/20 pl-3 pr-4 shadow-glow-sm">
+<span class="material-symbols-outlined text-primary text-sm">lock</span>
+<p class="text-primary text-xs font-bold tracking-widest uppercase">Encrypted Connection</p>
+</div>
+</div>
+<!-- Main Console Interface -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column: Selection Grid -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<!-- Selection Controls -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Option 1 -->
+<label class="group relative cursor-pointer">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="h-full p-5 rounded-xl border border-white/10 bg-[#0A0F18] hover:bg-[#0F1624] peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:shadow-glow-sm transition-all duration-300">
+<div class="flex justify-between items-start mb-3">
+<div class="p-2 rounded-lg bg-white/5 text-slate-300 group-hover:text-white peer-checked:bg-primary peer-checked:text-white transition-colors">
+<span class="material-symbols-outlined">badge</span>
+</div>
+<div class="size-5 rounded-full border-2 border-slate-600 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-black font-bold opacity-0 peer-checked:opacity-100">check</span>
+</div>
+</div>
+<h3 class="text-white font-bold text-lg mb-1">User Profile</h3>
+<p class="text-slate-500 text-sm">Settings, bio data, and account preferences.</p>
+<div class="mt-3 text-xs text-primary font-mono opacity-0 peer-checked:opacity-100 transition-opacity">
+                                            &gt; EST. SIZE: 45KB
+                                        </div>
+</div>
+</label>
+<!-- Option 2 -->
+<label class="group relative cursor-pointer">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="h-full p-5 rounded-xl border border-white/10 bg-[#0A0F18] hover:bg-[#0F1624] peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:shadow-glow-sm transition-all duration-300">
+<div class="flex justify-between items-start mb-3">
+<div class="p-2 rounded-lg bg-white/5 text-slate-300 group-hover:text-white peer-checked:bg-primary peer-checked:text-white transition-colors">
+<span class="material-symbols-outlined">history_edu</span>
+</div>
+<div class="size-5 rounded-full border-2 border-slate-600 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-black font-bold opacity-0 peer-checked:opacity-100">check</span>
+</div>
+</div>
+<h3 class="text-white font-bold text-lg mb-1">Activity Logs</h3>
+<p class="text-slate-500 text-sm">Complete XP history, level-ups, and quest logs.</p>
+<div class="mt-3 text-xs text-primary font-mono opacity-0 peer-checked:opacity-100 transition-opacity">
+                                            &gt; EST. SIZE: 1.2MB
+                                        </div>
+</div>
+</label>
+<!-- Option 3 -->
+<label class="group relative cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="h-full p-5 rounded-xl border border-white/10 bg-[#0A0F18] hover:bg-[#0F1624] peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:shadow-glow-sm transition-all duration-300">
+<div class="flex justify-between items-start mb-3">
+<div class="p-2 rounded-lg bg-white/5 text-slate-300 group-hover:text-white peer-checked:bg-primary peer-checked:text-white transition-colors">
+<span class="material-symbols-outlined">forum</span>
+</div>
+<div class="size-5 rounded-full border-2 border-slate-600 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-black font-bold opacity-0 peer-checked:opacity-100">check</span>
+</div>
+</div>
+<h3 class="text-white font-bold text-lg mb-1">Social Data</h3>
+<p class="text-slate-500 text-sm">Comments, direct messages, and guild interactions.</p>
+<div class="mt-3 text-xs text-primary font-mono opacity-0 peer-checked:opacity-100 transition-opacity">
+                                            &gt; EST. SIZE: 850KB
+                                        </div>
+</div>
+</label>
+<!-- Option 4 -->
+<label class="group relative cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="h-full p-5 rounded-xl border border-white/10 bg-[#0A0F18] hover:bg-[#0F1624] peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:shadow-glow-sm transition-all duration-300">
+<div class="flex justify-between items-start mb-3">
+<div class="p-2 rounded-lg bg-white/5 text-slate-300 group-hover:text-white peer-checked:bg-primary peer-checked:text-white transition-colors">
+<span class="material-symbols-outlined">movie</span>
+</div>
+<div class="size-5 rounded-full border-2 border-slate-600 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-black font-bold opacity-0 peer-checked:opacity-100">check</span>
+</div>
+</div>
+<h3 class="text-white font-bold text-lg mb-1">Media Inventory</h3>
+<p class="text-slate-500 text-sm">Saved lists: Anime, Manga, Games, and Novels.</p>
+<div class="mt-3 text-xs text-primary font-mono opacity-0 peer-checked:opacity-100 transition-opacity">
+                                            &gt; EST. SIZE: 240KB
+                                        </div>
+</div>
+</label>
+</div>
+<!-- Additional Options -->
+<div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-white/5">
+<label class="inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="relative w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ms-3 text-sm font-medium text-slate-300">Include media thumbnails (Will increase file size significantly)</span>
+</label>
+</div>
+</div>
+<!-- Right Column: Status & Action -->
+<div class="lg:col-span-1 flex flex-col gap-6">
+<!-- Terminal Output -->
+<div class="flex-1 bg-black rounded-xl border border-white/10 p-5 font-mono text-xs md:text-sm shadow-inner relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+<div class="flex flex-col gap-2 h-full justify-end">
+<div class="text-slate-500">&gt; SYSTEM_BOOT_SEQUENCE_INITIATED</div>
+<div class="text-slate-500">&gt; CONNECTED_TO_NODE: [RL-992-ALPHA]</div>
+<div class="text-slate-500">&gt; VERIFYING_USER_CREDENTIALS... <span class="text-green-500">OK</span></div>
+<div class="text-slate-500">&gt; CHECKING_STORAGE_PERMISSIONS... <span class="text-green-500">OK</span></div>
+<div class="text-white animate-pulse">&gt; WAITING_FOR_USER_INPUT_</div>
+</div>
+</div>
+<!-- Action Panel -->
+<div class="bg-[#0A0F18] border border-white/10 rounded-xl p-5 flex flex-col gap-4 shadow-glow-sm">
+<div class="flex justify-between items-center text-sm text-slate-400">
+<span>Format:</span>
+<span class="text-white font-mono">.JSON / .CSV</span>
+</div>
+<div class="flex justify-between items-center text-sm text-slate-400 border-b border-white/5 pb-4">
+<span>Est. Time:</span>
+<span class="text-white font-mono">~45 Seconds</span>
+</div>
+<button class="group relative flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 bg-primary hover:bg-blue-600 text-white font-bold tracking-widest transition-all hover:shadow-glow">
+<span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
+<span class="flex items-center gap-2">
+                                        INITIATE SEQUENCE
+                                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</span>
+</button>
+<p class="text-[10px] text-slate-500 text-center uppercase tracking-wider">
+                                    By clicking initiate, you agree to the data processing terms.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Global Keyframes for Shimmer -->
+<style>
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+</body></html>

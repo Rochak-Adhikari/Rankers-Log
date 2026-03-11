@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Edit Profile</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Rajdhani:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505",
+                        "panel-dark": "#0a1016",
+                        "void": "#050505",
+                    },
+                    fontFamily: {
+                        "display": ["Rajdhani", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    boxShadow: {
+                        "glow": "0 0 15px rgba(37, 140, 244, 0.3)",
+                        "glow-sm": "0 0 8px rgba(37, 140, 244, 0.2)",
+                        "glow-text": "0 0 10px rgba(37, 140, 244, 0.5)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Hexagon Clip Path */
+        .hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        /* Glass Panel Effect */
+        .glass-panel {
+            background: rgba(16, 26, 35, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(37, 140, 244, 0.2);
+        }
+
+        .glass-panel:focus-within {
+            border-color: #258cf4;
+            box-shadow: 0 0 15px rgba(37, 140, 244, 0.15);
+        }
+
+        /* Connector Lines */
+        .spine-glow {
+            box-shadow: 0 0 10px rgba(37, 140, 244, 0.4);
+        }
+
+        /* Hide Scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #223649; 
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-void text-white font-body overflow-x-hidden min-h-screen flex flex-col">
+<!-- Top Status Bar / Header -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-void/90 backdrop-blur-md border-b border-[#223649] h-16 px-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button class="text-[#90adcb] hover:text-white transition-colors p-1">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<h1 class="font-display font-bold text-lg leading-none tracking-wider text-white">EDIT PROFILE</h1>
+<span class="text-xs text-primary font-mono tracking-widest opacity-80">SYS.CONFIG.USER_01</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-xs font-mono text-[#90adcb]">ONLINE</span>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="relative flex-1 pt-24 pb-32 px-4 md:px-0 max-w-4xl mx-auto w-full">
+<!-- Central Spine (Background) -->
+<div class="absolute left-1/2 top-20 bottom-32 w-[2px] bg-[#1a2c3d] -translate-x-1/2 z-0">
+<!-- Animated glow moving down the spine -->
+<div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-primary/50 to-transparent opacity-30 blur-[1px]"></div>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-12">
+<!-- Node 1: Avatar Change -->
+<div class="relative group">
+<!-- Connector to Spine -->
+<div class="absolute left-1/2 -bottom-12 w-[2px] h-12 bg-gradient-to-b from-primary/50 to-transparent -translate-x-1/2"></div>
+<div class="relative w-32 h-36 flex items-center justify-center cursor-pointer transition-transform hover:scale-105">
+<!-- Glow Ring -->
+<div class="absolute inset-0 bg-primary/20 hexagon blur-md transition-opacity duration-300 opacity-50 group-hover:opacity-100"></div>
+<!-- Border -->
+<div class="absolute inset-0 bg-[#223649] hexagon p-[2px]">
+<!-- Image Container -->
+<div class="w-full h-full bg-[#101a23] hexagon overflow-hidden relative">
+<img alt="Current Avatar" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="User cyberpunk avatar profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_dxsm9HuXVobVHEfWk-8-LdapstLevuRbYrM3vAGEpaqjTqwpFjQlvkiZB6juQmYARuQSu7n65hV2D1xawdxzhsr5dSTRSa5em3_D2AfUi0vyTkBh1n-kpKtdIdKYyqIHQiiBeE2Zo_3-UekjSuMS54pyx0Rs1K6j9J0QdPx7PL_Z8dIZ4SxmKNH4ba0YFFtVMQPZ3J2aXPBXiTdHO4Xkt6K87nCP2jlZ6WlGIQ0cJUI5vj8Mz0Lim6a7J5F1JekN_b4xiJK-8S0f"/>
+<!-- Overlay -->
+<div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+<span class="material-symbols-outlined text-white mb-1">photo_camera</span>
+<span class="text-[10px] font-display tracking-widest text-primary">UPLOAD</span>
+</div>
+</div>
+</div>
+<!-- Tech Accents -->
+<div class="absolute -top-2 left-1/2 -translate-x-1/2 w-16 h-[1px] bg-primary/50"></div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-16 h-[1px] bg-primary/50"></div>
+</div>
+<div class="text-center mt-2">
+<span class="text-[10px] text-[#90adcb] font-mono bg-[#0a1016] px-2 py-0.5 border border-[#223649] rounded-sm">AVATAR_NODE_V2</span>
+</div>
+</div>
+<!-- Branching Section 1: Identity -->
+<div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 relative">
+<!-- Horizontal Connector Line (Desktop Only) -->
+<div class="hidden md:block absolute top-1/2 left-8 right-8 h-[1px] bg-[#1a2c3d] -z-10"></div>
+<!-- Left Node: Username -->
+<div class="relative flex flex-col items-end md:pr-12">
+<!-- Connector Line (Mobile) -->
+<div class="md:hidden absolute -top-8 left-1/2 h-8 w-[1px] bg-[#1a2c3d]"></div>
+<div class="hidden md:block absolute top-1/2 right-0 w-12 h-[1px] bg-[#223649]">
+<div class="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-primary rounded-full"></div>
+</div>
+<label class="w-full max-w-sm glass-panel p-4 rounded-sm relative group transition-all duration-300 hover:border-primary/50">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs text-primary font-display tracking-widest uppercase">Codename</span>
+<span class="material-symbols-outlined text-[#90adcb] text-sm group-focus-within:text-primary">badge</span>
+</div>
+<input class="w-full bg-transparent border-b border-[#223649] focus:border-primary text-white font-mono py-1 focus:ring-0 px-0 placeholder-[#475e75]" placeholder="ENTER USERNAME" type="text" value="NEURAL_NINJA"/>
+<!-- Corner accents -->
+<div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary/30"></div>
+<div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary/30"></div>
+</label>
+</div>
+<!-- Right Node: Display Name -->
+<div class="relative flex flex-col items-start md:pl-12">
+<!-- Connector Line (Mobile) -->
+<div class="md:hidden absolute -top-8 left-1/2 h-8 w-[1px] bg-[#1a2c3d]"></div>
+<div class="hidden md:block absolute top-1/2 left-0 w-12 h-[1px] bg-[#223649]">
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-primary rounded-full"></div>
+</div>
+<label class="w-full max-w-sm glass-panel p-4 rounded-sm relative group transition-all duration-300 hover:border-primary/50">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs text-primary font-display tracking-widest uppercase">Display Alias</span>
+<span class="material-symbols-outlined text-[#90adcb] text-sm group-focus-within:text-primary">person</span>
+</div>
+<input class="w-full bg-transparent border-b border-[#223649] focus:border-primary text-white font-mono py-1 focus:ring-0 px-0 placeholder-[#475e75]" placeholder="ENTER DISPLAY NAME" type="text" value="Kairos"/>
+<!-- Corner accents -->
+<div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary/30"></div>
+<div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary/30"></div>
+</label>
+</div>
+</div>
+<!-- Branching Section 2: Bio (Full Width) -->
+<div class="w-full max-w-2xl relative">
+<!-- Vertical Connector -->
+<div class="absolute -top-12 left-1/2 w-[1px] h-12 bg-[#1a2c3d] -translate-x-1/2"></div>
+<label class="block w-full glass-panel p-6 rounded-sm relative group transition-all duration-300 hover:border-primary/50">
+<div class="flex justify-between items-center mb-4 border-b border-[#223649] pb-2">
+<span class="text-xs text-primary font-display tracking-widest uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">terminal</span>
+                            BIO-DATA MANIFEST
+                        </span>
+<span class="text-[10px] text-[#475e75] font-mono">MAX_CHARS: 250</span>
+</div>
+<textarea class="w-full bg-[#05090c] border border-[#223649] rounded-sm focus:border-primary text-[#cbd5e1] font-mono p-3 focus:ring-0 resize-none text-sm leading-relaxed" placeholder="Initialize bio description sequence..." rows="4"></textarea>
+<!-- Glowing dots on side -->
+<div class="absolute top-1/2 -left-1 w-1 h-8 bg-primary/20 rounded-full"></div>
+<div class="absolute top-1/2 -right-1 w-1 h-8 bg-primary/20 rounded-full"></div>
+</label>
+</div>
+<!-- Branching Section 3: Links & Settings -->
+<div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 relative">
+<!-- Horizontal Connector Line (Desktop Only) -->
+<div class="hidden md:block absolute top-12 left-16 right-16 h-[1px] bg-[#1a2c3d] -z-10"></div>
+<!-- Left Node: External Links -->
+<div class="relative flex flex-col items-end md:pr-12">
+<div class="hidden md:block absolute top-12 right-0 w-12 h-[1px] bg-[#223649]"></div>
+<div class="w-full max-w-sm glass-panel p-5 rounded-sm relative">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-sm">link</span>
+<span class="text-xs text-white font-display font-bold tracking-widest uppercase">UPLINKS</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-3 group">
+<div class="w-8 h-8 rounded bg-[#101a23] flex items-center justify-center border border-[#223649] group-hover:border-primary/50 transition-colors">
+<span class="text-[10px] font-bold text-[#90adcb]">X</span>
+</div>
+<input class="flex-1 bg-transparent border-b border-[#223649] text-sm text-white focus:border-primary focus:ring-0 px-2 py-1 font-mono h-8" placeholder="@username" type="text"/>
+</div>
+<div class="flex items-center gap-3 group">
+<div class="w-8 h-8 rounded bg-[#101a23] flex items-center justify-center border border-[#223649] group-hover:border-primary/50 transition-colors">
+<span class="text-[10px] font-bold text-[#90adcb]">IG</span>
+</div>
+<input class="flex-1 bg-transparent border-b border-[#223649] text-sm text-white focus:border-primary focus:ring-0 px-2 py-1 font-mono h-8" placeholder="@username" type="text"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Node: Rank Preferences -->
+<div class="relative flex flex-col items-start md:pl-12">
+<div class="hidden md:block absolute top-12 left-0 w-12 h-[1px] bg-[#223649]"></div>
+<div class="w-full max-w-sm glass-panel p-5 rounded-sm relative">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-sm">tune</span>
+<span class="text-xs text-white font-display font-bold tracking-widest uppercase">HUD CONFIG</span>
+</div>
+<div class="space-y-4">
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="text-sm text-[#90adcb] font-mono group-hover:text-white transition-colors">Show XP Progress</span>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-[#101a23] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-[#90adcb] after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary/20 peer-checked:after:bg-primary"></div>
+</div>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="text-sm text-[#90adcb] font-mono group-hover:text-white transition-colors">Public Tier Badge</span>
+<div class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-[#101a23] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-[#90adcb] after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary/20 peer-checked:after:bg-primary"></div>
+</div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Terminal Node: Save -->
+<div class="mt-8 relative w-full flex flex-col items-center">
+<!-- Vertical Connector -->
+<div class="absolute -top-12 left-1/2 w-[1px] h-12 bg-[#1a2c3d] -translate-x-1/2"></div>
+<!-- Connector Split -->
+<div class="w-px h-8 bg-gradient-to-b from-[#1a2c3d] to-primary/50 mb-2"></div>
+<button class="relative group overflow-hidden bg-[#101a23] hover:bg-primary border border-primary/30 hover:border-primary text-white font-display font-bold tracking-widest text-sm px-10 py-4 rounded-sm transition-all duration-300 shadow-glow-sm hover:shadow-glow">
+<span class="relative z-10 flex items-center gap-3">
+<span class="material-symbols-outlined text-lg animate-pulse">save</span>
+                        COMMIT UPDATES
+                    </span>
+<!-- Button Glitch Background -->
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-10"></div>
+</button>
+<div class="mt-3 flex items-center gap-2 opacity-50">
+<div class="w-1 h-1 bg-white rounded-full"></div>
+<span class="text-[9px] font-mono text-[#90adcb]">UNSAVED CHANGES WILL BE LOST</span>
+<div class="w-1 h-1 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Command Deck (Bottom Nav) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+<div class="flex items-center gap-2 bg-[#0a1016]/90 backdrop-blur-xl border border-[#223649] px-4 py-2 rounded-lg shadow-2xl">
+<button class="p-3 rounded text-[#90adcb] hover:text-white hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined block">home</span>
+</button>
+<button class="p-3 rounded text-[#90adcb] hover:text-white hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined block">search</span>
+</button>
+<!-- Active Profile Tab -->
+<div class="relative">
+<button class="p-3 rounded text-primary bg-primary/10 border border-primary/20 shadow-glow-sm">
+<span class="material-symbols-outlined block">person</span>
+</button>
+<!-- Indicator dot -->
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+</div>
+<button class="p-3 rounded text-[#90adcb] hover:text-white hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined block">notifications</span>
+</button>
+<button class="p-3 rounded text-[#90adcb] hover:text-white hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined block">settings</span>
+</button>
+</div>
+</div>
+</body></html>

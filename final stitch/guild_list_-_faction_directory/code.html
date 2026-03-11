@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Faction Directory</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#258cf4",
+              "background-light": "#f5f7f8",
+              "background-dark": "#050505", // Deep void dark as requested
+              "card-dark": "#101922",
+              "accent-cyan": "#00f0ff",
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"],
+              "body": ["Noto Sans", "sans-serif"],
+            },
+            borderRadius: {
+              "DEFAULT": "0.125rem", 
+              "lg": "0.25rem", 
+              "xl": "0.5rem", 
+              "full": "9999px"
+            },
+            backgroundImage: {
+              'grid-pattern': "linear-gradient(to right, #223649 1px, transparent 1px), linear-gradient(to bottom, #223649 1px, transparent 1px)",
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      /* Custom scrollbar for the high-tech feel */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #050505;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #223649;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #258cf4;
+      }
+      
+      .glass-panel {
+        background: rgba(16, 25, 34, 0.7);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(37, 140, 244, 0.1);
+      }
+      
+      .glass-panel:hover {
+        border-color: rgba(37, 140, 244, 0.5);
+        box-shadow: 0 0 15px rgba(37, 140, 244, 0.15);
+      }
+
+      .hud-corner {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border: 2px solid #258cf4;
+        transition: all 0.3s ease;
+      }
+      
+      .hud-corner-tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+      .hud-corner-tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+      .hud-corner-bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+      .hud-corner-br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+      .card-hover:hover .hud-corner {
+        width: 100%;
+        height: 100%;
+        opacity: 0.1;
+        background: #258cf4;
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden h-screen flex">
+<!-- Side Navigation Rail -->
+<nav class="w-20 md:w-64 flex flex-col border-r border-[#223649] bg-[#0a0f14] h-full shrink-0 z-20">
+<div class="p-6 flex items-center gap-3 border-b border-[#223649]/50 h-20">
+<div class="size-8 rounded bg-gradient-to-tr from-primary to-cyan-400 shrink-0"></div>
+<span class="hidden md:block font-bold tracking-widest text-lg">RANKERS</span>
+</div>
+<div class="flex-1 flex flex-col gap-2 p-3 overflow-y-auto">
+<!-- User Profile Summary -->
+<div class="hidden md:flex flex-col gap-1 mb-6 p-3 bg-[#131d27] rounded border border-[#223649]">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded bg-cover bg-center border border-primary/30" data-alt="User avatar cyberpunk style" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBgCowGQw0OWK7Kqyviw31GS5Ngnl6ytMUk7XLGdqN63lq_oT_gnywB02bkHshsu1TiQwVBUTPWJysDAaFABlT4KM7yCvuoe2bam7Z1M327kIt14FpPOR357gYxOX-WVO8j2Y-phde_FjVRibxaMHToRLuhrjYkklyVGMmsMXCMdI-HUFGTnLXweecxtWbU7IyAsM_9Ro7rMJbkrWZop8KI0k5QFO5PBsmbXH8HtM6Q_puGRe0tsE9aFpg7TqKCRWPVq2B7TCiWkNBd');"></div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-sm font-bold truncate">SoloLeveler</span>
+<span class="text-xs text-primary truncate">Lv. 84 Shadow</span>
+</div>
+</div>
+<div class="mt-2 h-1 w-full bg-[#050505] rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%]"></div>
+</div>
+</div>
+<!-- Nav Items -->
+<a class="flex items-center gap-4 px-3 py-3 rounded text-[#90adcb] hover:bg-[#223649] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+<span class="hidden md:block text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-3 py-3 rounded text-[#90adcb] hover:bg-[#223649] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">swords</span>
+<span class="hidden md:block text-sm font-medium">Quests</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-4 px-3 py-3 rounded bg-[#258cf4]/10 border border-[#258cf4]/30 text-white relative group" href="#">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l"></div>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="hidden md:block text-sm font-medium text-primary shadow-[0_0_10px_rgba(37,140,244,0.3)]">Guilds</span>
+</a>
+<a class="flex items-center gap-4 px-3 py-3 rounded text-[#90adcb] hover:bg-[#223649] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">backpack</span>
+<span class="hidden md:block text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-4 px-3 py-3 rounded text-[#90adcb] hover:bg-[#223649] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">social_leaderboard</span>
+<span class="hidden md:block text-sm font-medium">Ranking</span>
+</a>
+</div>
+<div class="p-3 mt-auto border-t border-[#223649]/50">
+<a class="flex items-center gap-4 px-3 py-3 rounded text-[#90adcb] hover:bg-[#223649] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="hidden md:block text-sm font-medium">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col relative overflow-hidden">
+<!-- Background Grid Decoration -->
+<div class="absolute inset-0 z-0 pointer-events-none opacity-5" style="background-size: 40px 40px; background-image: linear-gradient(to right, #258cf4 1px, transparent 1px), linear-gradient(to bottom, #258cf4 1px, transparent 1px);"></div>
+<!-- Top Header & Search -->
+<header class="relative z-10 px-8 py-6 flex flex-col gap-6 border-b border-[#223649]/50 bg-[#050505]/90 backdrop-blur-md">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-xs font-mono text-primary tracking-[0.2em] uppercase">System // Global Network</span>
+<div class="h-[1px] w-12 bg-primary/50"></div>
+</div>
+<h1 class="text-3xl md:text-4xl font-black text-white uppercase tracking-tight">Faction Directory</h1>
+<p class="text-[#90adcb] mt-1 max-w-lg text-sm md:text-base">Browse registered guilds, monitor alliance status, and request deployment authorization.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="px-3 py-1 rounded border border-[#223649] bg-[#101922] flex items-center gap-2">
+<div class="size-2 rounded-full bg-green-500 animate-pulse"></div>
+<span class="text-xs font-mono text-[#90adcb]">SERVER: ONLINE</span>
+</div>
+<div class="px-3 py-1 rounded border border-[#223649] bg-[#101922] flex items-center gap-2">
+<span class="material-symbols-outlined text-[#90adcb] text-[16px]">group</span>
+<span class="text-xs font-mono text-[#90adcb]">34,209 ONLINE</span>
+</div>
+</div>
+</div>
+<!-- Search & Filters Bar -->
+<div class="flex flex-col lg:flex-row gap-4">
+<!-- Search Input -->
+<div class="flex-1 relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[#90adcb] group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-3 border border-[#223649] rounded bg-[#131d27]/80 text-white placeholder-[#58728a] focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body" placeholder="Search Guild Name, ID, or Tag..." type="text"/>
+<!-- Decorative corner -->
+<div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary opacity-50"></div>
+<div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary opacity-50"></div>
+</div>
+<!-- Filters -->
+<div class="flex gap-2 overflow-x-auto pb-2 lg:pb-0 no-scrollbar">
+<button class="flex items-center gap-2 px-4 py-2.5 bg-[#131d27] border border-[#223649] hover:border-primary/50 text-[#90adcb] hover:text-white rounded whitespace-nowrap transition-all">
+<span class="text-sm">Focus: All</span>
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 bg-[#131d27] border border-[#223649] hover:border-primary/50 text-[#90adcb] hover:text-white rounded whitespace-nowrap transition-all">
+<span class="text-sm">Rank: S-Class</span>
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 bg-[#131d27] border border-[#223649] hover:border-primary/50 text-[#90adcb] hover:text-white rounded whitespace-nowrap transition-all">
+<span class="text-sm">Region: Global</span>
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 bg-[#258cf4]/10 border border-primary/40 text-primary rounded whitespace-nowrap transition-all shadow-[0_0_15px_rgba(37,140,244,0.1)]">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span class="text-sm font-bold">Advanced</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Grid -->
+<div class="flex-1 overflow-y-auto relative z-0 p-8">
+<!-- Section Title -->
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-lg font-bold text-white flex items-center gap-2">
+<span class="w-1 h-5 bg-primary block"></span>
+          RECOMMENDED FACTIONS
+        </h2>
+<div class="flex items-center gap-2 text-xs font-mono text-[#58728a]">
+<span>SORT BY: POWER</span>
+<span class="material-symbols-outlined text-[14px]">swap_vert</span>
+</div>
+</div>
+<!-- Guild Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 pb-20">
+<!-- Guild Card 1 (Featured/Premium feel) -->
+<article class="glass-panel relative group rounded overflow-hidden flex flex-col h-full card-hover transition-all duration-300">
+<!-- HUD Corners -->
+<div class="hud-corner hud-corner-tl"></div>
+<div class="hud-corner hud-corner-tr"></div>
+<div class="hud-corner hud-corner-bl"></div>
+<div class="hud-corner hud-corner-br"></div>
+<!-- Card Header Image -->
+<div class="h-32 w-full bg-cover bg-center relative" data-alt="Abstract dark geometric pattern representing void magic" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdu1xhrGKI01dWz5ckMlEGUdt7tiI5mDu-6U0f4HymUJcJuja8onmwsq_yDel5KA_VcacI5JaXpLeqT5PNKTeDZPKphCXvww1FDXW8C0Elpq3HYrq9qoY1mUq58_6VIae05i3Zugm1E4t8aXRYDiVxoFm9UxGzl26mje3juG3r_bM97lVLX6WTuGoMxUqSCgM6pTTNEW7bBel0JWTmRl8UYfbM7HByDswIzRvQA6aIUvFdkmoTQ7_aHCEw-uk7zuvZB7HsqyzidEu3');">
+<div class="absolute inset-0 bg-gradient-to-t from-[#101922] to-transparent"></div>
+<div class="absolute top-3 right-3 px-2 py-0.5 bg-black/60 border border-primary/30 rounded text-[10px] font-mono text-primary uppercase backdrop-blur-sm">
+                Open for Recruit
+             </div>
+</div>
+<!-- Card Content -->
+<div class="p-5 pt-0 flex-1 flex flex-col relative">
+<!-- Guild Icon (floating) -->
+<div class="relative -mt-10 mb-3 ml-1">
+<div class="size-16 rounded bg-[#131d27] p-1 border border-[#223649] group-hover:border-primary transition-colors shadow-lg">
+<img alt="Void Walkers Emblem" class="w-full h-full object-cover rounded bg-black" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEdqrLk2rJXVqNal9fjchX1M9VE8Trp4sEJkcaRU_t6LlCPIYbiYRQcm5EICT1gL0WCvaG-zDnoHbXau5HpsT-xYcuRzE0oWL_stmlSoWM4Z05dZ1vyJaYyFrFWrgkREa0F3r0v8-uxcpNqOGjpsmB_hUD0Tqe_yjdHqiTItr-PuTzgSuIpIRyW-l5VG3M-AMmeKxeDD9ctsN132T1khyLxmPsbtL5Pw6WTaI2kQglmv2Z43uW99y2JNNHJJPLdu58Pe_0qkdwoLEw"/>
+</div>
+</div>
+<!-- Info -->
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-xl font-bold text-white leading-tight group-hover:text-primary transition-colors">Void Walkers</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-1.5 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-[10px] font-bold uppercase tracking-wider">Rank S</span>
+<span class="text-[#58728a] text-xs">ID: #8821</span>
+</div>
+</div>
+</div>
+<p class="text-[#90adcb] text-sm mb-4 line-clamp-2">"We chart the unseen. Exploring the abyss where no other guild dares to tread."</p>
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 gap-2 mb-5">
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Members</span>
+<span class="text-sm font-mono text-white">45<span class="text-[#58728a]">/50</span></span>
+</div>
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Focus</span>
+<span class="text-sm font-mono text-white">PvE / Raid</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="mt-auto grid grid-cols-2 gap-3">
+<button class="px-3 py-2 rounded border border-[#223649] hover:bg-[#223649] text-white text-xs font-bold uppercase tracking-wide transition-colors">
+                 Profile
+               </button>
+<button class="px-3 py-2 rounded bg-primary hover:bg-blue-600 text-white text-xs font-bold uppercase tracking-wide transition-colors shadow-[0_0_10px_rgba(37,140,244,0.4)]">
+                 Join Guild
+               </button>
+</div>
+</div>
+</article>
+<!-- Guild Card 2 -->
+<article class="glass-panel relative group rounded overflow-hidden flex flex-col h-full card-hover transition-all duration-300">
+<div class="hud-corner hud-corner-tl"></div>
+<div class="hud-corner hud-corner-tr"></div>
+<div class="hud-corner hud-corner-bl"></div>
+<div class="hud-corner hud-corner-br"></div>
+<div class="h-32 w-full bg-cover bg-center relative" data-alt="Crimson abstract pattern" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAOkA4KymWCoVqHr297rmXJ0PKdI0C3a4Zu6k2Gt9TX1yf5KCWhpmcNNTnZTOgeLOf-z-Hha1S4c4C_PH2Mvy12LvbkVtdyhJy3RpECq17-YQiTA74xc0N_Y_QiULMOFTGsdapcsjVGORULf4K4hHZh97b4lm8G5FhYdKts61QwhSry8yxyib4FHU4dy2ac5S6DMLb6g6xe7M0KxDpqZCwziHlQPU4ivKSIk4K02owDTid1z6J_AWpIlOWdkmsAbGy6yHSO1iSPNPAf');">
+<div class="absolute inset-0 bg-gradient-to-t from-[#101922] to-transparent"></div>
+<div class="absolute top-3 right-3 px-2 py-0.5 bg-red-900/60 border border-red-500/30 rounded text-[10px] font-mono text-red-400 uppercase backdrop-blur-sm">
+                Invite Only
+             </div>
+</div>
+<div class="p-5 pt-0 flex-1 flex flex-col relative">
+<div class="relative -mt-10 mb-3 ml-1">
+<div class="size-16 rounded bg-[#131d27] p-1 border border-[#223649] group-hover:border-primary transition-colors shadow-lg">
+<img alt="Blood Oath Emblem" class="w-full h-full object-cover rounded bg-black" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxJOadmVuptIX2UFLNe-rRs5EtLDSEH2mmgwagkIsGnoUx77ID4Fm_wQnfRjnWuANIDbFNTSHFcYXNJy1nwfIrHu_rz5Suw55m6aZnswJixbMU6r-ScH03DckqdVNPQ1slsX6eDXqDh7yWz_WvrycNeO7j7ceR-GHIB9_NQfEtzumK4PeFUiv1yBLbZIYHE5-v1vjVg89VX7S7AEdKBNFpcqcG3TWAs-StacAUX_0OfBhAtPAbwDlvw1kWoQQy16JfEKcxjrkh4G8_"/>
+</div>
+</div>
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-xl font-bold text-white leading-tight group-hover:text-primary transition-colors">Blood Oath</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-1.5 py-0.5 rounded bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-wider">Rank A</span>
+<span class="text-[#58728a] text-xs">ID: #9902</span>
+</div>
+</div>
+</div>
+<p class="text-[#90adcb] text-sm mb-4 line-clamp-2">Dominating the PvP leaderboards. Only the strongest survive our initiation.</p>
+<div class="grid grid-cols-2 gap-2 mb-5">
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Members</span>
+<span class="text-sm font-mono text-white">128<span class="text-[#58728a]">/150</span></span>
+</div>
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Focus</span>
+<span class="text-sm font-mono text-white">PvP / War</span>
+</div>
+</div>
+<div class="mt-auto grid grid-cols-2 gap-3">
+<button class="px-3 py-2 rounded border border-[#223649] hover:bg-[#223649] text-white text-xs font-bold uppercase tracking-wide transition-colors">
+                 Profile
+               </button>
+<button class="px-3 py-2 rounded bg-[#223649] text-[#58728a] cursor-not-allowed text-xs font-bold uppercase tracking-wide transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span> Request
+               </button>
+</div>
+</div>
+</article>
+<!-- Guild Card 3 -->
+<article class="glass-panel relative group rounded overflow-hidden flex flex-col h-full card-hover transition-all duration-300">
+<div class="hud-corner hud-corner-tl"></div>
+<div class="hud-corner hud-corner-tr"></div>
+<div class="hud-corner hud-corner-bl"></div>
+<div class="hud-corner hud-corner-br"></div>
+<div class="h-32 w-full bg-cover bg-center relative" data-alt="Forest green digital rain pattern" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAAGHOj47232EbO_Uugtlu2UMAhu3dlfe0CBO3qIz6IIOXWnaFQ8rhfU5ShFhS3qp7hFAJw5wsDtSMPtBzxMUPvyt6RCaTYRUm3jrU5JlXDBcX1DJ0ZRcazsFpqGV74gIU52AY3qfe0RizkGaUDU8n7Y5it-vOwVJDxAo8Tgyc-5dBvDpOsTSJ_oSXRvS0cMDyMORWo1peeD2FemIQEt9UZSxeKdQQsTxinHTozNBFm9ULg68uVJHns2S49A_rgAWTJneCQ8vJ-M2pF');">
+<div class="absolute inset-0 bg-gradient-to-t from-[#101922] to-transparent"></div>
+<div class="absolute top-3 right-3 px-2 py-0.5 bg-black/60 border border-primary/30 rounded text-[10px] font-mono text-primary uppercase backdrop-blur-sm">
+                Open for Recruit
+             </div>
+</div>
+<div class="p-5 pt-0 flex-1 flex flex-col relative">
+<div class="relative -mt-10 mb-3 ml-1">
+<div class="size-16 rounded bg-[#131d27] p-1 border border-[#223649] group-hover:border-primary transition-colors shadow-lg">
+<img alt="Iron Vanguard Emblem" class="w-full h-full object-cover rounded bg-black" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ6tcGESXNYsCddJxQrwSBo92Bm8xiBQMHAUfKTJ9SZFJsJ2oaQKdtE5Wk1vIC5d_fXcHo6C00f4-Wp717wpfR8TD-LqTqVmPWO1B5Hi5jq9QUBARlTDKlPpt8JykAAJ1ej3OmUMK6ZF5-VU8oXNGHUjhcJ5n-htjo5qrkFX4TuZHkoKKf6ywJee6CgTJCgsGeogviRMG7EtphYuSQk49gywt7dCGWtkpEsr0XgOBSdEyOe2XDQSu0ejaTP2NJz0ZUaQ7VfPHnj5rs"/>
+</div>
+</div>
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-xl font-bold text-white leading-tight group-hover:text-primary transition-colors">Iron Vanguard</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-1.5 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-wider">Rank B</span>
+<span class="text-[#58728a] text-xs">ID: #4410</span>
+</div>
+</div>
+</div>
+<p class="text-[#90adcb] text-sm mb-4 line-clamp-2">Casual leveling and dungeon runs. Beginners welcome! We help you grow.</p>
+<div class="grid grid-cols-2 gap-2 mb-5">
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Members</span>
+<span class="text-sm font-mono text-white">88<span class="text-[#58728a]">/100</span></span>
+</div>
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Focus</span>
+<span class="text-sm font-mono text-white">Casual / Social</span>
+</div>
+</div>
+<div class="mt-auto grid grid-cols-2 gap-3">
+<button class="px-3 py-2 rounded border border-[#223649] hover:bg-[#223649] text-white text-xs font-bold uppercase tracking-wide transition-colors">
+                 Profile
+               </button>
+<button class="px-3 py-2 rounded bg-primary hover:bg-blue-600 text-white text-xs font-bold uppercase tracking-wide transition-colors shadow-[0_0_10px_rgba(37,140,244,0.4)]">
+                 Join Guild
+               </button>
+</div>
+</div>
+</article>
+<!-- Guild Card 4 -->
+<article class="glass-panel relative group rounded overflow-hidden flex flex-col h-full card-hover transition-all duration-300">
+<div class="hud-corner hud-corner-tl"></div>
+<div class="hud-corner hud-corner-tr"></div>
+<div class="hud-corner hud-corner-bl"></div>
+<div class="hud-corner hud-corner-br"></div>
+<div class="h-32 w-full bg-cover bg-center relative" data-alt="Orange fire digital aesthetic" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDLqkEJVhGsGH1n1WQ-swmAYOtoUoX3Ef847w-rk6EQ8bHDVO69iFe0BkNTfv1lvhoFP85e5VD8eiOeukZmRQO7UZhYvdUG17i5PHOFBimNu9wDMEX0R-KKteZ60DCk9ao5bobbiDm2YcFSajIhf-W2i4MZYbZ15qOAXQsIRhU7Eaf9y9pEfIQPQfYZJtgXgE4vB4HFWOKkiO0FE1DLUsat6FVqPhvfOzTSMBIV-opV2fIALmm65jNJOiU-WHiLmruafoxc4G_V2Ylu');">
+<div class="absolute inset-0 bg-gradient-to-t from-[#101922] to-transparent"></div>
+<div class="absolute top-3 right-3 px-2 py-0.5 bg-gray-800/60 border border-gray-600/30 rounded text-[10px] font-mono text-gray-400 uppercase backdrop-blur-sm">
+                Full Capacity
+             </div>
+</div>
+<div class="p-5 pt-0 flex-1 flex flex-col relative">
+<div class="relative -mt-10 mb-3 ml-1">
+<div class="size-16 rounded bg-[#131d27] p-1 border border-[#223649] group-hover:border-primary transition-colors shadow-lg">
+<img alt="Phoenix Rising Emblem" class="w-full h-full object-cover rounded bg-black" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFkR5UvIqUt0sXbOuvPYZISsgSnNB71rMugScla4inT7-o2_KPcFCL8tNJE0TNkRJ2ItHRCMDzZw0CFapkR4yCUfjmdyr5NT4toZkIyPrmPOmiKN7SBbZhOlaUWGsT7r4FldCcm0iUk7qw31RxamvFcgXgdHO20RTdGSnadeIEh2Nn7WQN5w5njEZP_IEyoCa0RO777Xw7vqc2QWUet15IdMrX6KOh3L4F2h4Ewa8J1ij69wyDT-Ya3S86amvUO0cfmret8YtWy0Xy"/>
+</div>
+</div>
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-xl font-bold text-white leading-tight group-hover:text-primary transition-colors">Phoenix Rising</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-1.5 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-[10px] font-bold uppercase tracking-wider">Rank S</span>
+<span class="text-[#58728a] text-xs">ID: #0003</span>
+</div>
+</div>
+</div>
+<p class="text-[#90adcb] text-sm mb-4 line-clamp-2">World First raiding guild. High attendance required. No drama.</p>
+<div class="grid grid-cols-2 gap-2 mb-5">
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Members</span>
+<span class="text-sm font-mono text-white">50<span class="text-[#58728a]">/50</span></span>
+</div>
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Focus</span>
+<span class="text-sm font-mono text-white">Hardcore / Raid</span>
+</div>
+</div>
+<div class="mt-auto grid grid-cols-2 gap-3">
+<button class="px-3 py-2 rounded border border-[#223649] hover:bg-[#223649] text-white text-xs font-bold uppercase tracking-wide transition-colors">
+                 Profile
+               </button>
+<button class="px-3 py-2 rounded bg-[#223649] text-[#58728a] cursor-not-allowed text-xs font-bold uppercase tracking-wide transition-colors">
+                 Full
+               </button>
+</div>
+</div>
+</article>
+<!-- Guild Card 5 -->
+<article class="glass-panel relative group rounded overflow-hidden flex flex-col h-full card-hover transition-all duration-300">
+<div class="hud-corner hud-corner-tl"></div>
+<div class="hud-corner hud-corner-tr"></div>
+<div class="hud-corner hud-corner-bl"></div>
+<div class="hud-corner hud-corner-br"></div>
+<div class="h-32 w-full bg-cover bg-center relative" data-alt="Blue tech wave pattern" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCr-R_KYnFvww1ZuViBivz236jSfzgbsUjiDDNBXOYVOhrOOntwNsnXW3qQYfKlA-Y2jCzjSAIEPlThWEQsSlr2rsw9Hw1Tya7zIzAw71pwuowkVPkkZQVYqSUdFGLIqY_i9FA1PJn6H5fCn3cTTJREuYTrLF0iAFgJtka2wAQz7ZgK2JzIp-rfNwg70wxbqKSnYEYmotPj8t2HzeGq31110ijUooZNe01fAtetVSdTtbf1a47JIvvVU1ldR6VBfmymAP3GgkWJf80B');">
+<div class="absolute inset-0 bg-gradient-to-t from-[#101922] to-transparent"></div>
+<div class="absolute top-3 right-3 px-2 py-0.5 bg-black/60 border border-primary/30 rounded text-[10px] font-mono text-primary uppercase backdrop-blur-sm">
+                Open for Recruit
+             </div>
+</div>
+<div class="p-5 pt-0 flex-1 flex flex-col relative">
+<div class="relative -mt-10 mb-3 ml-1">
+<div class="size-16 rounded bg-[#131d27] p-1 border border-[#223649] group-hover:border-primary transition-colors shadow-lg">
+<img alt="Cyber Knights Emblem" class="w-full h-full object-cover rounded bg-black" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiaD-o26CNsvt4kjOxViMR30ttQ5m_-XQGXANl84bCOlDKH8erLEHHMPD_jF-K9Z87cJDO9v6jX--nGGUfQSASI1ztm91xLOk5I_Rh_bCxWizAp1HzffdmX9LfOLG3PD1_RRgq0Y48gR6GDfOwqobsialcvR_6enTYeT1mT7Hf0IAyUtiAcykyHR3mPjwcuTUJzqTHLHm5UagXnEd2ZfJPzH1mxueI2O4V1gcFTRKFwNV4O6-nZLtdV-UoAqITAXF-nURDx5vD4Vku"/>
+</div>
+</div>
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-xl font-bold text-white leading-tight group-hover:text-primary transition-colors">Cyber Knights</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-1.5 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-wider">Rank A</span>
+<span class="text-[#58728a] text-xs">ID: #7721</span>
+</div>
+</div>
+</div>
+<p class="text-[#90adcb] text-sm mb-4 line-clamp-2">Tech-focused guild. We specialize in crafting and economy manipulation.</p>
+<div class="grid grid-cols-2 gap-2 mb-5">
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Members</span>
+<span class="text-sm font-mono text-white">72<span class="text-[#58728a]">/100</span></span>
+</div>
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Focus</span>
+<span class="text-sm font-mono text-white">Crafting / Trade</span>
+</div>
+</div>
+<div class="mt-auto grid grid-cols-2 gap-3">
+<button class="px-3 py-2 rounded border border-[#223649] hover:bg-[#223649] text-white text-xs font-bold uppercase tracking-wide transition-colors">
+                 Profile
+               </button>
+<button class="px-3 py-2 rounded bg-primary hover:bg-blue-600 text-white text-xs font-bold uppercase tracking-wide transition-colors shadow-[0_0_10px_rgba(37,140,244,0.4)]">
+                 Join Guild
+               </button>
+</div>
+</div>
+</article>
+<!-- Guild Card 6 -->
+<article class="glass-panel relative group rounded overflow-hidden flex flex-col h-full card-hover transition-all duration-300">
+<div class="hud-corner hud-corner-tl"></div>
+<div class="hud-corner hud-corner-tr"></div>
+<div class="hud-corner hud-corner-bl"></div>
+<div class="hud-corner hud-corner-br"></div>
+<div class="h-32 w-full bg-cover bg-center relative" data-alt="Purple nebula space theme" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAuhp8un3IuEPNe87eoyEVUlnZjlI4jqf5W-9ixUOwQNKVM8yqUwkkyo7UYDQWFTlYZTqvoWn5IQV67Y6Uys_ul3h_DvRDelsz2BcO2uw2AQwnYpIBrVmfDG9MMhB91AcdTt3nh6juka1sePUXZ-bZ2mSuFTxybcRUaFnhhjJDP39A03_T8J8uNgCpbNmMb50Rk2SGu8mX3fQMdg9zWLMU4z24_d7Zz25Nv6gwIRiiojFAHwX3Ih2UNygjas5GHNqrbgrzzZUidRAof');">
+<div class="absolute inset-0 bg-gradient-to-t from-[#101922] to-transparent"></div>
+<div class="absolute top-3 right-3 px-2 py-0.5 bg-red-900/60 border border-red-500/30 rounded text-[10px] font-mono text-red-400 uppercase backdrop-blur-sm">
+                Invite Only
+             </div>
+</div>
+<div class="p-5 pt-0 flex-1 flex flex-col relative">
+<div class="relative -mt-10 mb-3 ml-1">
+<div class="size-16 rounded bg-[#131d27] p-1 border border-[#223649] group-hover:border-primary transition-colors shadow-lg">
+<img alt="Nebula Drift Emblem" class="w-full h-full object-cover rounded bg-black" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfLPm0AibXE86GI8r3LajIjmSmEnXye1ymPM-fzVEfAELLzsRrTnlUDsXq-MurflQwC-ugeLh4UB5tclvFPIaWnVBv2qfTmS-qELAEkdmXHUguU-b7s51xxHLcBznquE3a5IcLM932ctmSGOoBAC6rsQfhXEJZpRjvVGDu7L6iwW2-c4Vr02u2bIesNq8Khxt7nQAUijPGOececvAgo981BHIEtByGR3fAuNyjPnzUqhAd0LgpoILU29Ok0EJdcNrBK4nmoHKgtFsF"/>
+</div>
+</div>
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-xl font-bold text-white leading-tight group-hover:text-primary transition-colors">Nebula Drift</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-1.5 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-wider">Rank C</span>
+<span class="text-[#58728a] text-xs">ID: #1234</span>
+</div>
+</div>
+</div>
+<p class="text-[#90adcb] text-sm mb-4 line-clamp-2">Explorers of the deep story lore. Writers and RPers encouraged.</p>
+<div class="grid grid-cols-2 gap-2 mb-5">
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Members</span>
+<span class="text-sm font-mono text-white">22<span class="text-[#58728a]">/50</span></span>
+</div>
+<div class="bg-[#050505]/50 p-2 rounded border border-[#223649] flex flex-col">
+<span class="text-[10px] text-[#58728a] uppercase tracking-wider">Focus</span>
+<span class="text-sm font-mono text-white">RP / Lore</span>
+</div>
+</div>
+<div class="mt-auto grid grid-cols-2 gap-3">
+<button class="px-3 py-2 rounded border border-[#223649] hover:bg-[#223649] text-white text-xs font-bold uppercase tracking-wide transition-colors">
+                 Profile
+               </button>
+<button class="px-3 py-2 rounded bg-[#223649] text-[#58728a] cursor-not-allowed text-xs font-bold uppercase tracking-wide transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span> Request
+               </button>
+</div>
+</div>
+</article>
+</div>
+<!-- Footer Pagination Loader -->
+<div class="flex justify-center pb-8">
+<button class="group flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity">
+<span class="text-xs font-mono text-primary animate-pulse">LOAD NEXT SECTOR</span>
+<div class="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(37,140,244,0.3)] transition-all">
+<span class="material-symbols-outlined text-primary">expand_more</span>
+</div>
+</button>
+</div>
+</div>
+</main>
+</body></html>

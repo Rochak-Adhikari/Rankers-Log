@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Home Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#0b1219", // Slightly darker than component default for depth
+                        "hud-dark": "#101a23",
+                        "hud-glass": "rgba(22, 33, 44, 0.8)",
+                        "border-tech": "#314d68",
+                        "accent-glow": "rgba(37, 141, 244, 0.3)",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    boxShadow: {
+                        "glow": "0 0 15px rgba(37, 141, 244, 0.15)",
+                        "glow-strong": "0 0 20px rgba(37, 141, 244, 0.3)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for that tech feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b1219; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #314d68; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+        .clip-chamfer {
+            clip-path: polygon(
+                10px 0, 100% 0, 
+                100% calc(100% - 10px), calc(100% - 10px) 100%, 
+                0 100%, 0 10px
+            );
+        }
+        .clip-hex-avatar {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white font-display overflow-x-hidden min-h-screen flex flex-col">
+<!-- Top HUD / Navigation -->
+<header class="fixed top-0 left-0 right-0 z-50 border-b border-border-tech bg-hud-dark/95 backdrop-blur-md h-16 px-4 lg:px-8 flex items-center justify-between shadow-glow">
+<!-- Logo & Search -->
+<div class="flex items-center gap-6 lg:gap-8 flex-1">
+<div class="flex items-center gap-3 text-primary hover:text-white transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-3xl group-hover:drop-shadow-[0_0_8px_rgba(37,141,244,0.8)] transition-all">hub</span>
+<h1 class="text-xl lg:text-2xl font-bold tracking-tighter uppercase hidden md:block">Rankers Log</h1>
+</div>
+<label class="hidden md:flex items-center max-w-md w-full h-10 relative">
+<div class="absolute left-3 text-slate-400 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full h-full bg-[#182634] border border-border-tech text-sm text-white pl-10 pr-4 rounded focus:outline-none focus:border-primary focus:shadow-glow transition-all placeholder:text-slate-500 font-body" placeholder="Search Database..."/>
+</label>
+</div>
+<!-- Right Side Stats & Actions -->
+<div class="flex items-center gap-4 lg:gap-6">
+<!-- XP Bar Widget (Hidden on mobile) -->
+<div class="hidden lg:flex flex-col w-48 gap-1">
+<div class="flex justify-between text-xs font-bold text-primary tracking-widest">
+<span>LVL 42</span>
+<span>XP 85%</span>
+</div>
+<div class="h-1.5 w-full bg-[#182634] rounded-full overflow-hidden border border-border-tech/50">
+<div class="h-full bg-primary shadow-[0_0_10px_#258cf4]" style="width: 85%"></div>
+</div>
+</div>
+<!-- Icons -->
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded bg-[#182634] border border-border-tech hover:border-primary hover:text-primary transition-all relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded bg-[#182634] border border-border-tech hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded bg-[#182634] border border-border-tech hover:border-primary hover:text-primary transition-all md:hidden">
+<span class="material-symbols-outlined text-[20px]">menu</span>
+</button>
+</div>
+<!-- Profile -->
+<div class="w-10 h-10 bg-center bg-cover clip-hex-avatar border-2 border-primary cursor-pointer hover:scale-105 transition-transform" data-alt="User Avatar showing a sci-fi character" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUcKqatwgzrPCpnq__WROIXBqFMA8IMso1_mG7642KjCO3hFToTZpmc5S__YAZtMaQR_QhdX5RUwFxnkvr0dTc0F4eATkIQVeTpn-sdhjhvqcWsM1CAfpUSrFQr5gUHajQYknsV_Qfka9PwxcDMnYiYPRUVJLsybnIxl79BkvMv2r56ccgCxR15bLsUum0gJc4gr33ub-TaeRbXzoD-hZBzbBera2mrTFVP3JYobZGeyjcvhit2YQ9KPJPxyG4jAm4so4Ro0oc_UWV');">
+</div>
+</div>
+</header>
+<!-- Main Grid Layout -->
+<div class="pt-20 pb-8 px-4 lg:px-8 max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-start h-full">
+<!-- Left Sidebar: Command Deck (Navigation) -->
+<nav class="hidden lg:flex lg:col-span-3 flex-col gap-6 sticky top-24">
+<!-- Mini Profile Card -->
+<div class="p-4 rounded bg-hud-glass border border-border-tech backdrop-blur-sm shadow-lg flex items-center gap-4 group hover:border-primary/50 transition-colors">
+<div class="w-12 h-12 bg-center bg-cover clip-hex-avatar shrink-0 border border-primary/50" data-alt="Commander Kai Avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBC21oWN6aqjJwVUtQw8pt8lCh8FJ89dIc5QV6xgSo1nZZ6IvMjYUZWKzPvB04msLfI_6xy844afzqkwyAKeDlWejiXCGyAfVZ9gQRzsTmYwCoyHmRuOkNWdjIlZXKx_b-mh8GrljFKQFniWbmDLxfEwumnTQandxJfxcgXZHV-3oVGZ0DbPSkZtWAFWV-fL2Yunc7HhJXtu4_UwofgarP92JZ8jeq_ka92hTG37RXMkj_5pU2kAVB6QpeyPM3QAacbpVXUj-UIQcjz');">
+</div>
+<div class="flex flex-col">
+<h3 class="font-bold text-white group-hover:text-primary transition-colors">Commander Kai</h3>
+<p class="text-xs text-primary/80 uppercase tracking-wider">Rank: Vanguard</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded bg-primary/20 border-l-4 border-primary text-white font-medium shadow-glow transition-all" href="#">
+<span class="material-symbols-outlined text-primary">home_app_logo</span>
+<span>Home Base</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded hover:bg-[#182634] border-l-4 border-transparent hover:border-slate-600 text-slate-400 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">style</span>
+<span>My Collection</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded hover:bg-[#182634] border-l-4 border-transparent hover:border-slate-600 text-slate-400 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span>Quest Log</span>
+<span class="ml-auto bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded">3</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded hover:bg-[#182634] border-l-4 border-transparent hover:border-slate-600 text-slate-400 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Guild Hall</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded hover:bg-[#182634] border-l-4 border-transparent hover:border-slate-600 text-slate-400 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Inventory</span>
+</a>
+</div>
+<!-- Mini Widget: Daily Streak -->
+<div class="mt-4 p-4 rounded bg-[#182634]/50 border border-border-tech/50">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs text-slate-400 uppercase font-bold">Login Streak</span>
+<span class="text-xs text-primary font-bold">Day 24</span>
+</div>
+<div class="flex gap-1">
+<div class="h-2 flex-1 bg-primary rounded-sm shadow-[0_0_5px_#258cf4]"></div>
+<div class="h-2 flex-1 bg-primary rounded-sm shadow-[0_0_5px_#258cf4]"></div>
+<div class="h-2 flex-1 bg-primary rounded-sm shadow-[0_0_5px_#258cf4]"></div>
+<div class="h-2 flex-1 bg-primary/30 rounded-sm"></div>
+<div class="h-2 flex-1 bg-[#101a23] rounded-sm"></div>
+</div>
+</div>
+</nav>
+<!-- Center Column: Feed -->
+<main class="lg:col-span-6 w-full flex flex-col gap-6">
+<!-- Composer (Data Input Terminal) -->
+<div class="relative bg-hud-glass border border-border-tech backdrop-blur-md rounded p-4 shadow-lg group focus-within:border-primary focus-within:shadow-glow transition-all duration-300">
+<!-- Tech decoration corner -->
+<div class="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity"></div>
+<div class="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex gap-4">
+<div class="w-10 h-10 bg-center bg-cover clip-hex-avatar shrink-0 border border-slate-600" data-alt="User Avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCiE4fQt4ULA8yjvZkhqGqLAMtYjj3ySgEcTZ0M3hsEYVPvfdMaBGZiZ6knztCsfXfBa48lSMr2mfw_9p9CFvz3jybCcL__Dm_TIzXt8NDlw0PVmkkjZApw4ibgoa3emGBhm8bv33Hlibg92EKUHQhOxMlSUbkRn86vzanDQ6g_4J6iT8eVJBeQtikpFBqRhf6s-EYDQuZyrXvjJvKq6FZ1sAq_CxiYFHQ4lc-IhvSY-Lr11fkWlHz8bLnabU8YY2iZDV_psJ1rHNPx');">
+</div>
+<div class="flex-1 flex flex-col gap-3">
+<textarea class="w-full bg-[#101a23] border-none text-white placeholder:text-slate-500 font-body resize-none h-12 focus:h-24 transition-all duration-200 focus:ring-0 p-2 text-sm rounded-sm" placeholder="Initialize new log entry..."></textarea>
+<div class="flex justify-between items-center pt-2 border-t border-border-tech/30">
+<div class="flex gap-2">
+<button class="p-2 text-primary hover:bg-[#182634] rounded transition-colors" title="Add Image">
+<span class="material-symbols-outlined text-[20px]">image</span>
+</button>
+<button class="p-2 text-primary hover:bg-[#182634] rounded transition-colors" title="Log Achievement">
+<span class="material-symbols-outlined text-[20px]">emoji_events</span>
+</button>
+<button class="p-2 text-primary hover:bg-[#182634] rounded transition-colors" title="Tag Activity">
+<span class="material-symbols-outlined text-[20px]">label</span>
+</button>
+</div>
+<button class="bg-primary hover:bg-blue-600 text-white text-xs font-bold uppercase tracking-wider py-2 px-6 rounded-sm shadow-glow transition-all flex items-center gap-2">
+<span>Upload</span>
+<span class="material-symbols-outlined text-[16px]">upload</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Feed Post 1: Anime Watch Log -->
+<article class="bg-hud-glass border border-border-tech backdrop-blur-md rounded hover:border-primary/40 transition-colors duration-300 relative overflow-hidden">
+<!-- Left Accent Line -->
+<div class="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-primary to-transparent opacity-80"></div>
+<div class="p-5 flex flex-col gap-4">
+<!-- Post Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-center bg-cover clip-hex-avatar border border-primary/50" data-alt="User Kai Avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCMo1BGa28o9qf9AV-2MNp2SEJDmbN0_3LvKIfNqsXNyWJEpM1DnLKs3Hg4nAW7JMB0zAqHn2tBXFqB4CA4kjUw7f5L6XG17wfNbPsQF67IMcIExgnrFbPZId3t38jpZ0ztTjtRUDADPJVUlpwiHeRNgTCKGohiJTPi5ui75c86pJeI_Mn34l-Ele5gYL00Gg08lHIKuMxX01clFCfTdxrw5n32jTnV3MhInVCsujdYGeNGHtiHQni7Bu36ncTpiIRgq8pTOmLp6I2I');"></div>
+<div>
+<h4 class="font-bold text-white leading-none">Commander Kai</h4>
+<p class="text-xs text-primary/80 mt-1">2 hours ago • Anime Log</p>
+</div>
+</div>
+<span class="px-2 py-1 rounded bg-green-500/20 text-green-400 text-[10px] font-bold border border-green-500/30 uppercase tracking-widest">Completed</span>
+</div>
+<!-- Post Body -->
+<div class="flex flex-col gap-3">
+<p class="text-slate-300 font-body text-sm leading-relaxed">
+                            Just finished the <span class="text-white font-medium">Cyberpunk Edgerunners</span> series. The visual style is absolutely unmatched. Can't wait for the next mission.
+                        </p>
+<!-- Embedded Content Card -->
+<div class="bg-[#101a23] rounded border border-border-tech overflow-hidden group/card cursor-pointer">
+<div class="h-48 w-full bg-cover bg-center group-hover/card:scale-105 transition-transform duration-500" data-alt="Cyberpunk Edgerunners Anime Poster showing characters looking at a glowing city" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6k1WeJ42Ug8sziIicmnaBtIv-TarEIPiiJpGoriGKUp5rLcPMa8VxQ5Z3xnt2sL8n1Aa4sifTiSFTmVPP9189Vat1rfP2Nb8V-pBOVAopSJLZs-JRQjU-Rnjv-vETMxWvZVzeH9i_XLa5UBSf73kczE1JucIpO6KFCjvj72rzXx38MJwQMrZ8xz25mGMlEJywuoNiSttpAeC0QvgVIQzwM7nVEW1Y2z1BIvn_P8xp1WFFHMrDkNJfbxS1UOcopX7dGfuRYIMvzXSU');"></div>
+<div class="p-4 relative bg-hud-dark">
+<h5 class="text-lg font-bold text-white">Cyberpunk Edgerunners</h5>
+<div class="flex items-center justify-between mt-3">
+<div class="flex-1 mr-4">
+<div class="flex justify-between text-[10px] text-slate-400 uppercase mb-1">
+<span>Series Progress</span>
+<span>100%</span>
+</div>
+<div class="h-1.5 bg-[#182634] rounded-full overflow-hidden">
+<div class="h-full bg-green-500 w-full shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+</div>
+</div>
+<div class="text-green-400 text-xs font-bold">+500 XP</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Post Actions -->
+<div class="flex items-center justify-between pt-2 border-t border-border-tech/30">
+<div class="flex gap-4">
+<button class="flex items-center gap-2 text-slate-400 hover:text-primary transition-colors text-xs font-bold uppercase tracking-wider group">
+<span class="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform">thumb_up</span>
+<span>Commend</span>
+</button>
+<button class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-wider group">
+<span class="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform">chat_bubble</span>
+<span>Transmit (4)</span>
+</button>
+</div>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Feed Post 2: Game Achievement -->
+<article class="bg-hud-glass border border-border-tech backdrop-blur-md rounded hover:border-primary/40 transition-colors duration-300 relative">
+<div class="p-5 flex flex-col gap-4">
+<!-- Post Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-center bg-cover clip-hex-avatar border border-primary/50" data-alt="User Rina Avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDImvYiqwrhXZDTx1vyuW7c9ql7ioPWqKhscLy1YeSu6ht97ap3CQHzLcMxNVNvDKqx1pT0f2Nk7kn90OQXOqvYh5gyuhCHluEmbG_qXe17aZ0XHSkyYKpE8hilImdsCjmrgCYJ7hWcXOtNpXv9Ks6jQDT0mTBfboL_hfvj6epB3KLg0mnHc7WdUeSv6q9rVW9zlZXhZw-3b9REmIKJAltbRirQJSgKqckpXvzREdvO2T1YjnAQZ5HaCHmrOJNJcPCFdp5dc4JPsQoH');"></div>
+<div>
+<h4 class="font-bold text-white leading-none">Specialist Rina</h4>
+<p class="text-xs text-primary/80 mt-1">45 mins ago • Gaming Log</p>
+</div>
+</div>
+<span class="px-2 py-1 rounded bg-yellow-500/20 text-yellow-400 text-[10px] font-bold border border-yellow-500/30 uppercase tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">emoji_events</span> Trophy
+                        </span>
+</div>
+<!-- Post Body -->
+<div class="flex flex-col gap-3">
+<p class="text-slate-300 font-body text-sm leading-relaxed">
+                            Finally defeated the Malenia, Blade of Miquella. Took me 40 attempts but the Platinum trophy is mine!
+                        </p>
+<!-- Achievement Card -->
+<div class="bg-gradient-to-r from-[#182634] to-[#101a23] rounded border border-border-tech p-4 flex items-center gap-4">
+<div class="w-16 h-16 rounded bg-[#0b1219] border border-yellow-500/30 flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(234,179,8,0.2)]">
+<span class="material-symbols-outlined text-4xl text-yellow-400">military_tech</span>
+</div>
+<div class="flex flex-col flex-1">
+<h5 class="text-base font-bold text-white">Elden Ring: Elden Lord</h5>
+<p class="text-xs text-slate-400 uppercase tracking-wide">Ultra Rare Achievement • 1.2% Players</p>
+</div>
+<div class="text-yellow-400 text-xs font-bold whitespace-nowrap">+1200 XP</div>
+</div>
+</div>
+<!-- Post Actions -->
+<div class="flex items-center justify-between pt-2 border-t border-border-tech/30">
+<div class="flex gap-4">
+<button class="flex items-center gap-2 text-primary transition-colors text-xs font-bold uppercase tracking-wider group">
+<span class="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform fill-current">thumb_up</span>
+<span>Commended (24)</span>
+</button>
+<button class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-wider group">
+<span class="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform">chat_bubble</span>
+<span>Transmit (8)</span>
+</button>
+</div>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Loading State / Infinite Scroll -->
+<div class="flex justify-center py-6">
+<div class="flex items-center gap-2 text-primary/50 text-xs uppercase tracking-widest animate-pulse">
+<span class="material-symbols-outlined text-lg spin-slow">sync</span>
+                    Fetching additional data streams...
+                </div>
+</div>
+</main>
+<!-- Right Sidebar: Radar (Widgets) -->
+<aside class="hidden lg:flex lg:col-span-3 flex-col gap-6 sticky top-24">
+<!-- Widget 1: Active Quests (Trending) -->
+<div class="bg-hud-glass border border-border-tech backdrop-blur-md rounded p-4 flex flex-col gap-4">
+<div class="flex items-center justify-between border-b border-border-tech/50 pb-2">
+<h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">radar</span>
+                        Active Quests
+                    </h3>
+</div>
+<div class="flex flex-col gap-3">
+<div class="group cursor-pointer">
+<div class="flex justify-between items-start mb-1">
+<span class="text-sm font-medium text-slate-200 group-hover:text-primary transition-colors">Winter Anime Season</span>
+<span class="text-[10px] bg-[#182634] px-1.5 py-0.5 rounded text-slate-400">Weekly</span>
+</div>
+<p class="text-xs text-slate-500 mb-2">Watch 3 premiere episodes.</p>
+<div class="h-1 bg-[#182634] rounded-full overflow-hidden w-full">
+<div class="h-full bg-primary w-1/3"></div>
+</div>
+</div>
+<div class="group cursor-pointer pt-3 border-t border-border-tech/30">
+<div class="flex justify-between items-start mb-1">
+<span class="text-sm font-medium text-slate-200 group-hover:text-primary transition-colors">RPG Month</span>
+<span class="text-[10px] bg-[#182634] px-1.5 py-0.5 rounded text-slate-400">Event</span>
+</div>
+<p class="text-xs text-slate-500 mb-2">Log 10 hours of RPG gameplay.</p>
+<div class="h-1 bg-[#182634] rounded-full overflow-hidden w-full">
+<div class="h-full bg-purple-500 w-3/4 shadow-[0_0_5px_rgba(168,85,247,0.4)]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Widget 2: Allies Online -->
+<div class="bg-hud-glass border border-border-tech backdrop-blur-md rounded p-4 flex flex-col gap-4">
+<div class="flex items-center justify-between border-b border-border-tech/50 pb-2">
+<h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-green-500 text-[18px]">wifi</span>
+                        Allies Online
+                    </h3>
+<span class="text-xs font-bold text-slate-500">4</span>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="relative">
+<div class="w-8 h-8 rounded-full bg-cover bg-center" data-alt="Friend 1" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUIjccNWE5Nhobyqgcu8f6XaEcuf_m9E_hgFQLL7DglUknQWNx9_c3YJwD96LziLdXp9TAvJsaGvtlhf9L0EWtTkBfHlMwAOEkMTvI2jnUSe9pKXRafSjL7Zod5Crw91nkGaoWrRDuMr-PIaaoTumtJ4tA-_9EoogMw8jeiPl3AZrkABO562MeAyH7ONIWOyEzcr9JIBGGjjIXt6wsE_HNDouRgnpRD62PWLAiSonoNgqHbmy8e46iyurVtAfu0R5LqWpVjs1DqlcV');"></div>
+<div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 border-2 border-background-dark rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm text-slate-200 group-hover:text-white transition-colors">Viper_01</span>
+<span class="text-[10px] text-primary">Playing Valorant</span>
+</div>
+</div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="relative">
+<div class="w-8 h-8 rounded-full bg-cover bg-center" data-alt="Friend 2" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCcUNBRoJN22E9AG3wuvW8hw9kFk9IasVgks2s8dAMjf0aFf1pKhJOTPEM1Fd7ffTsVvywqxpf2tKKfPHyvfQlqOi_DTsYasg1nGcM26vp7lZl3bt5liymcGgK-PSMOeLveLQQA-R2Ri6mVh1IDgOsrUV59RXTPlwQX4LfWDyQwL0ZjlPX_zVj5rXft2Co0ECRRm1KeUg4v3Z5S3kOfJ9Pb_sI49uNBRgdQjvubPfHQ1WfYm0AK-RoJ88RBqAa5NGEEPnqRVpGSZi2W');"></div>
+<div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 border-2 border-background-dark rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm text-slate-200 group-hover:text-white transition-colors">GhostShell</span>
+<span class="text-[10px] text-slate-500">Idle in Lobby</span>
+</div>
+</div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="relative">
+<div class="w-8 h-8 rounded-full bg-cover bg-center" data-alt="Friend 3" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA3y2dnjkzdj_HtNCtyDce3qgtdG79t10Ypi09LSFiUHc6QKo9myB6x9MhY8JNZTtLI9-u3oXwVJkh1_yEU_u6dLmbQPUnDfDqhQJqeen-IF6HK_zK_FtEgBaPp5D4eNEKgi_kTuaATNR5jeM_O5bwW52FsjK-iaSyWYNSZ1K7B27EyMHvgVoF3Wd-JKYUUnpiMwaukwHAQTBeJ5RhKprJOcFRPlFqNEDjF0KEhyH7ab2zT9fwhYOG-IDbyaEKjkkeeXWQjg8bCcyS-');"></div>
+<div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-yellow-500 border-2 border-background-dark rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm text-slate-200 group-hover:text-white transition-colors">NeoTokyo</span>
+<span class="text-[10px] text-slate-500">Reading Manga</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-2 border border-dashed border-slate-600 text-slate-500 hover:text-white hover:border-white py-2 rounded text-xs uppercase tracking-widest transition-all">
+                    Find Guild Members
+                </button>
+</div>
+</aside>
+</div>
+</body></html>

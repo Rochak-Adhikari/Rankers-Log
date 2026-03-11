@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>System Appraisal - Rankers Log</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "primary-dark": "#1a6cb5",
+                        "secondary": "#00e5ff",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#0a1016",
+                        "surface-dark": "#101a23",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>.hud-border {
+            position: relative;
+            border: 1px solid rgba(37, 140, 244, 0.2);
+        }
+        .hud-border::before, .hud-border::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            transition: all 0.3s ease;
+        }
+        .hud-border::before {
+            top: -1px;
+            left: -1px;
+            border-top: 2px solid #258cf4;
+            border-left: 2px solid #258cf4;
+        }
+        .hud-border::after {
+            bottom: -1px;
+            right: -1px;
+            border-bottom: 2px solid #258cf4;
+            border-right: 2px solid #258cf4;
+        }
+        .scan-line {
+            background: linear-gradient(to bottom, transparent, rgba(0, 229, 255, 0.5), transparent);
+            animation: scan 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            height: 100px;
+            opacity: 0.5;
+        }
+        @keyframes scan {
+            0% { transform: translateY(-150%); }
+            100% { transform: translateY(250%); }
+        }
+        .bg-grid {
+            background-size: 40px 40px;
+            mask-image: linear-gradient(to bottom, transparent, black, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+        }@keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(37, 140, 244, 0.1); opacity: 0.8; transform: scale(1); }
+            50% { box-shadow: 0 0 60px rgba(0, 229, 255, 0.3); opacity: 1; transform: scale(1.02); }
+        }
+        .pulsating-field {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #00e5ff }
+        }
+        .typing-effect {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #00e5ff;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+            display: inline-block;
+            max-width: fit-content;
+        }
+        @keyframes text-glitch {
+            0% { transform: translate(0); opacity: 1; filter: blur(0); }
+            2% { transform: translate(-2px, 1px); opacity: 0.8; }
+            4% { transform: translate(2px, -1px); opacity: 0.9; filter: blur(1px); }
+            6% { transform: translate(0); opacity: 1; filter: blur(0); }
+            100% { transform: translate(0); opacity: 1; }
+        }
+        .glitch-active {
+            animation: text-glitch 4s infinite;
+        }
+        @keyframes progress-loading {
+            0% { width: 0%; }
+            10% { width: 15%; }
+            30% { width: 15%; }
+            40% { width: 45%; }
+            60% { width: 55%; }
+            80% { width: 80%; }
+            100% { width: 92%; }
+        }
+        .progress-bar-fill {
+            animation: progress-loading 6s ease-out forwards;
+        }
+        .scan-overlay-horizontal {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 140, 244, 0.2), transparent);
+            transform: skewX(-20deg);
+            animation: scan-horizontal 3s infinite linear;
+            pointer-events: none;
+        }
+        @keyframes scan-horizontal {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display overflow-x-hidden min-h-screen flex flex-col selection:bg-primary selection:text-white">
+<header class="fixed top-0 w-full z-50 border-b border-[#223649] bg-[#101a23]/90 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl animate-pulse">radar</span>
+<h2 class="text-xl font-bold tracking-tight">RANKERS LOG <span class="text-xs font-normal text-gray-500 ml-2 tracking-widest opacity-60">SYSTEM v4.0</span></h2>
+</div>
+<nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
+<a class="text-gray-400 hover:text-primary transition-colors" href="#">DASHBOARD</a>
+<a class="text-white relative after:content-[''] after:absolute after:-bottom-5 after:left-0 after:w-full after:h-0.5 after:bg-primary" href="#">LICENSE</a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#">GUILDS</a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#">QUESTS</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 rounded bg-[#182634] border border-[#223649]">
+<div class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
+<span class="text-xs text-gray-300 font-mono">PROCESSING</span>
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-[#182634] hover:bg-primary/20 text-gray-300 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+</div>
+</div>
+</header>
+<main class="relative flex-1 flex flex-col pt-24 pb-12 px-6">
+<div class="absolute inset-0 z-0 bg-grid-pattern opacity-[0.07] pointer-events-none"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
+<div class="relative z-10 max-w-7xl mx-auto w-full flex flex-col gap-8 h-full">
+<div class="w-full flex flex-col md:flex-row justify-between items-end border-b border-[#223649] pb-4 mb-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-sm animate-spin">sync</span>
+<span class="text-primary text-xs font-bold tracking-[0.2em] animate-pulse">SYSTEM APPRAISAL INITIATED</span>
+</div>
+<h1 class="text-3xl md:text-4xl font-bold uppercase tracking-tight glitch-active">Identifying Subject...</h1>
+</div>
+<div class="text-right mt-4 md:mt-0">
+<p class="text-xs text-gray-500 font-mono">ID: AUTHENTICATING... • THREAT LEVEL: CALCULATING</p>
+<p class="text-sm text-secondary font-mono mt-1 flex items-center justify-end gap-2">
+                    SYSTEM SYNC: 
+                    <span class="inline-block w-12 text-right">42%</span>
+</p>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">
+<div class="w-full lg:w-5/12 flex flex-col items-center">
+<div class="relative w-full max-w-[400px] aspect-[3/5] rounded-xl flex items-center justify-center">
+<div class="absolute inset-0 bg-primary/5 rounded-xl pulsating-field border border-primary/20"></div>
+<div class="absolute inset-0 rounded-xl overflow-hidden z-0">
+<div class="scan-line w-full"></div>
+</div>
+<div class="relative z-10 flex flex-col items-center justify-center gap-6 text-center p-8 w-full h-full border-2 border-dashed border-white/10 rounded-xl bg-[#0a1016]/80 backdrop-blur-sm">
+<div class="w-32 h-32 rounded-full border border-primary/30 flex items-center justify-center relative overflow-hidden bg-black/50">
+<span class="material-symbols-outlined text-5xl text-primary/40 animate-pulse">fingerprint</span>
+<div class="absolute inset-0 border-t-2 border-secondary/50 animate-spin opacity-50"></div>
+</div>
+<div class="space-y-2">
+<h3 class="text-lg font-bold text-white/50 tracking-widest uppercase">Awaiting Data</h3>
+<p class="text-xs text-primary font-mono animate-pulse">Establishing Neural Link...</p>
+</div>
+<div class="absolute top-4 left-4 w-4 h-4 border-t border-l border-primary/50"></div>
+<div class="absolute top-4 right-4 w-4 h-4 border-t border-r border-primary/50"></div>
+<div class="absolute bottom-4 left-4 w-4 h-4 border-b border-l border-primary/50"></div>
+<div class="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-primary/50"></div>
+</div>
+</div>
+<div class="mt-6 flex flex-col items-center gap-2 w-full max-w-[300px]">
+<div class="text-[10px] text-gray-500 font-mono uppercase tracking-widest">Generating Artifact...</div>
+<div class="w-full h-1 bg-[#182634] rounded-full overflow-hidden">
+<div class="h-full bg-secondary/50 progress-bar-fill w-0"></div>
+</div>
+</div>
+</div>
+<div class="w-full lg:w-7/12 flex flex-col gap-6 relative">
+<div class="scan-overlay-horizontal"></div>
+<div class="hud-border bg-[#101a23]/80 p-6 md:p-8 rounded-lg relative overflow-hidden backdrop-blur-xl shadow-2xl">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-sm text-white font-bold tracking-widest uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">dataset</span>
+                            Source Material Input
+                        </h3>
+<span class="text-[10px] font-mono text-secondary animate-pulse">LIVE FEED ACTIVE</span>
+</div>
+<div class="space-y-4 mb-8">
+<label class="block text-xs text-gray-400 font-mono uppercase mb-2">Select Top 3 Narrative Artifacts</label>
+<div class="w-full min-h-[60px] bg-[#0a1016] border border-[#223649] rounded p-3 flex flex-wrap gap-2 focus-within:border-primary focus-within:shadow-[0_0_15px_rgba(37,140,244,0.3)] transition-all duration-300 relative group">
+<div class="px-3 py-1.5 rounded bg-primary/20 border border-primary/50 text-sm text-white font-medium flex items-center gap-2 animate-[pulse_3s_infinite]">
+                                Attack on Titan
+                                <button class="hover:text-primary"><span class="material-symbols-outlined text-xs">close</span></button>
+</div>
+<div class="px-3 py-1.5 rounded bg-primary/20 border border-primary/50 text-sm text-white font-medium flex items-center gap-2 animate-[pulse_3s_infinite] delay-100">
+                                Elden Ring
+                                <button class="hover:text-primary"><span class="material-symbols-outlined text-xs">close</span></button>
+</div>
+<div class="px-3 py-1.5 rounded bg-primary/20 border border-primary/50 text-sm text-white font-medium flex items-center gap-2 animate-[pulse_3s_infinite] delay-200">
+                                Solo Leveling
+                                <button class="hover:text-primary"><span class="material-symbols-outlined text-xs">close</span></button>
+</div>
+<div class="h-6 w-[2px] bg-primary animate-blink my-auto ml-1"></div>
+<div class="absolute inset-0 border border-transparent group-focus-within:border-secondary/30 pointer-events-none opacity-0 group-focus-within:opacity-100 animate-pulse"></div>
+</div>
+<p class="text-[10px] text-gray-500 font-mono">* System will extrapolate class and rank based on narrative complexity preference.</p>
+</div>
+<button class="w-full h-14 relative group overflow-hidden rounded bg-primary hover:bg-primary-dark transition-all duration-300 shadow-[0_0_20px_rgba(37,140,244,0.4)]">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+<div class="flex items-center justify-center gap-3">
+<span class="material-symbols-outlined animate-spin text-white">settings_motion_mode</span>
+<span class="text-white font-bold tracking-widest text-lg glitch-active">BEGIN APPRAISAL</span>
+</div>
+</button>
+</div>
+<div class="mt-2 bg-black/40 rounded border border-white/5 p-4 font-mono text-xs h-48 overflow-y-auto custom-scrollbar relative">
+<div class="absolute top-2 right-2 flex gap-1">
+<div class="w-2 h-2 rounded-full bg-red-500"></div>
+<div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+</div>
+<div class="space-y-2 text-gray-400">
+<p>&gt; INITIATING SYSTEM PROTOCOL 4.2...</p>
+<p>&gt; CONNECTING TO AKASHIC RECORDS... <span class="text-green-400">[CONNECTED]</span></p>
+<p class="text-white">&gt; SCANNING INPUT ARTIFACTS:</p>
+<ul class="pl-4 space-y-1 text-gray-500">
+<li>- DETECTED: "Dark Fantasy" affinity</li>
+<li>- DETECTED: "Progression Fantasy" tropes</li>
+<li>- DETECTED: "High Difficulty" preference</li>
+</ul>
+<div class="flex items-center gap-2 text-primary mt-4">
+<span>&gt; STATUS:</span>
+<span class="typing-effect text-secondary font-bold">Analyzing taste patterns...</span>
+</div>
+<div class="flex items-center gap-3 mt-2 pl-2">
+<div class="w-4 h-4 border-2 border-gray-600 border-t-primary rounded-full animate-spin"></div>
+<span class="text-gray-500">Compiling Hunter Profile</span>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-6 border-t border-[#223649] opacity-50 pointer-events-none grayscale">
+<div class="flex flex-col sm:flex-row gap-3">
+<button class="flex-1 h-12 bg-[#182634] border border-[#314d68] text-gray-400 font-bold rounded flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">lock</span>
+<span>DOWNLOAD LICENSE</span>
+</button>
+<button class="flex-1 h-12 bg-[#182634] border border-[#314d68] text-gray-400 font-bold rounded flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">lock</span>
+<span>SHARE</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="fixed bottom-0 w-full bg-[#0a1016] border-t border-[#223649] py-2 px-6 z-50 hidden md:block">
+<div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] font-mono text-gray-500">
+<div class="flex gap-4">
+<span class="text-secondary animate-pulse">SYSTEM STATUS: SCANNING</span>
+<span>SERVER: ASIA-1</span>
+<span>LATENCY: 12ms</span>
+</div>
+<div class="flex gap-4 opacity-50">
+<span>RANKERS LOG © 2024</span>
+<span>PROTOCOL 77-B</span>
+</div>
+</div>
+</footer>
+
+</body></html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Global Ladder</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505", // Void Dark
+                        "rank-gold": "#FFD700",
+                        "rank-silver": "#C0C0C0",
+                        "rank-bronze": "#CD7F32",
+                        "rank-cyan": "#00FFFF",
+                        "rank-purple": "#BF00FF",
+                        "rank-green": "#00FF00",
+                        "rank-red": "#FF0000",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #ffffff05 1px, transparent 1px), linear-gradient(to bottom, #ffffff05 1px, transparent 1px)",
+                        'god-rays': "linear-gradient(180deg, rgba(255,215,0,0.15) 0%, rgba(255,215,0,0) 100%)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4;
+        }
+        .chamfered-box {
+            clip-path: polygon(
+                20px 0, 100% 0, 
+                100% calc(100% - 20px), 
+                calc(100% - 20px) 100%, 
+                0 100%, 
+                0 20px
+            );
+        }
+        .neon-text-gold { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        .neon-text-silver { text-shadow: 0 0 10px rgba(192, 192, 192, 0.5); }
+        .neon-text-bronze { text-shadow: 0 0 10px rgba(205, 127, 50, 0.5); }
+        .neon-text-cyan { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+        .neon-text-primary { text-shadow: 0 0 10px rgba(37, 140, 244, 0.5); }
+        .hex-avatar {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        .hex-border-gold { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); }
+        .hex-border-silver { filter: drop-shadow(0 0 5px rgba(192, 192, 192, 0.5)); }
+        .hex-border-bronze { filter: drop-shadow(0 0 5px rgba(205, 127, 50, 0.5)); }
+        .glass-panel {
+            background: rgba(20, 25, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .podium-shine {
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+            background-size: 200% 200%;
+            animation: shine 3s infinite linear;
+        }
+        @keyframes shine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(37, 140, 244, 0.2); transform: scale(1); }
+            50% { box-shadow: 0 0 25px rgba(37, 140, 244, 0.6); transform: scale(1.05); }
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 3s infinite;
+        }
+        .ticker-up { color: #00FF00; text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
+        .ticker-down { color: #FF0000; text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display overflow-x-hidden min-h-screen selection:bg-primary selection:text-white">
+<div class="fixed inset-0 pointer-events-none bg-grid-pattern bg-[length:40px_40px] opacity-20 z-0"></div>
+<div class="relative z-10 flex h-full min-h-screen w-full flex-col">
+<header class="flex items-center justify-between border-b border-white/10 bg-[#050505]/90 backdrop-blur-md px-8 py-4 sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-4xl">hub</span>
+</div>
+<h1 class="text-2xl font-bold tracking-tight">RANKERS LOG <span class="text-xs font-normal text-gray-500 tracking-widest ml-2">GLOBAL LADDER</span></h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex h-10 items-center rounded-full bg-white/5 px-4 border border-white/10 w-64">
+<span class="material-symbols-outlined text-gray-400 text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full text-white placeholder-gray-500" placeholder="Find user..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold">Kairos</p>
+<p class="text-xs text-primary">Rank #42</p>
+</div>
+<div class="h-10 w-10 rounded-full bg-cover bg-center border border-primary/50" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdaWmABVJXA2jsgAaK0-A6KfaQdF1oWID-5yztCv3l5U4qlYJDSTECr6S60s6aBycW6BghIvBQ1xOa8-DhAwvTEzDPpjRcZd0K45p4r0ZfOwdKum9Qnyac1EEnvjyeO_Kq60P6BMi4UkW9vs35XyjWPzLq4wVuhV3rWwCt6UUEUAj6mnAT-RhULGMZ8cxGGp7Uc_F5TTib0U2w_QW5cFL4wkdzQUMu-AH7iLWkIVuNlTrz5B5RRSt_BDGQakh-x3VtiqhU72W8jV3j');"></div>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col relative px-4 md:px-12 lg:px-20 pb-32">
+<div class="flex justify-center mt-8 mb-4">
+<div class="bg-white/5 p-1 rounded-lg border border-white/10 flex relative">
+<div class="absolute left-1 top-1 bottom-1 w-[calc(50%-4px)] bg-primary/20 rounded-md border border-primary/40 transition-all duration-300"></div>
+<button class="relative px-8 py-2 text-sm font-bold uppercase tracking-widest text-primary z-10">Weekly</button>
+<button class="relative px-8 py-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-gray-300 z-10 transition-colors">All-Time</button>
+</div>
+</div>
+<div class="relative w-full max-w-5xl mx-auto h-[400px] flex items-end justify-center gap-4 md:gap-8 mb-16">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-full bg-god-rays opacity-50 blur-3xl pointer-events-none"></div>
+<div class="relative flex flex-col items-center z-10 group">
+<div class="relative mb-4 transition-transform duration-300 group-hover:-translate-y-2">
+<div class="absolute -inset-4 bg-rank-silver/20 blur-xl rounded-full"></div>
+<div class="w-32 h-36 hex-avatar bg-gray-800 p-1 hex-border-silver relative">
+<div class="w-full h-full hex-avatar bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAGIFyAo6ueD-dUMTcbzj-9oePgrp7PvNsW1osOYqtU1z9sCYNVYPBhj-AKGdPJtOyXqLHu88_TfZ1eJMJy-LIGTz_t-uS2GklYKxzsL4OQ4WcYTNlWL-eB46w-gVseq8xy_BqHwPN3Br2f-CN9NHV5ZtC1_ZUiaJEO0-bTpM-5Icn-N2ctOClbvf59IGR9UV-W7wZ7QUwZ_nkZKYf4KSV9Jpw4yReyXP0uT1iuIhFL1K8IaZJAkPzHlnq9VKlvRsuUHcnfzWwQPLSj');"></div>
+</div>
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-rank-silver text-black font-bold px-3 py-0.5 rounded-full text-xs shadow-lg shadow-rank-silver/50">LVL 89</div>
+</div>
+<div class="w-40 h-48 bg-gradient-to-t from-rank-silver/10 to-transparent border-x border-t border-rank-silver/30 rounded-t-lg flex flex-col items-center justify-end pb-4 relative overflow-hidden backdrop-blur-sm">
+<div class="podium-shine absolute inset-0 opacity-20"></div>
+<span class="text-4xl font-bold text-rank-silver neon-text-silver mb-2">2</span>
+<p class="text-white font-bold tracking-wider">Nova_Scout</p>
+<p class="text-xs text-rank-silver mt-1">9,420 XP</p>
+</div>
+</div>
+<div class="relative flex flex-col items-center z-20 -mb-4 group">
+<div class="absolute -top-16 text-rank-gold animate-bounce">
+<span class="material-symbols-outlined text-4xl neon-text-gold">crown</span>
+</div>
+<div class="relative mb-6 transition-transform duration-300 group-hover:-translate-y-3">
+<div class="absolute -inset-6 bg-rank-gold/20 blur-2xl rounded-full animate-pulse"></div>
+<div class="w-40 h-44 hex-avatar bg-gray-800 p-1 hex-border-gold relative">
+<div class="w-full h-full hex-avatar bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNi7Ir1_JVDK5k575XBEKw6VG8QHAiyB-d9mBlpBJO5RiXtSCo7DXGDGrAsOe7wo86lDtRXea3FxYOrPOmf44M0gRyIXNoAJF3AWYvO-q6DdmJ6glqW5W0_Esga9nt1F8N0wBJAR66XHxm1hovtEI6UpG16VmJp1mrv1cfBxDzPel7nMHFmIMACAoj47B4z-Ol562sFu6Qo6Cq0nqJhnTxpX0Nbdp_6W21MxGeUmiHBdwEsmpQncyUuWCQfWtAk5U-ujggqwJYwB81');"></div>
+</div>
+<div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-rank-gold text-black font-bold px-4 py-1 rounded-full text-sm shadow-lg shadow-rank-gold/50 tracking-widest">LVL 99</div>
+</div>
+<div class="w-48 h-64 bg-gradient-to-t from-rank-gold/10 to-transparent border-x border-t border-rank-gold/30 rounded-t-lg flex flex-col items-center justify-end pb-6 relative overflow-hidden backdrop-blur-md shadow-[0_0_30px_rgba(255,215,0,0.1)]">
+<div class="podium-shine absolute inset-0 opacity-30"></div>
+<span class="text-6xl font-bold text-rank-gold neon-text-gold mb-2">1</span>
+<p class="text-xl font-bold text-white tracking-wider">Jin-Woo</p>
+<p class="text-sm text-rank-gold mt-1 font-bold">12,500 XP</p>
+</div>
+</div>
+<div class="relative flex flex-col items-center z-10 group">
+<div class="relative mb-4 transition-transform duration-300 group-hover:-translate-y-2">
+<div class="absolute -inset-4 bg-rank-bronze/20 blur-xl rounded-full"></div>
+<div class="w-32 h-36 hex-avatar bg-gray-800 p-1 hex-border-bronze relative">
+<div class="w-full h-full hex-avatar bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAxNqrQq_1cG3Ho50pbWgA71G6lSd5TGaPiOURrgQUZa4ioS9HGSotD4ScDHGKDtzwTfQqAxiJtUMLsYW-SoMT8AIpWIWvkfRVKiOrFF4PIOFziEPunAqJ-web5JW-v4Wj1QSHeHpidUbMMp7qIaK7UJYxjQQR-lfPfE8a2rBevqHBV7SCzkq7TM36wY9Pso0OauHx3gCUgjSq4_GukK4XqN2RjlR9Tv4vIo6RoktAjU5MMKac21cCi2q2FV_tjG7Ln2jaqBMoXbHMk');"></div>
+</div>
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-rank-bronze text-black font-bold px-3 py-0.5 rounded-full text-xs shadow-lg shadow-rank-bronze/50">LVL 82</div>
+</div>
+<div class="w-40 h-36 bg-gradient-to-t from-rank-bronze/10 to-transparent border-x border-t border-rank-bronze/30 rounded-t-lg flex flex-col items-center justify-end pb-4 relative overflow-hidden backdrop-blur-sm">
+<div class="podium-shine absolute inset-0 opacity-20"></div>
+<span class="text-4xl font-bold text-rank-bronze neon-text-bronze mb-2">3</span>
+<p class="text-white font-bold tracking-wider">Rookie_One</p>
+<p class="text-xs text-rank-bronze mt-1">8,150 XP</p>
+</div>
+</div>
+</div>
+<div class="max-w-5xl mx-auto w-full flex flex-col gap-8">
+<div class="flex items-center gap-4">
+<div class="h-[1px] flex-1 bg-gradient-to-r from-transparent to-rank-gold"></div>
+<div class="px-4 py-1 rounded-full border border-rank-gold/30 bg-rank-gold/5 text-rank-gold text-xs font-bold uppercase tracking-[0.2em] shadow-[0_0_10px_rgba(255,215,0,0.2)]">
+                        Gold Tier (Top 10)
+                    </div>
+<div class="h-[1px] flex-1 bg-gradient-to-l from-transparent to-rank-gold"></div>
+</div>
+<div class="flex flex-col gap-3">
+<div class="group relative flex items-center bg-[#0a0f14] border border-white/5 hover:border-primary/50 rounded-lg p-3 transition-all hover:bg-white/5 hover:scale-[1.01]">
+<div class="w-16 text-center text-xl font-bold text-gray-400 font-display">04</div>
+<div class="flex flex-col items-center justify-center mr-6 w-8">
+<span class="material-symbols-outlined text-sm ticker-up">arrow_drop_up</span>
+<span class="text-[10px] text-green-500 font-bold">2</span>
+</div>
+<div class="h-10 w-10 rounded-md bg-cover bg-center mr-4 ring-1 ring-white/20" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBaCFjtC8Z9SMEyFpIvp0w4QUVCToRIdXCg5KEVqRJ1y8N4D_UCYg5zAp4GXrnr3NR2SWE_NxTeZ4eAnVdcxhOIvVAiiz5AaZQb8-X1vaYGt_ZvuwpOnH1zsZ0SxW-0r09ZEAJXeGRpOp4cvrtkxrGzJgqFEfJK2_PCuo9AQoYC4fETmUXkvqWPZQUn_sYokIUTIXZfuPtQZq-KsusbLcsfDFsbE0vdjD3Q3nCxlA40iY52ABTmSeZdqc8H7aW7S_NPVYgknsKpNn4r');"></div>
+<div class="flex-1">
+<h4 class="text-white font-bold text-sm">ShadowMonarch</h4>
+<p class="text-xs text-gray-500">Last active: 2m ago</p>
+</div>
+<div class="text-right px-4">
+<p class="text-primary font-bold text-sm font-display">7,890 XP</p>
+<p class="text-[10px] text-gray-600 uppercase">Lvl 79</p>
+</div>
+<div class="absolute right-0 top-0 bottom-0 w-1 bg-primary scale-y-0 group-hover:scale-y-100 transition-transform origin-center rounded-r-lg"></div>
+</div>
+<div class="group relative flex items-center bg-[#0a0f14] border border-white/5 hover:border-primary/50 rounded-lg p-3 transition-all hover:bg-white/5 hover:scale-[1.01]">
+<div class="w-16 text-center text-xl font-bold text-gray-400 font-display">05</div>
+<div class="flex flex-col items-center justify-center mr-6 w-8">
+<span class="material-symbols-outlined text-sm text-gray-600">remove</span>
+</div>
+<div class="h-10 w-10 rounded-md bg-cover bg-center mr-4 ring-1 ring-white/20" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBduUClT67EH4qznbqtRZ-gqkTWTWAxy_qfVxSIqOIkVLc9bSUAOJ_WxB_9dL7eyRgOyj8evIhI8wg0JmyRwTly6tr9pV8945HD0MzLBBgbAJSE8NPAxEfqthPiE1NOIAWfno0Y5uzgdcUOW3qLF_Ocdl4v51kW3eVHtIE2PtQzK4xGu8VYuvNp56WE_6Pobw9Cq1grOuxQxaOetFBNy6nWyBiJDtBZ6Oi6g99-AEHZ_rR11ehaprahjCqp0GPLjUAQ1L9jci2ZKXiI');"></div>
+<div class="flex-1">
+<h4 class="text-white font-bold text-sm">CyberPunk_2077</h4>
+<p class="text-xs text-gray-500">Last active: 1h ago</p>
+</div>
+<div class="text-right px-4">
+<p class="text-primary font-bold text-sm font-display">7,650 XP</p>
+<p class="text-[10px] text-gray-600 uppercase">Lvl 76</p>
+</div>
+<div class="absolute right-0 top-0 bottom-0 w-1 bg-primary scale-y-0 group-hover:scale-y-100 transition-transform origin-center rounded-r-lg"></div>
+</div>
+<div class="group relative flex items-center bg-[#0a0f14] border border-white/5 hover:border-primary/50 rounded-lg p-3 transition-all hover:bg-white/5 hover:scale-[1.01]">
+<div class="w-16 text-center text-xl font-bold text-gray-400 font-display">06</div>
+<div class="flex flex-col items-center justify-center mr-6 w-8">
+<span class="material-symbols-outlined text-sm ticker-down">arrow_drop_down</span>
+<span class="text-[10px] text-red-500 font-bold">1</span>
+</div>
+<div class="h-10 w-10 rounded-md bg-cover bg-center mr-4 ring-1 ring-white/20" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAi4ZbxtugArFInHpaVdDjMiOEnyWNESJzmY9JS3gneOdDS_qnpHbmkx-xWvezRBmeWEjOr96ZrWq8CoO8mxJOxAt52d9V7ZI4kupQLsJRZ-iOs6EPMFIWKU80G0bJ98oNq9swZn34mpaB-XgYk-VX4N5orI-yEfTX_q3UizJjViKLPY2u4-MXWLx4qZr2KXiqH_UC8blJtdCGIHUv987B5QfefhFQANfW28xnU_wYgee2m8F8j6Md9UsQXIS2F36TJnHd5EDo-wEQ3');"></div>
+<div class="flex-1">
+<h4 class="text-white font-bold text-sm">StrawHat_Luffy</h4>
+<p class="text-xs text-gray-500">Last active: 5h ago</p>
+</div>
+<div class="text-right px-4">
+<p class="text-primary font-bold text-sm font-display">7,420 XP</p>
+<p class="text-[10px] text-gray-600 uppercase">Lvl 74</p>
+</div>
+<div class="absolute right-0 top-0 bottom-0 w-1 bg-primary scale-y-0 group-hover:scale-y-100 transition-transform origin-center rounded-r-lg"></div>
+</div>
+</div>
+<div class="flex items-center gap-4 mt-4">
+<div class="h-[1px] flex-1 bg-gradient-to-r from-transparent to-rank-silver"></div>
+<div class="px-4 py-1 rounded-full border border-rank-silver/30 bg-rank-silver/5 text-rank-silver text-xs font-bold uppercase tracking-[0.2em] shadow-[0_0_10px_rgba(192,192,192,0.2)]">
+                        Silver Tier (Top 50)
+                    </div>
+<div class="h-[1px] flex-1 bg-gradient-to-l from-transparent to-rank-silver"></div>
+</div>
+<div class="flex flex-col gap-3">
+<div class="group relative flex items-center bg-[#0a0f14] border border-white/5 hover:border-primary/50 rounded-lg p-3 transition-all hover:bg-white/5 hover:scale-[1.01]">
+<div class="w-16 text-center text-xl font-bold text-gray-500 font-display">07</div>
+<div class="flex flex-col items-center justify-center mr-6 w-8">
+<span class="material-symbols-outlined text-sm ticker-up">arrow_drop_up</span>
+<span class="text-[10px] text-green-500 font-bold">5</span>
+</div>
+<div class="h-10 w-10 rounded-md bg-gray-800 flex items-center justify-center mr-4 ring-1 ring-white/10 text-gray-500 text-xs">IMG</div>
+<div class="flex-1">
+<h4 class="text-gray-300 font-bold text-sm">GamerKidd</h4>
+<p class="text-xs text-gray-600">Last active: 10m ago</p>
+</div>
+<div class="text-right px-4">
+<p class="text-gray-400 font-bold text-sm font-display">6,800 XP</p>
+<p class="text-[10px] text-gray-700 uppercase">Lvl 68</p>
+</div>
+</div>
+<div class="group relative flex items-center bg-primary/10 border border-primary/50 rounded-lg p-3 my-2 shadow-[0_0_15px_rgba(37,140,244,0.1)]">
+<div class="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-full shadow-[0_0_8px_#258cf4]"></div>
+<div class="w-16 text-center text-xl font-bold text-primary font-display neon-text-primary">42</div>
+<div class="flex flex-col items-center justify-center mr-6 w-8">
+<span class="material-symbols-outlined text-sm text-gray-400">remove</span>
+</div>
+<div class="h-10 w-10 rounded-md bg-cover bg-center mr-4 ring-1 ring-primary/50" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdaWmABVJXA2jsgAaK0-A6KfaQdF1oWID-5yztCv3l5U4qlYJDSTECr6S60s6aBycW6BghIvBQ1xOa8-DhAwvTEzDPpjRcZd0K45p4r0ZfOwdKum9Qnyac1EEnvjyeO_Kq60P6BMi4UkW9vs35XyjWPzLq4wVuhV3rWwCt6UUEUAj6mnAT-RhULGMZ8cxGGp7Uc_F5TTib0U2w_QW5cFL4wkdzQUMu-AH7iLWkIVuNlTrz5B5RRSt_BDGQakh-x3VtiqhU72W8jV3j');"></div>
+<div class="flex-1">
+<h4 class="text-white font-bold text-sm">Kairos <span class="text-[10px] bg-primary text-white px-1.5 py-0.5 rounded ml-2 uppercase">You</span></h4>
+<p class="text-xs text-gray-400">Sync Rate: 92%</p>
+</div>
+<div class="text-right px-4">
+<p class="text-primary font-bold text-sm font-display">4,203 XP</p>
+<p class="text-[10px] text-primary/70 uppercase">Lvl 42</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+<div class="relative flex items-center justify-between gap-6 px-8 py-3 rounded-full bg-[#101922]/80 backdrop-blur-xl border border-primary/30 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors group">
+<span class="material-symbols-outlined group-hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">home</span>
+<div class="h-1 w-1 rounded-full bg-transparent group-hover:bg-white"></div>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary group">
+<span class="material-symbols-outlined group-hover:drop-shadow-[0_0_5px_rgba(37,140,244,0.8)] fill-current">leaderboard</span>
+<div class="h-1 w-1 rounded-full bg-primary shadow-[0_0_5px_#258cf4]"></div>
+</button>
+<div class="relative -top-6 mx-2 group cursor-pointer">
+<div class="absolute inset-0 bg-primary opacity-30 blur-lg rounded-full animate-pulse-glow"></div>
+<div class="hex-btn bg-background-dark h-16 w-14 flex items-center justify-center relative border-2 border-primary z-10 hover:scale-105 transition-transform" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+<div class="bg-primary h-14 w-12 flex items-center justify-center" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+<span class="material-symbols-outlined text-white text-3xl">add</span>
+</div>
+</div>
+</div>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors group">
+<span class="material-symbols-outlined group-hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">notifications</span>
+<div class="h-1 w-1 rounded-full bg-transparent group-hover:bg-white"></div>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors group">
+<span class="material-symbols-outlined group-hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">person</span>
+<div class="h-1 w-1 rounded-full bg-transparent group-hover:bg-white"></div>
+</button>
+</div>
+</div>
+</div>
+
+</body></html>

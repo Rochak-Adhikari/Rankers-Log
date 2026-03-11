@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guild Profile - Rankers Log</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922", // Keeping theme config but will override main bg for specific look
+                        "void": "#050505",
+                        "glass": "rgba(16, 26, 35, 0.6)",
+                        "glass-border": "rgba(37, 140, 244, 0.2)",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    boxShadow: {
+                        "glow": "0 0 15px rgba(37, 140, 244, 0.15)",
+                        "glow-sm": "0 0 8px rgba(37, 140, 244, 0.25)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #223649; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+        
+        .glass-panel {
+            background: rgba(17, 28, 38, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(37, 140, 244, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(37, 140, 244, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-void min-h-screen font-display text-white selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Background Grid Effect -->
+<div class="fixed inset-0 z-0 opacity-10 pointer-events-none" style="background-image: linear-gradient(#258cf4 1px, transparent 1px), linear-gradient(90deg, #258cf4 1px, transparent 1px); background-size: 40px 40px;"></div>
+<div class="relative z-10 flex flex-col min-h-screen">
+<!-- Navbar -->
+<header class="sticky top-0 z-50 glass-panel border-b border-glass-border">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<!-- Logo & Brand -->
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-white">
+<span class="material-symbols-outlined text-primary text-3xl">deployed_code</span>
+<h2 class="text-xl font-bold tracking-tight uppercase">Rankers Log</h2>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-gray-400 hover:text-white hover:text-glow text-sm font-medium transition-colors" href="#">Home</a>
+<a class="text-primary text-glow text-sm font-bold border-b-2 border-primary py-5" href="#">Guilds</a>
+<a class="text-gray-400 hover:text-white hover:text-glow text-sm font-medium transition-colors" href="#">Leaderboards</a>
+<a class="text-gray-400 hover:text-white hover:text-glow text-sm font-medium transition-colors" href="#">Profile</a>
+</nav>
+</div>
+<!-- Right Actions -->
+<div class="flex items-center gap-4">
+<!-- Search -->
+<div class="hidden md:flex items-center bg-[#101a23]/80 rounded-lg border border-white/10 h-9 w-64 px-3 focus-within:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-gray-400 text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full text-white placeholder-gray-500 ml-2" placeholder="Search logs..."/>
+</div>
+<!-- Icons -->
+<button class="p-2 text-gray-400 hover:text-white transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 h-2 w-2 rounded-full bg-primary shadow-glow"></span>
+</button>
+<!-- Avatar -->
+<div class="h-9 w-9 rounded-full bg-gray-700 bg-cover bg-center border border-white/10 ring-2 ring-transparent hover:ring-primary/50 transition-all cursor-pointer" data-alt="User Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCPrubTz2IQRjtinZ8-FKEUj4RNyTQFRbDR6cJEsYoSTZeSSUdlyeN-xEWUuxGEote10V3IkQv-0Nv1jvx0TRev5k3OJUeMdPP1ZEyo7HjrEbTodgrWnhwE5NyYWO5cK5GgOOng4xzNfYN52wLOgH29TWTuZcF61s_HhyMkGv_mH13Q6ITrNCkVy9SJvJRpkMFBsaeDi8FtALv4f61EjZWqIyc8NDmrDOYmzOahjR0r4jwU4qHZ8EfL_lJ7xZx9nAhvHDwaeE-xRJAu");'></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+<!-- 1. Guild Header Holo-Panel -->
+<section class="glass-panel rounded-xl overflow-hidden relative group">
+<!-- Decorative Top Bar -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+<div class="p-6 md:p-8 flex flex-col md:flex-row gap-8 items-start md:items-center relative z-10">
+<!-- Guild Emblem -->
+<div class="relative shrink-0">
+<div class="h-32 w-32 md:h-40 md:w-40 rounded-xl bg-cover bg-center border-2 border-primary/30 shadow-glow overflow-hidden" data-alt="Azure Vanguard Guild Emblem - Blue shield with stylized wings" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB6nWsiDxbVT7xz_8WJS908PbAIdvluW8NrY0dtV_NKSQB70vWkoci9ca6QVBf96zRaQayqJfzd2YF29OePqLV5SBCwtZCYx_SYkdDNOqe1dT-58GNzoVuSKqg16vqyEa-63-5nkoIXMN0eSewPiDpz2vNh__vkE7KDZgUvbbEoTczrFoKxHponsil9G9_0qEkxuA8vcPuGk6MldaATkB81Xz0rLKWo5_aS_bRxo83ecT4TewjGbEJAhcfRgGEEjqOIpFd7owf5GKku");'>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+</div>
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-[#101a23] border border-primary/50 px-3 py-1 rounded-full whitespace-nowrap shadow-glow-sm">
+<span class="text-xs font-bold text-primary tracking-wider">LVL 45</span>
+</div>
+</div>
+<!-- Guild Info -->
+<div class="flex-1 space-y-3">
+<div class="flex flex-col md:flex-row md:items-baseline gap-3">
+<h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight uppercase">Azure Vanguard</h1>
+<span class="hidden md:inline-block text-gray-500">|</span>
+<span class="text-primary font-medium tracking-widest text-sm uppercase border border-primary/30 px-2 py-0.5 rounded bg-primary/10">S-Class Faction</span>
+</div>
+<p class="text-gray-400 text-lg italic font-light border-l-2 border-primary/40 pl-4">"Observe. Analyze. Conquer."</p>
+<!-- Tags -->
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-300 border border-white/5">#Hardcore</span>
+<span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-300 border border-white/5">#Raids</span>
+<span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-300 border border-white/5">#Completionists</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto mt-4 md:mt-0">
+<button class="flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-blue-600 text-white font-bold rounded-lg shadow-glow hover:shadow-[0_0_20px_rgba(37,140,244,0.4)] transition-all transform active:scale-95 group/btn">
+<span class="material-symbols-outlined text-[20px] animate-pulse">login</span>
+<span>Request to Join</span>
+</button>
+<button class="flex items-center justify-center gap-2 px-6 py-3 bg-[#101a23] border border-primary/30 hover:border-primary/80 text-white font-bold rounded-lg transition-all hover:bg-[#152230]">
+<span class="material-symbols-outlined text-[20px] text-gray-400 group-hover:text-white">forum</span>
+<span>Guild Hall</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 2. Statistics Node -->
+<section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<!-- Stat Card 1 -->
+<div class="glass-panel p-5 rounded-lg border-l-4 border-l-primary flex flex-col justify-between h-full group hover:bg-white/5 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<span class="text-gray-400 text-sm font-medium uppercase tracking-wider">Members</span>
+<span class="material-symbols-outlined text-primary/50 group-hover:text-primary transition-colors">group</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-bold text-white">48<span class="text-gray-500 text-xl font-normal">/50</span></span>
+<span class="text-emerald-400 text-xs font-bold mb-1.5 flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_drop_up</span> 2%
+                        </span>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="glass-panel p-5 rounded-lg border-l-4 border-l-purple-500 flex flex-col justify-between h-full group hover:bg-white/5 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<span class="text-gray-400 text-sm font-medium uppercase tracking-wider">Avg Rank</span>
+<span class="material-symbols-outlined text-purple-500/50 group-hover:text-purple-500 transition-colors">military_tech</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-bold text-white">S-Class</span>
+<span class="text-gray-500 text-xs font-normal mb-1.5">Top 1%</span>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="glass-panel p-5 rounded-lg border-l-4 border-l-orange-500 flex flex-col justify-between h-full group hover:bg-white/5 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<span class="text-gray-400 text-sm font-medium uppercase tracking-wider">Total Quests</span>
+<span class="material-symbols-outlined text-orange-500/50 group-hover:text-orange-500 transition-colors">assignment_turned_in</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-bold text-white">1,240</span>
+<span class="text-emerald-400 text-xs font-bold mb-1.5 flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_drop_up</span> 15%
+                        </span>
+</div>
+</div>
+</section>
+<!-- 3. Main Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column (Directives & Roster) -->
+<div class="lg:col-span-8 flex flex-col gap-8">
+<!-- Directives (Active Quests) -->
+<section class="flex flex-col gap-4">
+<div class="flex items-center justify-between border-b border-white/10 pb-2">
+<h3 class="text-xl font-bold text-white uppercase tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">target</span>
+                                Active Directives
+                            </h3>
+<button class="text-xs text-primary hover:text-white transition-colors uppercase font-bold tracking-wider">View All</button>
+</div>
+<!-- Quest List -->
+<div class="glass-panel rounded-lg overflow-hidden divide-y divide-white/5">
+<!-- Item 1 -->
+<div class="p-4 hover:bg-white/5 transition-colors group">
+<div class="flex flex-col sm:flex-row sm:items-center gap-4">
+<div class="h-12 w-12 rounded bg-gradient-to-br from-red-900 to-red-600 flex items-center justify-center shrink-0 border border-white/10 shadow-lg">
+<span class="material-symbols-outlined text-white">swords</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between mb-1">
+<h4 class="text-white font-bold truncate group-hover:text-primary transition-colors">Raid: The Cybernetic Dragon</h4>
+<span class="text-red-400 text-xs font-bold border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 rounded">Expires in 2h</span>
+</div>
+<div class="flex items-center gap-4 text-xs text-gray-400 mb-2">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">stars</span> 5000 XP</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">public</span> Global Event</span>
+</div>
+<div class="relative pt-1">
+<div class="flex mb-2 items-center justify-between">
+<div class="text-right">
+<span class="text-xs font-semibold inline-block text-primary">85% Complete</span>
+</div>
+</div>
+<div class="overflow-hidden h-1.5 mb-1 text-xs flex rounded bg-[#0b1219]">
+<div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary shadow-[0_0_10px_rgba(37,140,244,0.5)]" style="width:85%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-4 hover:bg-white/5 transition-colors group">
+<div class="flex flex-col sm:flex-row sm:items-center gap-4">
+<div class="h-12 w-12 rounded bg-gradient-to-br from-purple-900 to-purple-600 flex items-center justify-center shrink-0 border border-white/10 shadow-lg">
+<span class="material-symbols-outlined text-white">auto_stories</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between mb-1">
+<h4 class="text-white font-bold truncate group-hover:text-primary transition-colors">Collection: Rare Manga Volumes</h4>
+<span class="text-gray-400 text-xs font-bold">Ongoing</span>
+</div>
+<div class="flex items-center gap-4 text-xs text-gray-400 mb-2">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">stars</span> 1200 XP</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">savings</span> 500 Gold</span>
+</div>
+<div class="relative pt-1">
+<div class="flex mb-2 items-center justify-between">
+<div class="text-right">
+<span class="text-xs font-semibold inline-block text-purple-400">12/50 Collected</span>
+</div>
+</div>
+<div class="overflow-hidden h-1.5 mb-1 text-xs flex rounded bg-[#0b1219]">
+<div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]" style="width:24%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Member Roster -->
+<section class="flex flex-col gap-4">
+<div class="flex items-center justify-between border-b border-white/10 pb-2">
+<h3 class="text-xl font-bold text-white uppercase tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">badge</span>
+                                Key Operatives
+                            </h3>
+<button class="text-xs text-primary hover:text-white transition-colors uppercase font-bold tracking-wider">View Roster</button>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<!-- Member 1 (Leader) -->
+<div class="glass-panel p-4 rounded-lg flex flex-col items-center gap-3 border border-yellow-500/20 hover:border-yellow-500/50 transition-colors group">
+<div class="relative">
+<div class="h-16 w-16 rounded-full bg-cover bg-center ring-2 ring-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.3)]" data-alt="Guild Master Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB8cBvmU21ekAG8WAZ-sEjV_xuxLjCBMsWtr0LGbE8bXVJA3WgQWj4-0rbJxkD81e1vBghLJj1LrdtDAv0ZzVEng0WUcoYDV1yy2ky6slfGxMtltbv7MtF_lxkQZAB1zEhg4WXmDgZVgIc-RiXnZBGb94zvRt4G2rDD0ekushRGsD6N2yGy1HiGnzCt2QUVFAPd_-efPxd_4XVBJDqsNU1Fvfctek61xIkZ5O1bKmj1BXskNqToQhYkX-vdeTcxL9KukDGXbWYtXFJa");'></div>
+<div class="absolute -bottom-1 -right-1 bg-yellow-500 text-[#050505] text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm uppercase">Master</div>
+</div>
+<div class="text-center">
+<p class="text-white font-bold text-sm truncate group-hover:text-yellow-400 transition-colors">Vortex</p>
+<p class="text-gray-500 text-xs">Lvl. 99 Paladin</p>
+</div>
+</div>
+<!-- Member 2 (Officer) -->
+<div class="glass-panel p-4 rounded-lg flex flex-col items-center gap-3 border border-blue-500/20 hover:border-blue-500/50 transition-colors group">
+<div class="relative">
+<div class="h-16 w-16 rounded-full bg-cover bg-center ring-2 ring-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.3)]" data-alt="Officer Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAophxfGJ69kc66BSLgjPzbahuJQKWxMGue3hqNKr5jDuVBtHrnOuUCAgdqDouNCtpU-dcvxXuf3ge-AjxTIsIkC6uDZ9qmLg9IbH-pmOsxESikP7yRMb4-0ZZ_4bHBn-UJ_YXryU41ysOsvkJgMVjolSGotqV8_bKIGcNNgC8sPmgFSdJGRk8NE-DkXHRKttFqaYvwlgI600p1WtKG_hq94Y7V2rFvfum_o_SbBN6L-G472KQI86G7rZSbSR_t2S0PTFJDGq-HCgPc");'></div>
+<div class="absolute -bottom-1 -right-1 bg-blue-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm uppercase">Officer</div>
+</div>
+<div class="text-center">
+<p class="text-white font-bold text-sm truncate group-hover:text-blue-400 transition-colors">Neo</p>
+<p class="text-gray-500 text-xs">Lvl. 85 Mage</p>
+</div>
+</div>
+<!-- Member 3 -->
+<div class="glass-panel p-4 rounded-lg flex flex-col items-center gap-3 hover:bg-white/5 transition-colors cursor-pointer">
+<div class="relative">
+<div class="h-16 w-16 rounded-full bg-cover bg-center ring-2 ring-gray-600 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all" data-alt="Member Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCaHVgDQmQivhjJo9IjJ_oX-LAayP27SpUmkjCzUe44miy0YsI0BB-Ro0nbu-oMGMmOKYGQXhmckYhoDeoryu_uUhxoOK7YrB64w7FzvuoFqt1oVYAoJnNEOkT7iC5yEHQlrvjyxtC19GYQWfelYgSwAeo4RKfimy0mxfh9Iq_r9-qy1pKwsNZlsQaz2ANT1_z4vScNdr-XtrmBzv3x6jdKkmCSa-rK9unjISLWWXNYB3iBw7TrHChZ830e6RZI2k0PyYjRf8rd-gGu");'></div>
+</div>
+<div class="text-center">
+<p class="text-white font-bold text-sm truncate">Kira</p>
+<p class="text-gray-500 text-xs">Lvl. 70 Rogue</p>
+</div>
+</div>
+<!-- Member 4 -->
+<div class="glass-panel p-4 rounded-lg flex flex-col items-center gap-3 hover:bg-white/5 transition-colors cursor-pointer">
+<div class="relative">
+<div class="h-16 w-16 rounded-full bg-cover bg-center ring-2 ring-gray-600 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all" data-alt="Member Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDTwgDTdxaeRLg_mgv81NWNbJuAffBTkc6Z8-E3vaHbHDHiGaxRqVS1RZXom-9NiRb0YggriHPNXsx94N-UAxqNsdaaVe63lYuAm5PG5XZAyCmf7r7VsuYEeR5VlTS0gzVDH0PRyKiY4JioFeU_UhwZcIg_GLPuFYOLPCx2SxMYbx3NPJACbkBGjQFlO2hUrg_KTGDUIXHk635QukYz2dNHMNWttNvAZStM9fcUHV7r094SNz0KuJRxNBOUaBUXDZRJB-mNIf-4t8T0");'></div>
+</div>
+<div class="text-center">
+<p class="text-white font-bold text-sm truncate">Sombra</p>
+<p class="text-gray-500 text-xs">Lvl. 68 Hunter</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column (Activity Feed) -->
+<div class="lg:col-span-4 space-y-4">
+<div class="flex items-center justify-between border-b border-white/10 pb-2">
+<h3 class="text-xl font-bold text-white uppercase tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                            Activity Log
+                        </h3>
+</div>
+<div class="glass-panel rounded-lg p-5 relative overflow-hidden">
+<!-- Connecting Line -->
+<div class="absolute top-6 bottom-6 left-[27px] w-0.5 bg-gradient-to-b from-primary/50 via-primary/20 to-transparent"></div>
+<div class="space-y-6 relative z-10">
+<!-- Feed Item 1 -->
+<div class="flex gap-4 group">
+<div class="mt-1 h-3 w-3 rounded-full bg-primary ring-4 ring-[#15202b] shadow-[0_0_10px_rgba(37,140,244,0.6)] z-10 shrink-0"></div>
+<div class="flex-1">
+<p class="text-sm text-gray-300 leading-snug">
+<span class="text-primary font-bold hover:underline cursor-pointer">Neo</span> joined the guild.
+                                    </p>
+<p class="text-xs text-gray-600 mt-1 font-mono">10 mins ago</p>
+</div>
+</div>
+<!-- Feed Item 2 -->
+<div class="flex gap-4 group">
+<div class="mt-1 h-3 w-3 rounded-full bg-yellow-500 ring-4 ring-[#15202b] shadow-[0_0_10px_rgba(234,179,8,0.6)] z-10 shrink-0"></div>
+<div class="flex-1">
+<p class="text-sm text-gray-300 leading-snug">
+                                        Guild achieved <span class="text-yellow-400 font-bold border border-yellow-500/30 px-1 rounded bg-yellow-500/10 text-xs uppercase">Speedrunner</span> badge.
+                                    </p>
+<p class="text-xs text-gray-600 mt-1 font-mono">2 hours ago</p>
+</div>
+</div>
+<!-- Feed Item 3 -->
+<div class="flex gap-4 group">
+<div class="mt-1 h-3 w-3 rounded-full bg-purple-500 ring-4 ring-[#15202b] shadow-[0_0_10px_rgba(168,85,247,0.6)] z-10 shrink-0"></div>
+<div class="flex-1">
+<p class="text-sm text-gray-300 leading-snug">
+<span class="text-white font-bold">Vortex</span> looted <span class="text-purple-400">Void Essence</span> x3.
+                                    </p>
+<p class="text-xs text-gray-600 mt-1 font-mono">5 hours ago</p>
+</div>
+</div>
+<!-- Feed Item 4 -->
+<div class="flex gap-4 group">
+<div class="mt-1 h-3 w-3 rounded-full bg-gray-600 ring-4 ring-[#15202b] z-10 shrink-0 group-hover:bg-primary transition-colors"></div>
+<div class="flex-1 opacity-75 group-hover:opacity-100 transition-opacity">
+<p class="text-sm text-gray-300 leading-snug">
+                                        Guild Level increased to <span class="text-white font-bold">45</span>.
+                                    </p>
+<p class="text-xs text-gray-600 mt-1 font-mono">1 day ago</p>
+</div>
+</div>
+<!-- Feed Item 5 -->
+<div class="flex gap-4 group">
+<div class="mt-1 h-3 w-3 rounded-full bg-gray-600 ring-4 ring-[#15202b] z-10 shrink-0 group-hover:bg-primary transition-colors"></div>
+<div class="flex-1 opacity-75 group-hover:opacity-100 transition-opacity">
+<p class="text-sm text-gray-300 leading-snug">
+                                        New directive <span class="italic">"Cybernetic Dragon"</span> started.
+                                    </p>
+<p class="text-xs text-gray-600 mt-1 font-mono">2 days ago</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Additional Info Widget -->
+<div class="glass-panel rounded-lg p-5 mt-6 border-t border-t-emerald-500/50">
+<div class="flex items-center gap-3 mb-3">
+<div class="p-2 bg-emerald-500/10 rounded-lg">
+<span class="material-symbols-outlined text-emerald-500">trending_up</span>
+</div>
+<div>
+<p class="text-xs text-gray-400 uppercase font-bold">Performance</p>
+<p class="text-white font-bold">Weekly Ranking</p>
+</div>
+</div>
+<div class="h-24 w-full flex items-end justify-between gap-1">
+<div class="w-full bg-white/5 hover:bg-emerald-500/50 transition-colors rounded-t-sm h-[40%]"></div>
+<div class="w-full bg-white/5 hover:bg-emerald-500/50 transition-colors rounded-t-sm h-[60%]"></div>
+<div class="w-full bg-white/5 hover:bg-emerald-500/50 transition-colors rounded-t-sm h-[30%]"></div>
+<div class="w-full bg-emerald-500 rounded-t-sm h-[85%] shadow-[0_0_10px_rgba(16,185,129,0.4)] relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#050505] border border-white/20 text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-20">#3 Global</div>
+</div>
+<div class="w-full bg-white/5 hover:bg-emerald-500/50 transition-colors rounded-t-sm h-[50%]"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

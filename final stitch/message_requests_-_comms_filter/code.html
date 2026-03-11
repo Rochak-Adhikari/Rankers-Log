@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Message Requests</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505", // Deep void dark as requested
+                        "surface-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Hexagon Shape */
+        .hexagon-avatar {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        /* Sci-fi Scanline Effect Overlay */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        /* Glass Panel Glow */
+        .glass-glow:hover {
+            box-shadow: 0 0 15px rgba(37, 140, 244, 0.2);
+            border-color: rgba(37, 140, 244, 0.6);
+        }
+    </style>
+</head>
+<body class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden font-display selection:bg-primary selection:text-white">
+<!-- Background Grid Effect -->
+<div class="fixed inset-0 z-0 opacity-[0.05] pointer-events-none" style="background-size: 40px 40px; background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px);"></div>
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-primary/20 bg-background-dark/90 backdrop-blur-md px-6 py-3 lg:px-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-white">
+<div class="size-8 text-primary animate-pulse">
+<svg class="w-full h-full drop-shadow-[0_0_8px_rgba(37,140,244,0.8)]" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-white text-xl font-bold tracking-widest uppercase">Rankers Log</h2>
+</div>
+<!-- Global Search -->
+<div class="hidden md:flex flex-col min-w-40 h-10 w-64 group">
+<div class="flex w-full flex-1 items-stretch rounded bg-surface-dark border border-white/10 group-focus-within:border-primary/50 transition-colors">
+<div class="text-[#90adcb] flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-transparent text-white border-none focus:ring-0 placeholder:text-[#90adcb]/50 text-sm font-normal px-3" placeholder="Search database..."/>
+</div>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<!-- Navigation Links -->
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-[#90adcb] hover:text-white text-sm font-medium transition-colors" href="#">Home</a>
+<a class="text-[#90adcb] hover:text-white text-sm font-medium transition-colors" href="#">Quests</a>
+<a class="text-[#90adcb] hover:text-white text-sm font-medium transition-colors" href="#">Library</a>
+<div class="relative">
+<a class="text-primary text-sm font-bold tracking-wide drop-shadow-[0_0_5px_rgba(37,140,244,0.5)]" href="#">Messages</a>
+<div class="absolute -bottom-[22px] left-0 right-0 h-[2px] bg-primary shadow-[0_0_10px_#258cf4]"></div>
+</div>
+<a class="text-[#90adcb] hover:text-white text-sm font-medium transition-colors" href="#">Profile</a>
+</nav>
+<!-- Action Buttons -->
+<div class="flex gap-3">
+<button class="flex items-center justify-center size-10 rounded bg-surface-dark text-white hover:bg-white/10 transition-all border border-transparent hover:border-primary/30">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded bg-surface-dark text-white hover:bg-white/10 transition-all border border-transparent hover:border-primary/30">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="size-10 rounded hexagon-avatar bg-cover bg-center border-2 border-primary/50 shadow-[0_0_10px_rgba(37,140,244,0.3)]" data-alt="User profile avatar showing a cyberpunk character" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDGY7UOwLhnbrqNacx1ZYPcA4T38t_TLpSjJ19_BcshHpWV92-7wsOdqKdree2mKP0dr5L2QZcQOo-Oow-Tb_0lEIhCONOJKKCwc8hJJB6XHLKxYHc6TG6uNUr01vkMCI1zsezOur5ZC27nBhVVTMqR8w_Gay5fCDa0si3oe4rjmUKJ7brU4oPtVlA4Mz4i0TaBfkLfPNNmotWyqtzg9S2ssKp_UBOSWUtvRCXeOlRB___CnjL6g3OjQzUjey2fNXVku73nH7Hg_plR");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="relative z-10 flex flex-1 flex-col items-center py-10 px-4 md:px-8">
+<div class="w-full max-w-[1024px] flex flex-col gap-6">
+<!-- Page Header -->
+<div class="border-b border-white/10 pb-4">
+<h1 class="text-white text-2xl md:text-3xl font-bold tracking-[0.15em] leading-tight px-2 flex items-center gap-3">
+<span class="text-primary material-symbols-outlined text-3xl">radar</span>
+                    INCOMING TRANSMISSIONS <span class="text-white/30 text-lg md:text-xl font-normal tracking-normal">// UNKNOWN SOURCES</span>
+</h1>
+</div>
+<!-- Tabs and Filters -->
+<div class="flex flex-col md:flex-row justify-between items-end md:items-center gap-4 px-2">
+<div class="flex gap-8 w-full md:w-auto border-b border-white/10 md:border-none">
+<button class="group flex flex-col items-center justify-center pb-2 relative">
+<span class="text-white text-sm font-bold tracking-wider uppercase">Pending</span>
+<div class="absolute bottom-0 w-full h-[2px] bg-primary shadow-[0_0_8px_#258cf4]"></div>
+</button>
+<button class="group flex flex-col items-center justify-center pb-2 relative">
+<span class="text-[#90adcb] group-hover:text-white transition-colors text-sm font-medium tracking-wider uppercase">Spam</span>
+<div class="absolute bottom-0 w-0 group-hover:w-full transition-all duration-300 h-[2px] bg-white/20"></div>
+</button>
+<button class="group flex flex-col items-center justify-center pb-2 relative">
+<span class="text-[#90adcb] group-hover:text-white transition-colors text-sm font-medium tracking-wider uppercase">Declined</span>
+<div class="absolute bottom-0 w-0 group-hover:w-full transition-all duration-300 h-[2px] bg-white/20"></div>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<p class="text-primary/80 font-mono text-xs uppercase tracking-widest bg-primary/10 px-3 py-1 rounded border border-primary/20">
+                        12 Pending • 0 Spam
+                    </p>
+<button class="text-[#90adcb] hover:text-red-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-sm">delete_sweep</span>
+                        Clear All
+                    </button>
+</div>
+</div>
+<!-- Request List -->
+<div class="flex flex-col gap-4 mt-2">
+<!-- Card 1 -->
+<div class="group relative flex flex-col md:flex-row items-start md:items-center gap-4 bg-surface-dark/60 backdrop-blur-md border border-white/5 hover:border-primary/50 transition-all duration-300 rounded-lg p-5 glass-glow">
+<!-- Avatar -->
+<div class="relative shrink-0">
+<div class="size-16 hexagon-avatar bg-cover bg-center" data-alt="Avatar of user Kira_Godslayer" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBWeB6K2lVGUR5fzkr13pbxAXDa0ePJO2Av4mwx1zL7bRJYDjRZScJ301r0XcRoXcZO9feq9NgVz0dgAknSFXy16w7s7VgJe2F45rjOekAx0EMXAaAnGP5IENPrcpzMVO_Y0SDqfqElvzBnnTBGuPWpbfFLyL9uaenxYnhizNHIvJxmyv8uO2t74ARXGOYrUVNeLR-KOvXVgTcDRYb2emSsP73vY8sFSByGf9qyK-1hlyrSjkqMW82-9T3qFHGZKtDZX3qeFZuHBgpS");'></div>
+<div class="absolute -bottom-1 -right-1 bg-primary text-black text-[10px] font-bold px-1.5 py-0.5 rounded shadow-[0_0_5px_#258cf4]">LVL 99</div>
+</div>
+<!-- Content -->
+<div class="flex flex-1 flex-col justify-center min-w-0 w-full">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="text-white text-base font-bold tracking-wide">Kira_Godslayer</h3>
+<span class="text-xs text-[#90adcb]/60 font-mono border border-white/10 px-1 rounded">MAGE CLASS</span>
+<span class="text-xs text-white/40 ml-auto md:ml-2">2h ago</span>
+</div>
+<p class="text-[#90adcb] text-sm font-normal leading-relaxed truncate md:whitespace-normal line-clamp-2 md:line-clamp-1">
+                            Saw your review on Elden Ring, wanted to ask about the build you used for Malenia. I'm struggling with the second phase...
+                        </p>
+</div>
+<!-- Actions -->
+<div class="flex gap-2 shrink-0 w-full md:w-auto justify-end mt-2 md:mt-0">
+<button class="flex items-center justify-center h-9 px-4 rounded bg-primary text-white text-xs font-bold uppercase tracking-wider hover:bg-primary/80 transition-all shadow-[0_0_10px_rgba(37,140,244,0.4)] hover:shadow-[0_0_15px_rgba(37,140,244,0.6)]">
+                            Accept
+                        </button>
+<button class="flex items-center justify-center h-9 px-4 rounded bg-transparent border border-white/20 text-white text-xs font-bold uppercase tracking-wider hover:border-red-500 hover:text-red-500 hover:shadow-[0_0_10px_rgba(239,68,68,0.3)] transition-all">
+                            Decline
+                        </button>
+<button class="flex items-center justify-center size-9 rounded bg-transparent border border-white/10 text-[#90adcb] hover:bg-white/5 hover:text-white transition-all" title="Block User">
+<span class="material-symbols-outlined text-lg">block</span>
+</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative flex flex-col md:flex-row items-start md:items-center gap-4 bg-surface-dark/60 backdrop-blur-md border border-white/5 hover:border-primary/50 transition-all duration-300 rounded-lg p-5 glass-glow">
+<!-- Avatar -->
+<div class="relative shrink-0">
+<div class="size-16 hexagon-avatar bg-cover bg-center" data-alt="Avatar of user Neon_Samurai" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCCJmXgUTMW8S-XMMvJ6TfJSIGHYyN9s8NeO9k7SkBKHX6HLdaK5DTsXbji0Hg16c6y-r3jKS3jp7Dc3Jf4PhIekkolTGr4fy97a-sh6p9nMzVasgmeWNSLyDpPblOuljovquuQue7BbOUGiXaSbF5onDYbOkkPHAMyLvaUiI4nffn3hy24zcpi0kgf7vyFa38liCu62eAuECPWxbbyxwmPggD6f6D_nzuSdUy1m45HHdRK9j_YZwG9vli39qld1RfLA9vJ3tJEJA8Y");'></div>
+<div class="absolute -bottom-1 -right-1 bg-white/20 backdrop-blur text-white text-[10px] font-bold px-1.5 py-0.5 rounded border border-white/10">LVL 42</div>
+</div>
+<!-- Content -->
+<div class="flex flex-1 flex-col justify-center min-w-0 w-full">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="text-white text-base font-bold tracking-wide">Neon_Samurai</h3>
+<span class="text-xs text-[#90adcb]/60 font-mono border border-white/10 px-1 rounded">ROGUE</span>
+<span class="text-xs text-white/40 ml-auto md:ml-2">5h ago</span>
+</div>
+<p class="text-[#90adcb] text-sm font-normal leading-relaxed truncate md:whitespace-normal line-clamp-2 md:line-clamp-1">
+                            Hey! Are you still recruiting for the weekend raid? I have maxed out stealth stats and reliable DPS.
+                        </p>
+</div>
+<!-- Actions -->
+<div class="flex gap-2 shrink-0 w-full md:w-auto justify-end mt-2 md:mt-0">
+<button class="flex items-center justify-center h-9 px-4 rounded bg-primary text-white text-xs font-bold uppercase tracking-wider hover:bg-primary/80 transition-all shadow-[0_0_10px_rgba(37,140,244,0.4)] hover:shadow-[0_0_15px_rgba(37,140,244,0.6)]">
+                            Accept
+                        </button>
+<button class="flex items-center justify-center h-9 px-4 rounded bg-transparent border border-white/20 text-white text-xs font-bold uppercase tracking-wider hover:border-red-500 hover:text-red-500 hover:shadow-[0_0_10px_rgba(239,68,68,0.3)] transition-all">
+                            Decline
+                        </button>
+<button class="flex items-center justify-center size-9 rounded bg-transparent border border-white/10 text-[#90adcb] hover:bg-white/5 hover:text-white transition-all" title="Block User">
+<span class="material-symbols-outlined text-lg">block</span>
+</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative flex flex-col md:flex-row items-start md:items-center gap-4 bg-surface-dark/60 backdrop-blur-md border border-white/5 hover:border-primary/50 transition-all duration-300 rounded-lg p-5 glass-glow">
+<!-- Avatar -->
+<div class="relative shrink-0">
+<div class="size-16 hexagon-avatar bg-cover bg-center grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all" data-alt="Avatar of user xX_Shadow_Xx" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCx6CIympK_z0nOgHt4W2XKczjeRkfuRIMddavXG4x3-yNzAsMsIHwJutRUbLLDlXkKvoHhWtVfcS3ws5FUVTkt7HUG_bH4sLhXIrW671eQvoEjZLPRpaXebb8LJH9YQH3WcGcitKu64rhIa00aZgRnlUWMDxtiyShUqtxMCGDz_EmXNHWxm97LxPXGN8o_fZ7tRJScmqudnV78shbC_DMavLnTINuuQrJoOb8r560hbTCsXKnHPXrMC3D1phN14XGHWIqROSvlWkDF");'></div>
+<div class="absolute -bottom-1 -right-1 bg-white/20 backdrop-blur text-white text-[10px] font-bold px-1.5 py-0.5 rounded border border-white/10">LVL 12</div>
+</div>
+<!-- Content -->
+<div class="flex flex-1 flex-col justify-center min-w-0 w-full">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="text-white text-base font-bold tracking-wide">xX_Shadow_Xx</h3>
+<span class="text-xs text-[#90adcb]/60 font-mono border border-white/10 px-1 rounded">NOVICE</span>
+<span class="text-xs text-white/40 ml-auto md:ml-2">1d ago</span>
+</div>
+<p class="text-[#90adcb] text-sm font-normal leading-relaxed truncate md:whitespace-normal line-clamp-2 md:line-clamp-1">
+                            Trade offer: I give you 500 gold, you boost me to level 20? Pls respond fast.
+                        </p>
+</div>
+<!-- Actions -->
+<div class="flex gap-2 shrink-0 w-full md:w-auto justify-end mt-2 md:mt-0">
+<button class="flex items-center justify-center h-9 px-4 rounded bg-primary text-white text-xs font-bold uppercase tracking-wider hover:bg-primary/80 transition-all shadow-[0_0_10px_rgba(37,140,244,0.4)] hover:shadow-[0_0_15px_rgba(37,140,244,0.6)]">
+                            Accept
+                        </button>
+<button class="flex items-center justify-center h-9 px-4 rounded bg-transparent border border-white/20 text-white text-xs font-bold uppercase tracking-wider hover:border-red-500 hover:text-red-500 hover:shadow-[0_0_10px_rgba(239,68,68,0.3)] transition-all">
+                            Decline
+                        </button>
+<button class="flex items-center justify-center size-9 rounded bg-transparent border border-white/10 text-[#90adcb] hover:bg-white/5 hover:text-white transition-all" title="Block User">
+<span class="material-symbols-outlined text-lg">block</span>
+</button>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group relative flex flex-col md:flex-row items-start md:items-center gap-4 bg-surface-dark/60 backdrop-blur-md border border-white/5 hover:border-primary/50 transition-all duration-300 rounded-lg p-5 glass-glow">
+<!-- Avatar -->
+<div class="relative shrink-0">
+<div class="size-16 hexagon-avatar bg-cover bg-center" data-alt="Avatar of user Pixel_Valkyrie" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFXSc98vnfPWbMi5mzIzWsHfqEc96eLMBDvy9YxhHrU_yZCOSuF06y1-GnEbgH99_00iqMHxAzBSsFv_G_4QBAhmlb3Cd7b3o9XLQQVo4ROd6ykNzmrxueg9wxT79Tj0wHk7B3Vdhk2gKIvh7rWCYLmzE5F1UJma5hEt4WiCDBHcAyEZNWDHHNB-6mZmkrqy35C9_qn1QpfUQQw7U3RuGJm8VIUHqBwYhb63Lx3oa6x848u5Zy4bvvLpX8gtHYZKB_uMJoibbW9Yny");'></div>
+<div class="absolute -bottom-1 -right-1 bg-yellow-500 text-black text-[10px] font-bold px-1.5 py-0.5 rounded shadow-[0_0_5px_#eab308]">VIP</div>
+</div>
+<!-- Content -->
+<div class="flex flex-1 flex-col justify-center min-w-0 w-full">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="text-white text-base font-bold tracking-wide">Pixel_Valkyrie</h3>
+<span class="text-xs text-[#90adcb]/60 font-mono border border-white/10 px-1 rounded">GUILD LEADER</span>
+<span class="text-xs text-white/40 ml-auto md:ml-2">2d ago</span>
+</div>
+<p class="text-[#90adcb] text-sm font-normal leading-relaxed truncate md:whitespace-normal line-clamp-2 md:line-clamp-1">
+                            Your performance in the last tournament was impressive. We would like to formally invite you to 'Ascension'.
+                        </p>
+</div>
+<!-- Actions -->
+<div class="flex gap-2 shrink-0 w-full md:w-auto justify-end mt-2 md:mt-0">
+<button class="flex items-center justify-center h-9 px-4 rounded bg-primary text-white text-xs font-bold uppercase tracking-wider hover:bg-primary/80 transition-all shadow-[0_0_10px_rgba(37,140,244,0.4)] hover:shadow-[0_0_15px_rgba(37,140,244,0.6)]">
+                            Accept
+                        </button>
+<button class="flex items-center justify-center h-9 px-4 rounded bg-transparent border border-white/20 text-white text-xs font-bold uppercase tracking-wider hover:border-red-500 hover:text-red-500 hover:shadow-[0_0_10px_rgba(239,68,68,0.3)] transition-all">
+                            Decline
+                        </button>
+<button class="flex items-center justify-center size-9 rounded bg-transparent border border-white/10 text-[#90adcb] hover:bg-white/5 hover:text-white transition-all" title="Block User">
+<span class="material-symbols-outlined text-lg">block</span>
+</button>
+</div>
+</div>
+<!-- Empty State Indicator / Bottom Message -->
+<div class="mt-8 text-center border-t border-white/5 pt-8">
+<p class="text-white/20 text-sm font-mono tracking-widest">END OF TRANSMISSION STREAM</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Decorational overlay for Scanline Monitor look -->
+<div class="scanlines fixed inset-0 z-50 pointer-events-none opacity-[0.03]"></div>
+</body></html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cookie Preferences - Rankers Log</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f20d0d",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#050505", // Deep void dark as requested
+                        "panel-bg": "#231010",
+                        "panel-border": "#492222",
+                        "text-muted": "#cb9090",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a0a0a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #492222; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f20d0d; 
+        }
+
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(35, 16, 16, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(242, 13, 13, 0.2);
+        }
+
+        /* Scanline effect overlay */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(242, 13, 13, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white font-display overflow-x-hidden antialiased selection:bg-primary selection:text-white">
+<!-- CRT Scanline Effect Overlay -->
+<div class="fixed inset-0 z-50 pointer-events-none opacity-20 scanlines"></div>
+<div class="relative flex h-screen w-full flex-col md:flex-row overflow-hidden">
+<!-- Side Navigation -->
+<aside class="w-full md:w-[280px] flex-shrink-0 border-b md:border-b-0 md:border-r border-panel-border bg-[#120808] z-20 flex flex-col justify-between h-auto md:h-full relative overflow-hidden">
+<!-- Decorative Hex pattern background for nav -->
+<div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(#f20d0d 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="flex flex-col h-full relative z-10 p-4">
+<div class="flex gap-4 items-center mb-8 px-2 mt-2">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-12 border-2 border-primary shadow-[0_0_15px_rgba(242,13,13,0.4)]" data-alt="User avatar showing a stylized anime character with glowing eyes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAx2SERqJNr2nYyKSVLEkDbW62zp7H85QnRdFuA1UZ8C0ms3HV1AG3QSN_-vMED9NAXQuNVJTzMDWy9tQqEuYO244dwk_sQFyJYe9A5SMSMHrH0BN0ZXMx7KyM8dbur0MO96GORrrNOE8f7VJe3W4e2Tf7UYaOFmXdgI4nqZfMfpT2g1xD0KBwpS6xrk2BMmsZxrQYs_YNAgFSocyud3RpJLGAyHE3RTtlsbwElVw6yNUl3AtW-cuvKjMFWUTNGjuUtsuGZ2dxOgOJz");'></div>
+<div class="absolute -bottom-1 -right-1 size-3 bg-green-500 rounded-full border-2 border-[#120808]"></div>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-lg font-bold leading-none tracking-wide">RANKERS LOG</h1>
+<p class="text-primary text-xs font-mono mt-1">LVL 42 // OMEGA CLASS</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 flex-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary transition-colors">dashboard</span>
+<p class="text-text-muted group-hover:text-white text-sm font-medium tracking-wide">DASHBOARD</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary transition-colors">inventory_2</span>
+<p class="text-text-muted group-hover:text-white text-sm font-medium tracking-wide">ARCHIVES</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary transition-colors">track_changes</span>
+<p class="text-text-muted group-hover:text-white text-sm font-medium tracking-wide">MISSIONS</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary transition-colors">groups</span>
+<p class="text-text-muted group-hover:text-white text-sm font-medium tracking-wide">GUILD</p>
+</a>
+<div class="mt-auto pt-4 border-t border-panel-border">
+<a class="flex items-center gap-3 px-4 py-3 rounded bg-primary/10 border border-primary/30 shadow-[0_0_10px_rgba(242,13,13,0.1)] relative overflow-hidden group" href="#">
+<div class="absolute inset-0 bg-primary/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+<span class="material-symbols-outlined text-primary">settings</span>
+<p class="text-white text-sm font-bold tracking-wide">SYSTEM</p>
+</a>
+</div>
+</nav>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full relative overflow-y-auto">
+<!-- Decorative background elements -->
+<div class="fixed top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="fixed bottom-0 left-[300px] w-[300px] h-[300px] bg-blue-500/5 rounded-full blur-[80px] pointer-events-none"></div>
+<!-- Top Header -->
+<header class="sticky top-0 z-30 flex items-center justify-between whitespace-nowrap border-b border-panel-border glass-panel px-6 py-4 md:px-10">
+<div class="flex items-center gap-4 text-white">
+<div class="flex items-center justify-center size-8 rounded bg-primary/20 border border-primary/50 text-primary">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+</div>
+<div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-widest glow-text">DATA ACCESS PROTOCOL</h2>
+<div class="flex items-center gap-2 text-[10px] text-text-muted font-mono">
+<span class="inline-block size-1.5 rounded-full bg-primary animate-pulse"></span>
+                            SECURE CONNECTION
+                        </div>
+</div>
+</div>
+<button class="flex items-center justify-center rounded-lg size-10 bg-white/5 hover:bg-primary/20 text-white border border-transparent hover:border-primary/50 transition-all duration-200">
+<span class="material-symbols-outlined">close</span>
+</button>
+</header>
+<!-- Page Content -->
+<div class="flex-1 px-4 md:px-10 py-8 max-w-[1200px] mx-auto w-full">
+<!-- Heading Section -->
+<div class="flex flex-col gap-6 mb-10 animate-fade-in-up">
+<div class="border-l-4 border-primary pl-6 py-2 bg-gradient-to-r from-primary/10 to-transparent">
+<h1 class="text-3xl md:text-5xl font-black leading-tight tracking-tighter text-white mb-2 uppercase">System Permissions</h1>
+<h2 class="text-xl md:text-2xl font-bold text-primary tracking-widest uppercase mb-4">Cookie Protocols v.4.2</h2>
+<p class="text-text-muted text-base md:text-lg max-w-3xl font-light font-body leading-relaxed">
+                            Configure incoming data packet reception. Essential system integrity modules are locked for stability. 
+                            Optional tracking uplinks increase XP gain analytics and tailor marketing loot drops.
+                        </p>
+</div>
+</div>
+<!-- Grid Layout for Controls -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- Left Column: Toggles -->
+<div class="lg:col-span-8 flex flex-col gap-4">
+<!-- ESSENTIAL Card -->
+<div class="group relative overflow-hidden rounded-xl border border-primary/40 bg-[#150a0a] p-6 shadow-lg transition-all hover:border-primary/80 hover:shadow-[0_0_20px_rgba(242,13,13,0.15)]">
+<!-- Tech corner markers -->
+<div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary"></div>
+<div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary"></div>
+<div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary"></div>
+<div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary"></div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative z-10">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">dns</span>
+<h3 class="text-white text-lg font-bold tracking-wide uppercase">System Core (Essential)</h3>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-primary/20 text-primary border border-primary/30">REQUIRED</span>
+</div>
+<p class="text-text-muted text-sm leading-relaxed max-w-xl font-body">
+                                        Foundational code required for HUD stability, session persistence, and security protocols. 
+                                        Disabling would cause critical system failure. Cannot be overridden.
+                                    </p>
+</div>
+<label class="relative flex h-[32px] w-[60px] cursor-not-allowed items-center rounded-sm border border-primary/30 bg-[#2a1515] p-1 opacity-80">
+<input checked="" class="peer sr-only" disabled="" type="checkbox"/>
+<div class="h-full w-[24px] rounded-sm bg-primary shadow-[0_0_10px_rgba(242,13,13,0.8)] transition-all peer-checked:translate-x-[26px]"></div>
+<div class="absolute inset-0 flex justify-between px-2 items-center pointer-events-none">
+<span class="text-[8px] font-bold text-white/30">OFF</span>
+<span class="text-[8px] font-bold text-white">ON</span>
+</div>
+</label>
+</div>
+</div>
+<!-- ANALYTICS Card -->
+<div class="group relative overflow-hidden rounded-xl border border-panel-border bg-[#1a0f0f] p-6 shadow-md transition-all hover:border-primary hover:bg-[#1f1212]">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary transition-colors">query_stats</span>
+<h3 class="text-white text-lg font-bold tracking-wide uppercase group-hover:text-primary transition-colors">Reconnaissance (Analytics)</h3>
+</div>
+<p class="text-text-muted text-sm leading-relaxed max-w-xl font-body">
+                                        Allows the system to track movement patterns and interaction heatmaps. 
+                                        Data is used to optimize server load and improve future patch updates.
+                                    </p>
+</div>
+<label class="relative flex h-[32px] w-[60px] cursor-pointer items-center rounded-sm border border-panel-border bg-[#0a0505] p-1 transition-colors hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-[#2a1515]">
+<input class="peer sr-only" type="checkbox"/>
+<div class="h-full w-[24px] rounded-sm bg-[#492222] shadow-sm transition-all peer-checked:translate-x-[26px] peer-checked:bg-primary peer-checked:shadow-[0_0_10px_rgba(242,13,13,0.8)]"></div>
+<div class="absolute inset-0 flex justify-between px-2 items-center pointer-events-none">
+<span class="text-[8px] font-bold text-white/50">OFF</span>
+<span class="text-[8px] font-bold text-white/50 peer-checked:text-white">ON</span>
+</div>
+</label>
+</div>
+</div>
+<!-- MARKETING Card -->
+<div class="group relative overflow-hidden rounded-xl border border-panel-border bg-[#1a0f0f] p-6 shadow-md transition-all hover:border-primary hover:bg-[#1f1212]">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary transition-colors">campaign</span>
+<h3 class="text-white text-lg font-bold tracking-wide uppercase group-hover:text-primary transition-colors">External Comms (Marketing)</h3>
+</div>
+<p class="text-text-muted text-sm leading-relaxed max-w-xl font-body">
+                                        Enables third-party signal interception for personalized offers and relevant loot drops.
+                                        Disabling may result in generic, low-relevance advertisements.
+                                    </p>
+</div>
+<label class="relative flex h-[32px] w-[60px] cursor-pointer items-center rounded-sm border border-panel-border bg-[#0a0505] p-1 transition-colors hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-[#2a1515]">
+<input class="peer sr-only" type="checkbox"/>
+<div class="h-full w-[24px] rounded-sm bg-[#492222] shadow-sm transition-all peer-checked:translate-x-[26px] peer-checked:bg-primary peer-checked:shadow-[0_0_10px_rgba(242,13,13,0.8)]"></div>
+<div class="absolute inset-0 flex justify-between px-2 items-center pointer-events-none">
+<span class="text-[8px] font-bold text-white/50">OFF</span>
+<span class="text-[8px] font-bold text-white/50 peer-checked:text-white">ON</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Right Column: Summary / Status -->
+<div class="lg:col-span-4 flex flex-col gap-4">
+<div class="rounded-xl border border-dashed border-primary/30 bg-primary/5 p-6 backdrop-blur-sm">
+<h4 class="text-primary font-bold text-sm uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">terminal</span>
+                                Console Output
+                            </h4>
+<div class="font-mono text-xs text-text-muted space-y-2">
+<p class="flex gap-2"><span class="text-green-500">&gt;&gt;</span> DETECTED USER ID: <span class="text-white">RL-8842-X</span></p>
+<p class="flex gap-2"><span class="text-green-500">&gt;&gt;</span> PROTOCOL STATUS: <span class="text-yellow-500 blink">PENDING CONFIGURATION</span></p>
+<p class="flex gap-2"><span class="text-green-500">&gt;&gt;</span> REGION: <span class="text-white">NORTH AMERICA (NA-EAST)</span></p>
+<p class="flex gap-2"><span class="text-green-500">&gt;&gt;</span> WAITING FOR INPUT...</p>
+</div>
+</div>
+<!-- Action Buttons - Stacked for impact -->
+<div class="flex flex-col gap-3 mt-4">
+<button class="relative overflow-hidden group w-full bg-primary hover:bg-[#ff1f1f] text-white font-bold py-4 px-6 rounded-lg shadow-[0_0_20px_rgba(242,13,13,0.3)] hover:shadow-[0_0_30px_rgba(242,13,13,0.6)] transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+<div class="absolute inset-0 bg-white/20 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 skew-y-12"></div>
+<span class="relative flex items-center justify-center gap-2 tracking-widest uppercase text-sm">
+<span class="material-symbols-outlined">save</span>
+                                    Commit Changes
+                                </span>
+</button>
+<button class="group w-full bg-[#1a0f0f] hover:bg-[#2a1515] border border-primary/50 text-white font-bold py-3 px-6 rounded-lg transition-all flex items-center justify-center gap-2 tracking-widest uppercase text-xs">
+<span class="material-symbols-outlined text-primary group-hover:animate-ping text-sm">done_all</span>
+                                Override: Accept All
+                            </button>
+<button class="w-full text-text-muted hover:text-white py-2 text-xs font-mono uppercase hover:underline transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">delete</span>
+                                Purge Optional Modules
+                            </button>
+</div>
+</div>
+</div>
+<!-- Footer Legal -->
+<div class="mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="text-[10px] text-text-muted/60 font-mono max-w-2xl">
+                        SYSTEM NOTE: DATA IS ENCRYPTED END-TO-END. COMPLIANCE WITH INTERGALACTIC PRIVACY STANDARDS (GDPR/CCPA SECTOR 7) IS GUARANTEED.
+                    </div>
+<div class="flex gap-4">
+<a class="text-[10px] text-primary/60 hover:text-primary font-bold uppercase tracking-wide" href="#">Privacy Policy</a>
+<a class="text-[10px] text-primary/60 hover:text-primary font-bold uppercase tracking-wide" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

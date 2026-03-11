@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Supply Depot</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "primary-glow": "#258cf4",
+                        "background-dark": "#050505",
+                        "surface-dark": "#0a1016",
+                        "glass": "rgba(16, 26, 35, 0.65)",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Space Grotesk", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for high-tech feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #223649; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+
+        /* Scanline animation */
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(37, 140, 244, 0.1) 50%, rgba(0,0,0,0) 100%);
+            opacity: 0.1;
+            position: absolute;
+            bottom: 100%;
+            animation: scanline 10s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes scanline {
+            0% { bottom: 100%; }
+            100% { bottom: -100%; }
+        }
+
+        /* Glowing text effect */
+        .text-glow {
+            text-shadow: 0 0 10px rgba(37, 140, 244, 0.5);
+        }
+        
+        /* Node connector lines */
+        .connector-vertical {
+            width: 2px;
+            background: linear-gradient(180deg, rgba(37,140,244,0) 0%, rgba(37,140,244,0.5) 50%, rgba(37,140,244,0) 100%);
+        }
+        .connector-horizontal {
+            height: 2px;
+            background: linear-gradient(90deg, rgba(37,140,244,0) 0%, rgba(37,140,244,0.5) 50%, rgba(37,140,244,0) 100%);
+        }
+
+        /* Glass panel */
+        .glass-panel {
+            background: rgba(10, 16, 22, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* HUD Corners */
+        .hud-corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(37, 140, 244, 0.3);
+            pointer-events: none;
+        }
+        .hud-tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+        .hud-tr { top: 20px; right: 20px; border-left: 0; border-bottom: 0; }
+        .hud-bl { bottom: 20px; left: 20px; border-right: 0; border-top: 0; }
+        .hud-br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display overflow-x-hidden min-h-screen relative">
+<!-- Ambient Background Effects -->
+<div class="fixed inset-0 z-0 opacity-[0.03] pointer-events-none" style="background-size: 40px 40px; background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px);"></div>
+<div class="fixed inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background-dark to-background-dark pointer-events-none"></div>
+<div class="scanline fixed inset-0 pointer-events-none z-50"></div>
+<!-- HUD Decorative Corners -->
+<div class="hud-corner hud-tl z-50 fixed"></div>
+<div class="hud-corner hud-tr z-50 fixed"></div>
+<div class="hud-corner hud-bl z-50 fixed hidden md:block"></div>
+<div class="hud-corner hud-br z-50 fixed hidden md:block"></div>
+<div class="relative flex min-h-screen flex-col z-10">
+<!-- TOP HUD: Header & Stats -->
+<header class="sticky top-0 z-40 glass-panel border-b-0 border-b-white/10">
+<div class="layout-container flex flex-col mx-auto max-w-7xl">
+<!-- Main Navbar Row -->
+<div class="flex items-center justify-between px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary animate-pulse">
+<span class="material-symbols-outlined text-3xl">hub</span>
+</div>
+<div>
+<h2 class="text-white text-lg font-bold leading-none tracking-widest uppercase text-glow">SUPPLY DEPOT</h2>
+<span class="text-[10px] text-primary/70 font-mono tracking-[0.2em]">VENDOR SYS V2.4 // ONLINE</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<!-- Stats Mini-Display inside Header for Desktop -->
+<div class="hidden md:flex items-center gap-6 border-r border-white/10 pr-6 mr-2">
+<div class="flex flex-col items-end">
+<span class="text-[10px] text-gray-400 uppercase tracking-wider">Credits</span>
+<div class="flex items-center gap-1 text-primary font-bold">
+<span class="material-symbols-outlined text-sm">diamond</span>
+<span>9,500</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-[10px] text-gray-400 uppercase tracking-wider">Level</span>
+<div class="text-white font-bold">LVL 54</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center size-10 rounded-lg bg-surface-dark border border-white/10 hover:border-primary/50 text-white transition-colors group relative">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">shopping_cart</span>
+<span class="absolute -top-1 -right-1 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-lg size-10 border border-white/10" data-alt="Cyberpunk stylized user avatar portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFpYUjoiTL2GzB0YMVzSISIX1xbgNUR0l5s4llfbQS_rk1w2IhTJX-uq84wIBrIHiRVvvUIILPcZ3XsOKqiayi-XFqh3gNHgtjN_NnNHyHRJSC-X6xVFGTlnXGwcq9l3zJMgeThLMhBVpaj3TGM8_HjJLWIWhoh-kivb_13A4XkK7O6iAhnYAhz2EFZAiEpp2Nz9Yjh5lDrCy0ffL7pN01Apm6WCY1rliUUwDzXMexh9udpRlmp8a7vk6VvOHlHb4g7akLgDAuO_bc");'></div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN SCROLLABLE CONTENT -->
+<main class="flex-1 layout-container flex flex-col max-w-7xl mx-auto w-full px-4 md:px-6 pb-28 pt-8">
+<!-- SECTION 1: CENTRAL HUB (HERO) -->
+<div class="flex flex-col items-center relative mb-12">
+<!-- Vertical connector line top -->
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 h-8 w-px bg-gradient-to-b from-transparent to-primary/50"></div>
+<div class="glass-panel p-1 rounded-xl w-full max-w-5xl relative group hover:border-primary/50 transition-colors duration-500">
+<!-- Tech decorations around card -->
+<div class="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-primary rounded-tl-lg"></div>
+<div class="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-primary rounded-tr-lg"></div>
+<div class="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-primary rounded-bl-lg"></div>
+<div class="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-primary rounded-br-lg"></div>
+<div class="flex flex-col md:flex-row gap-6 bg-surface-dark/50 rounded-lg overflow-hidden">
+<div class="md:w-3/5 bg-center bg-no-repeat bg-cover min-h-[250px] relative overflow-hidden" data-alt="Futuristic neon katana glowing with blue energy" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB66wzjp4-ZcZYPZk0Twhhid0DolzLTnhwfDTgaoauzst8rr-sji3IsvDDYRZ9Gtrhf-vR-Ef9J90aZ0TQrjTdW-YEyRHrXzbDOwAa22vKf9l434466e3_3qiJYYJy6a1WdMPmhUi1MOd7cY-qx9od2LZzYNJiqB_ti68Cfo5oj9S6ELjZIi_u3YonIA3G20F3Hy-hKNh5i1XYW9mM8l-PxiN9wP5zNYuZeDySOQilVlxfmWvx9gCmnlXZkj7drMNDRU_VojfY8Q09h");'>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+<span class="bg-primary text-white text-xs font-bold px-2 py-1 rounded-sm uppercase tracking-wider mb-1">Featured Item</span>
+</div>
+</div>
+<div class="md:w-2/5 p-6 md:p-8 flex flex-col justify-center gap-4 text-left relative">
+<!-- Background grid effect -->
+<div class="absolute inset-0 bg-grid-pattern opacity-[0.05] pointer-events-none"></div>
+<div class="flex flex-col gap-2 relative z-10">
+<h1 class="text-white text-3xl md:text-4xl font-bold leading-tight uppercase tracking-tight">
+                                    Neon <span class="text-primary text-glow">Cyber-Katana</span>
+</h1>
+<p class="text-gray-400 text-sm md:text-base leading-relaxed">
+                                    Legendary rarity badge. +50 Social Standing. Includes exclusive kill-effect animation.
+                                </p>
+</div>
+<div class="flex items-center justify-between border-t border-white/10 pt-4 mt-2 relative z-10">
+<div class="flex flex-col">
+<span class="text-[10px] text-gray-500 uppercase">Cost</span>
+<span class="text-xl font-bold text-white">1,200 <span class="text-primary text-sm">CR</span></span>
+</div>
+<button class="relative overflow-hidden group bg-primary/10 hover:bg-primary border border-primary/50 hover:border-primary text-primary hover:text-white px-6 py-2 rounded transition-all duration-300">
+<span class="relative z-10 text-sm font-bold tracking-wider uppercase flex items-center gap-2">
+                                        Acquire <span class="material-symbols-outlined text-lg">bolt</span>
+</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Vertical connector line bottom -->
+<div class="h-16 w-px bg-gradient-to-b from-primary/50 to-primary/20 relative">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-2 bg-primary rounded-full shadow-[0_0_10px_#258cf4]"></div>
+</div>
+</div>
+<!-- SECTION 2: CATEGORY BRANCHES (CHIPS) -->
+<div class="relative mb-12 w-full">
+<!-- Horizontal Connecting Line behind chips -->
+<div class="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent -z-10"></div>
+<div class="flex flex-wrap justify-center gap-6 p-4">
+<!-- Active Category Node -->
+<button class="glass-panel group relative flex items-center gap-3 px-6 py-3 rounded-lg border-primary/50 bg-primary/10 hover:bg-primary/20 transition-all min-w-[160px] justify-center transform hover:-translate-y-1">
+<span class="absolute -top-1 left-1/2 -translate-x-1/2 w-px h-4 bg-primary/30 -mt-4"></span>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">filter_frames</span>
+<div class="flex flex-col items-start">
+<span class="text-[10px] text-primary font-bold uppercase tracking-widest leading-none mb-1">Node 01</span>
+<span class="text-white text-sm font-bold uppercase tracking-wide">Avatar Frames</span>
+</div>
+<!-- Active indicator -->
+<span class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full shadow-[0_0_8px_#258cf4]"></span>
+</button>
+<!-- Inactive Nodes -->
+<button class="glass-panel group relative flex items-center gap-3 px-6 py-3 rounded-lg border-white/10 hover:border-primary/30 hover:bg-white/5 transition-all min-w-[160px] justify-center opacity-70 hover:opacity-100">
+<span class="absolute -top-1 left-1/2 -translate-x-1/2 w-px h-4 bg-white/10 -mt-4"></span>
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors">palette</span>
+<div class="flex flex-col items-start">
+<span class="text-[10px] text-gray-600 group-hover:text-primary/70 font-bold uppercase tracking-widest leading-none mb-1">Node 02</span>
+<span class="text-gray-300 text-sm font-medium uppercase tracking-wide">UI Themes</span>
+</div>
+</button>
+<button class="glass-panel group relative flex items-center gap-3 px-6 py-3 rounded-lg border-white/10 hover:border-primary/30 hover:bg-white/5 transition-all min-w-[160px] justify-center opacity-70 hover:opacity-100">
+<span class="absolute -top-1 left-1/2 -translate-x-1/2 w-px h-4 bg-white/10 -mt-4"></span>
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors">military_tech</span>
+<div class="flex flex-col items-start">
+<span class="text-[10px] text-gray-600 group-hover:text-primary/70 font-bold uppercase tracking-widest leading-none mb-1">Node 03</span>
+<span class="text-gray-300 text-sm font-medium uppercase tracking-wide">Rank Badges</span>
+</div>
+</button>
+<button class="glass-panel group relative flex items-center gap-3 px-6 py-3 rounded-lg border-white/10 hover:border-primary/30 hover:bg-white/5 transition-all min-w-[160px] justify-center opacity-70 hover:opacity-100">
+<span class="absolute -top-1 left-1/2 -translate-x-1/2 w-px h-4 bg-white/10 -mt-4"></span>
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors">sentiment_satisfied</span>
+<div class="flex flex-col items-start">
+<span class="text-[10px] text-gray-600 group-hover:text-primary/70 font-bold uppercase tracking-widest leading-none mb-1">Node 04</span>
+<span class="text-gray-300 text-sm font-medium uppercase tracking-wide">Emotes</span>
+</div>
+</button>
+</div>
+<!-- Vertical connector line to content -->
+<div class="h-12 w-px bg-gradient-to-b from-primary/30 to-transparent mx-auto"></div>
+</div>
+<!-- SECTION 3: ITEM GRID (LEAVES) -->
+<div class="w-full">
+<div class="flex items-center justify-between mb-6 px-4">
+<h3 class="text-white text-xl font-bold uppercase tracking-wider flex items-center gap-2">
+<span class="w-2 h-2 bg-primary rounded-sm"></span>
+                        Available Schematics
+                    </h3>
+<div class="flex gap-2">
+<button class="p-2 rounded bg-surface-dark border border-white/10 hover:border-white/30 text-gray-400 hover:text-white">
+<span class="material-symbols-outlined text-lg">grid_view</span>
+</button>
+<button class="p-2 rounded bg-surface-dark border border-white/10 hover:border-white/30 text-gray-400 hover:text-white">
+<span class="material-symbols-outlined text-lg">list</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+<!-- Item Card 1 -->
+<div class="glass-panel rounded-lg overflow-hidden flex flex-col hover:border-primary/60 hover:shadow-[0_0_15px_rgba(37,140,244,0.15)] transition-all duration-300 group">
+<div class="relative aspect-square w-full bg-surface-dark overflow-hidden">
+<div class="absolute inset-0 bg-center bg-cover transform group-hover:scale-105 transition-transform duration-700" data-alt="Holographic square border frame with blue digital noise" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCqyI5ZQyZzlZjTa7IFhItRhmzfzThZu6CmvaSOdJ3Q5EDDZOlqT2TF4nX04WHd81wf71_3EhxVKpfDujoSR829ZCrBR4HHT9zIpL73LHuo2AAil7sgRGAJuDhcxSgscX9X-njqeWDA1lsto8uMDBnMMTJFKPFGYn9FAM-cvx1fz8XeQQuM10M6vSsCpHa9ZgVTvZYia7d6n-w3UzTcLCWvKIyasg43mwUp3PWLZbrKeCQbO2sK3JsGKMKPOxOZcq-hEWJj2dCQRacC");'></div>
+<div class="absolute top-2 right-2 bg-black/60 backdrop-blur px-2 py-1 rounded text-[10px] font-bold text-blue-400 border border-blue-400/30">RARE</div>
+</div>
+<div class="p-4 flex flex-col flex-1 gap-3 bg-gradient-to-b from-surface-dark to-transparent">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-white font-bold text-lg leading-tight group-hover:text-primary transition-colors">Holo-Border</h4>
+<span class="text-xs text-gray-500 uppercase">Frame Mod</span>
+</div>
+</div>
+<div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between">
+<span class="text-primary font-bold">500 CR</span>
+<button class="size-8 rounded flex items-center justify-center bg-white/5 hover:bg-primary text-white transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</div>
+<button class="w-full py-2 rounded bg-primary/10 border border-primary/30 text-primary text-xs font-bold uppercase tracking-wider hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2">
+                                Purchase
+                            </button>
+</div>
+</div>
+<!-- Item Card 2 -->
+<div class="glass-panel rounded-lg overflow-hidden flex flex-col hover:border-purple-500/60 hover:shadow-[0_0_15px_rgba(168,85,247,0.15)] transition-all duration-300 group">
+<div class="relative aspect-square w-full bg-surface-dark overflow-hidden">
+<div class="absolute inset-0 bg-center bg-cover transform group-hover:scale-105 transition-transform duration-700" data-alt="Abstract glitch art texture with purple and green artifacts" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDLmpWfYgkeNI3MsHgZVJjWLj6r_blGY21DR9uo2HlDdPiCJjiQ-PaJ-wubWUWBl-vwKa_Wefhl-UGCpjzsniznnfYW949KtJdYHPyKNISC94AGaz4UhThyfCkRHrGowxiwaioQOIy1Ajtnvsy_9nhm7_UvoYIyhgizkbtvnITgMA95dV3cZWFHAwNRD5WehGWRxGimSJa6_1uJ8ZtxqbUnRfb-0KY2xanNb7kTFHQq7wNZkGTxF9GuEoGWqPSJewYnYEnjB844EdPQ");'></div>
+<div class="absolute top-2 right-2 bg-black/60 backdrop-blur px-2 py-1 rounded text-[10px] font-bold text-purple-400 border border-purple-400/30">EPIC</div>
+</div>
+<div class="p-4 flex flex-col flex-1 gap-3 bg-gradient-to-b from-surface-dark to-transparent">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-white font-bold text-lg leading-tight group-hover:text-purple-400 transition-colors">Glitch Effect</h4>
+<span class="text-xs text-gray-500 uppercase">Anim. Overlay</span>
+</div>
+</div>
+<div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between">
+<span class="text-purple-400 font-bold">750 CR</span>
+<button class="size-8 rounded flex items-center justify-center bg-white/5 hover:bg-purple-500 text-white transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</div>
+<button class="w-full py-2 rounded bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-bold uppercase tracking-wider hover:bg-purple-500 hover:text-white transition-all flex items-center justify-center gap-2">
+                                Purchase
+                            </button>
+</div>
+</div>
+<!-- Item Card 3 -->
+<div class="glass-panel rounded-lg overflow-hidden flex flex-col hover:border-yellow-500/60 hover:shadow-[0_0_15px_rgba(234,179,8,0.15)] transition-all duration-300 group">
+<div class="relative aspect-square w-full bg-surface-dark overflow-hidden">
+<div class="absolute inset-0 bg-center bg-cover transform group-hover:scale-105 transition-transform duration-700" data-alt="Golden glowing aura sphere on dark background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDfhRZuxqxr9ITDnq-rawjUzY4PVX0Is-y12JlHXk7kK1oT-k8aWVY9LarzFUTUleVIjpsva7BmgG4MKJq8MeHqlsgboeeQcE_v0RicwVDh7AsKsi24puAuxJUcGN7yWUOCDSdRWWQk-t9LqObaDtHKxKR0R1Ibp9MUq8GWfAx4QQRYJ5A_5ohOB8Y442gy1JJQuQbrbsAzUy7VZ7z6mCFSv25YvL80VlLBNs4KHvDLI9EacSgPVg0Rl8oQegAnOVVhCEelNYdDqrje");'></div>
+<div class="absolute top-2 right-2 bg-black/60 backdrop-blur px-2 py-1 rounded text-[10px] font-bold text-yellow-400 border border-yellow-400/30">LEGENDARY</div>
+</div>
+<div class="p-4 flex flex-col flex-1 gap-3 bg-gradient-to-b from-surface-dark to-transparent">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-white font-bold text-lg leading-tight group-hover:text-yellow-400 transition-colors">Gold Aura</h4>
+<span class="text-xs text-gray-500 uppercase">Profile FX</span>
+</div>
+</div>
+<div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between">
+<span class="text-yellow-400 font-bold">1200 CR</span>
+<button class="size-8 rounded flex items-center justify-center bg-white/5 hover:bg-yellow-500 text-white transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</div>
+<button class="w-full py-2 rounded bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-bold uppercase tracking-wider hover:bg-yellow-500 hover:text-white transition-all flex items-center justify-center gap-2">
+                                Purchase
+                            </button>
+</div>
+</div>
+<!-- Item Card 4 -->
+<div class="glass-panel rounded-lg overflow-hidden flex flex-col hover:border-gray-400/60 hover:shadow-[0_0_15px_rgba(156,163,175,0.15)] transition-all duration-300 group">
+<div class="relative aspect-square w-full bg-surface-dark overflow-hidden">
+<div class="absolute inset-0 bg-center bg-cover transform group-hover:scale-105 transition-transform duration-700" data-alt="Dark static noise texture, like a broken tv screen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZ27cQD2Xj7YdD1PC9w50OvIE6J9Fd8reRZn1FDCn4LYU9CUeXIM2-t1RIsbaEyUxMDIvbnbF8_Sr1wApclgEX-eCl0FCQ8Gw_IA8W2P2ndSbIp0aOdgE7wxt9kLNoLcob16TKVpcEM3pn0v0VaRo_xY-xDNKGtyqn_X1t8P_XgQboQiCi5Uf_PrpMlRtp7GOu3mJBPvAn2OlvNxJW49sBPp_-JzYXb_NC16qKhuTxco7DAlwa5S5XVzuJJ5gTU8awzl3pefTBx_mO");'></div>
+<div class="absolute top-2 right-2 bg-black/60 backdrop-blur px-2 py-1 rounded text-[10px] font-bold text-gray-400 border border-gray-400/30">COMMON</div>
+</div>
+<div class="p-4 flex flex-col flex-1 gap-3 bg-gradient-to-b from-surface-dark to-transparent">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-white font-bold text-lg leading-tight group-hover:text-gray-300 transition-colors">Void Static</h4>
+<span class="text-xs text-gray-500 uppercase">Background</span>
+</div>
+</div>
+<div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between">
+<span class="text-gray-300 font-bold">400 CR</span>
+<button class="size-8 rounded flex items-center justify-center bg-white/5 hover:bg-gray-500 text-white transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</div>
+<button class="w-full py-2 rounded bg-gray-500/10 border border-gray-500/30 text-gray-400 text-xs font-bold uppercase tracking-wider hover:bg-gray-500 hover:text-white transition-all flex items-center justify-center gap-2">
+                                Purchase
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- COMMAND DECK (Floating Bottom Nav) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm px-4">
+<div class="glass-panel rounded-full px-6 py-3 flex items-center justify-between shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/10 relative">
+<!-- Nav Active Indicator -->
+<div class="absolute bottom-1 left-0 w-full flex justify-center pointer-events-none">
+<div class="w-12 h-1 bg-primary rounded-t-full shadow-[0_-4px_10px_#258cf4] transform translate-x-12"></div>
+</div>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors group">
+<span class="material-symbols-outlined group-hover:-translate-y-1 transition-transform">dashboard</span>
+<span class="text-[9px] font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 absolute -top-4 transition-opacity bg-black/80 px-1 rounded">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors group">
+<span class="material-symbols-outlined group-hover:-translate-y-1 transition-transform">person</span>
+<span class="text-[9px] font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 absolute -top-4 transition-opacity bg-black/80 px-1 rounded">Profile</span>
+</button>
+<!-- Active Item -->
+<button class="flex flex-col items-center gap-1 text-primary relative -top-4">
+<div class="bg-primary text-white p-3 rounded-full shadow-[0_0_15px_#258cf4] border-4 border-background-dark">
+<span class="material-symbols-outlined text-xl">storefront</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-wider text-glow mt-1">Shop</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors group">
+<span class="material-symbols-outlined group-hover:-translate-y-1 transition-transform">menu_book</span>
+<span class="text-[9px] font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 absolute -top-4 transition-opacity bg-black/80 px-1 rounded">Logs</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors group">
+<span class="material-symbols-outlined group-hover:-translate-y-1 transition-transform">settings</span>
+<span class="text-[9px] font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 absolute -top-4 transition-opacity bg-black/80 px-1 rounded">Sys</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Transmission Stream</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                        "void": "#050505",
+                        "glass": "#111111",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    boxShadow: {
+                        'glow': '0 0 10px rgba(37, 140, 244, 0.3)',
+                        'glow-sm': '0 0 5px rgba(37, 140, 244, 0.5)',
+                        'glow-text': '0 0 8px rgba(37, 140, 244, 0.6)',
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(rgba(37, 140, 244, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 140, 244, 0.05) 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .hex-avatar {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        .tech-border-tr-bl {
+            border-radius: 4px;
+            border-top-right-radius: 1rem;
+            border-bottom-left-radius: 1rem;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Custom Circuit Lines */
+        .circuit-line {
+            position: absolute;
+            left: -24px;
+            top: 24px;
+            width: 24px;
+            height: 2px;
+            background: #258cf4;
+            opacity: 0.3;
+        }
+        .circuit-node {
+            position: absolute;
+            left: -28px;
+            top: 20px;
+            width: 8px;
+            height: 8px;
+            background: #258cf4;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #258cf4;
+        }
+    </style>
+</head>
+<body class="bg-void text-white font-display overflow-x-hidden min-h-screen flex flex-col relative selection:bg-primary/30">
+<!-- Background Grid Effect -->
+<div class="fixed inset-0 bg-grid-pattern bg-[size:40px_40px] pointer-events-none z-0"></div>
+<div class="fixed inset-0 bg-gradient-to-b from-void via-transparent to-void pointer-events-none z-0"></div>
+<!-- Main Content Wrapper -->
+<div class="relative z-10 flex flex-col w-full max-w-4xl mx-auto pb-32">
+<!-- Context Header (Pinned) -->
+<header class="sticky top-0 z-40 bg-void/80 backdrop-blur-xl border-b border-white/10 px-4 py-4 md:px-8">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary animate-pulse">satellite_alt</span>
+<h2 class="text-xs font-bold uppercase tracking-[0.2em] text-primary/80">Transmission Stream</h2>
+</div>
+<div class="flex items-center gap-2 text-xs text-white/40">
+<span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.8)]"></span>
+                    LIVE FEED
+                </div>
+</div>
+<div class="bg-glass/50 border border-white/5 p-3 rounded-lg flex items-center justify-between gap-4 relative overflow-hidden group">
+<!-- Hover Glow Effect -->
+<div class="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded bg-cover bg-center border border-white/10 shrink-0" data-alt="Abstract data source thumbnail with geometric patterns" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC-yld-hxejhXX7AaVxBSR0DjUyFYBT2xUG6jL-1ieio2xrLfsZq-b8ZlEyd96YUy-VfcCYlZlN9pyPjmKIdBzoW2kCG7KZMh7ZVOi88FXOG6qCy9KCIYX-MnBmJJcWipwFvgse1Ubv8SFk09KJo7N0m-Du7d9LU205Da_iiS2HxggBmOYWrDs7BAEU6sEeIVAE4pf_BZ5s4IvFRHghTu-nf96aWKL0OeHOE_kdsORyYR-ugBJWmcD3iFKhRpSaiRVmDwuLS7DOnWv2');"></div>
+<div>
+<h1 class="text-white text-base md:text-lg font-bold leading-tight tracking-tight">Log Entry #402: Solo Leveling</h1>
+<p class="text-primary/60 text-xs font-mono mt-0.5">Chapter 175 • Manga Tracker • <span class="text-white/40">Status: Completed</span></p>
+</div>
+</div>
+<button class="hidden md:flex items-center justify-center w-8 h-8 rounded-full bg-white/5 hover:bg-primary/20 hover:text-primary transition-colors border border-white/5">
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</button>
+</div>
+</header>
+<!-- Comments Stream -->
+<main class="flex-1 px-4 md:px-8 py-6">
+<!-- Timeline Guide -->
+<div class="absolute left-8 md:left-12 top-0 bottom-0 w-[1px] bg-gradient-to-b from-primary/50 via-primary/20 to-transparent"></div>
+<div class="flex flex-col gap-6 pl-8 md:pl-12 relative">
+<!-- Comment 1 (Root) -->
+<div class="group relative">
+<!-- Connector Logic -->
+<div class="circuit-node group-hover:bg-white transition-colors"></div>
+<div class="circuit-line group-hover:w-8 group-hover:left-[-32px] transition-all"></div>
+<div class="tech-border-tr-bl bg-glass/60 backdrop-blur-md border border-white/5 p-4 md:p-5 hover:border-primary/40 hover:shadow-glow-sm transition-all duration-300">
+<div class="flex gap-4">
+<!-- Hex Avatar -->
+<div class="shrink-0 relative">
+<div class="w-10 h-10 md:w-12 md:h-12 bg-gray-800 hex-avatar relative z-10">
+<img alt="CyberSamurai_99 Avatar" class="w-full h-full object-cover" data-alt="Cyberpunk style user avatar in hexagon shape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJVDLY0XMBlldG2Ig-5yi3D9cE5jSMEgExnoeJAg3MNZJtpPSS-kxUZhnuIS5pdjh9kYl8wwA3t5oLCJ5v5VpVDphPcYPCmMKy0vbQA7F8TO9qDswaJTPTOEIn5o-IGWSVmDUgS5pzahK2aacllfnb2v_kBEnLCZUEMoa4CW3SYFBg2vKgd9ihqmhP0HjYNJTo0kjuJjsIYntOcNpGLGxyFhcM92ufWhfiXaUw13YGzlDa76DCGSMtjsps18dzYNrF31EH8pPyxBYE"/>
+</div>
+<div class="absolute inset-0 bg-primary/50 hex-avatar scale-110 blur-[2px] z-0"></div>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-baseline gap-2">
+<span class="text-primary font-bold text-sm tracking-wide">CyberSamurai_99</span>
+<span class="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded border border-primary/20">LVL 42</span>
+</div>
+<span class="text-xs text-white/30 font-mono">2h ago</span>
+</div>
+<p class="text-gray-300 text-sm leading-relaxed mb-3">
+                                    The power scaling in this chapter is absolute madness. That shadow extraction sequence was peak art. I didn't expect the monarch to react that way!
+                                </p>
+<!-- Action Bar -->
+<div class="flex items-center gap-4 border-t border-white/5 pt-2 mt-2">
+<button class="flex items-center gap-1.5 text-xs text-white/40 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span>
+<span>124</span>
+</button>
+<button class="flex items-center gap-1.5 text-xs text-white/40 hover:text-red-400 transition-colors">
+<span class="material-symbols-outlined text-[16px]">thumb_down</span>
+</button>
+<div class="h-3 w-[1px] bg-white/10 mx-1"></div>
+<button class="flex items-center gap-1.5 text-xs text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[16px]">chat_bubble</span>
+<span>Reply</span>
+</button>
+<div class="flex-1"></div>
+<button class="text-white/20 hover:text-red-500 transition-colors" title="Report">
+<span class="material-symbols-outlined text-[16px]">flag</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment 2 (Reply) -->
+<div class="group relative ml-0 md:ml-8">
+<!-- Connector Logic for Indented -->
+<div class="absolute left-[-40px] top-6 w-[40px] h-[20px] border-l border-b border-primary/20 rounded-bl-xl pointer-events-none"></div>
+<div class="absolute left-[-4px] top-[43px] w-2 h-2 bg-primary/50 rounded-full shadow-[0_0_5px_#258cf4]"></div>
+<div class="tech-border-tr-bl bg-glass/40 backdrop-blur-md border border-white/5 p-4 hover:bg-glass/60 hover:border-primary/30 transition-all duration-300">
+<div class="flex gap-4">
+<!-- Hex Avatar -->
+<div class="shrink-0 relative">
+<div class="w-8 h-8 md:w-10 md:h-10 bg-gray-800 hex-avatar relative z-10">
+<img alt="NeoNinja_v2 Avatar" class="w-full h-full object-cover" data-alt="Futuristic ninja avatar in hexagon shape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZDgWIbkUUNDw4G1atavk0WVy8SohJgOp6F0ogtb8MZzro-5_MFdaY0taumjtUB1nAFLQ6Y9vD4JTeoDxmfXTJvCnMn69WdACyqnL25JYtUhFRTyjW4fnV6mvpVGadSBCNN3SYkehDXiXW1VGD5v0DOWzWzLsK6Z-yT_MziUPT4z2Bdo9lj7D-hqjUOFbb7e5zQkictzFxJDl1AoggR0juIyDWaAecYvtWkmkkth3ctj2jvASjIuA1Pil7Jdl0lrZVD8gQSxJEDxfn"/>
+</div>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-baseline gap-2">
+<span class="text-white font-bold text-sm tracking-wide">NeoNinja_v2</span>
+</div>
+<span class="text-xs text-white/30 font-mono">45m ago</span>
+</div>
+<p class="text-gray-400 text-sm leading-relaxed mb-2">
+                                    Confirmed. The visual fidelity on the shadow army rendering is off the charts.
+                                </p>
+<!-- Action Bar Condensed -->
+<div class="flex items-center gap-4 pt-1">
+<button class="flex items-center gap-1 text-xs text-white/40 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[14px]">thumb_up</span>
+<span>45</span>
+</button>
+<button class="flex items-center gap-1 text-xs text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[14px]">reply</span>
+<span>Reply</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment 3 (New Thread) -->
+<div class="group relative">
+<div class="circuit-node bg-void border border-primary/50 group-hover:bg-primary transition-colors"></div>
+<div class="circuit-line opacity-20"></div>
+<div class="tech-border-tr-bl bg-glass/60 backdrop-blur-md border border-white/5 p-4 md:p-5 hover:border-primary/40 hover:shadow-glow-sm transition-all duration-300">
+<div class="flex gap-4">
+<div class="shrink-0 relative">
+<div class="w-10 h-10 md:w-12 md:h-12 bg-gray-800 hex-avatar relative z-10">
+<img alt="MangaReader99 Avatar" class="w-full h-full object-cover" data-alt="Abstract pixel art avatar in hexagon shape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWrrLtLLxA3jJE3LKh4CCg-rL4wfpLKttMl4KuiEXBtQSIrOGaSmPo3JT0M8iJjvQm6ycm2AqGvtRAWw3QvPj43NTzsiRQZCPLmjAtVbIvKjPou0_fk0IT1-zm-2XFuSUzudE8CFWkS6tU8KnGZT36ThcHfsfnBe1EmSti-N6VmZBzOWpCUzE_VeTz0B-lTDOvKLG23pNOwuZFfTYPCosSZj20Kn9IWgvCzmt2dvth1VKM7wWJ1pDSVRwxChneOqEnIdxCnWEIAIsq"/>
+</div>
+<div class="absolute inset-0 bg-purple-500/50 hex-avatar scale-110 blur-[2px] z-0"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-baseline gap-2">
+<span class="text-purple-400 font-bold text-sm tracking-wide">System_Op</span>
+<span class="text-[10px] bg-purple-500/10 text-purple-400 px-1.5 py-0.5 rounded border border-purple-500/20">ADMIN</span>
+</div>
+<span class="text-xs text-white/30 font-mono">10m ago</span>
+</div>
+<p class="text-gray-300 text-sm leading-relaxed mb-3">
+<span class="text-primary font-mono bg-primary/10 px-1 rounded text-xs mr-1">@CyberSamurai_99</span> Please keep spoilers tagged properly next time. I've added the tag for you.
+                                </p>
+<div class="flex items-center gap-4 border-t border-white/5 pt-2 mt-2">
+<button class="flex items-center gap-1.5 text-xs text-white/40 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span>
+<span>8</span>
+</button>
+<button class="flex items-center gap-1.5 text-xs text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[16px]">chat_bubble</span>
+<span>Reply</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Loading Skeleton (New Data Incoming) -->
+<div class="pl-8 md:pl-12 mt-8 opacity-50 relative">
+<div class="absolute left-[-11px] top-6 w-3 h-3 border-2 border-dashed border-primary/50 rounded-full animate-spin"></div>
+<div class="flex items-center gap-2 text-primary/60 text-xs font-mono animate-pulse mb-2">
+<span class="material-symbols-outlined text-[14px]">downloading</span>
+                    RECEIVING TRANSMISSION...
+                 </div>
+<div class="h-20 bg-white/5 rounded-tr-xl rounded-bl-xl w-full"></div>
+</div>
+</main>
+<!-- Fixed Input Terminal -->
+<div class="fixed bottom-0 left-0 right-0 z-50 pointer-events-none flex flex-col items-center justify-end pb-6">
+<!-- Input Field Container (Interactive) -->
+<div class="w-full max-w-4xl px-4 md:px-8 mb-4 pointer-events-auto">
+<div class="relative group">
+<!-- Glow Background -->
+<div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-lg opacity-20 group-hover:opacity-40 blur transition duration-500"></div>
+<div class="relative flex items-end bg-[#0a0a0a] border border-white/10 rounded-lg overflow-hidden shadow-2xl">
+<div class="pl-3 py-3 text-primary/50">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<textarea class="w-full bg-transparent border-0 text-white placeholder-white/30 focus:ring-0 text-sm py-3.5 px-3 resize-none font-mono" placeholder="Input command or reply..." rows="1"></textarea>
+<div class="flex items-center gap-1 pr-2 pb-2">
+<button class="p-2 text-white/40 hover:text-primary transition-colors rounded hover:bg-white/5">
+<span class="material-symbols-outlined text-[20px]">alternate_email</span>
+</button>
+<button class="p-2 text-white/40 hover:text-primary transition-colors rounded hover:bg-white/5">
+<span class="material-symbols-outlined text-[20px]">image</span>
+</button>
+<button class="ml-1 h-9 px-4 bg-primary/20 hover:bg-primary hover:text-white text-primary text-xs font-bold uppercase tracking-wider rounded border border-primary/30 transition-all flex items-center gap-2 group/btn">
+<span>Send</span>
+<span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-1 transition-transform">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Command Deck (Navigation Pill) -->
+<div class="pointer-events-auto">
+<nav class="bg-glass/80 backdrop-blur-xl border border-white/10 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.5)] flex items-center gap-1 p-1.5 px-3 mb-2">
+<a class="w-10 h-10 rounded-full flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white transition-colors" href="#" title="Dashboard">
+<span class="material-symbols-outlined">grid_view</span>
+</a>
+<a class="w-10 h-10 rounded-full flex items-center justify-center bg-primary/20 text-primary shadow-[0_0_10px_rgba(37,140,244,0.3)] border border-primary/30" href="#" title="Logs">
+<span class="material-symbols-outlined">forum</span>
+</a>
+<a class="w-10 h-10 rounded-full flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white transition-colors" href="#" title="Database">
+<span class="material-symbols-outlined">database</span>
+</a>
+<div class="w-[1px] h-4 bg-white/10 mx-1"></div>
+<a class="w-10 h-10 rounded-full flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white transition-colors relative" href="#" title="Profile">
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-[#111]"></span>
+<span class="material-symbols-outlined">person</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+</body></html>

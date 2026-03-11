@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Notifications</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505", // Void Dark as requested
+                        "rank-gold": "#FFD700",
+                        "rank-cyan": "#00FFFF",
+                        "rank-purple": "#BF00FF",
+                        "rank-green": "#22c55e",
+                        "rank-red": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #ffffff05 1px, transparent 1px), linear-gradient(to bottom, #ffffff05 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4;
+        }
+        .chamfered-box {
+            clip-path: polygon(
+                20px 0, 100% 0, 
+                100% calc(100% - 20px), 
+                calc(100% - 20px) 100%, 
+                0 100%, 
+                0 20px
+            );
+        }
+        .chamfered-box-sm {
+            clip-path: polygon(
+                10px 0, 100% 0, 
+                100% calc(100% - 10px), 
+                calc(100% - 10px) 100%, 
+                0 100%, 
+                0 10px
+            );
+        }
+        .neon-text-gold { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        .neon-text-cyan { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+        .neon-text-purple { text-shadow: 0 0 10px rgba(191, 0, 255, 0.5); }
+        .neon-border-primary { box-shadow: 0 0 10px rgba(37, 140, 244, 0.3); }
+        .hex-btn {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        .glass-panel {
+            background: rgba(20, 25, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel-active {
+            background: rgba(37, 140, 244, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(37, 140, 244, 0.3);
+            box-shadow: 0 0 20px rgba(37, 140, 244, 0.1);
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(37, 140, 244, 0.2); transform: scale(1); }
+            50% { box-shadow: 0 0 25px rgba(37, 140, 244, 0.6); transform: scale(1.05); }
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 3s infinite;
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display overflow-x-hidden min-h-screen selection:bg-primary selection:text-white">
+<div class="fixed inset-0 pointer-events-none bg-grid-pattern bg-[length:40px_40px] opacity-20 z-0"></div>
+<div class="relative z-10 flex h-full min-h-screen w-full flex-col">
+<header class="flex items-center justify-between border-b border-white/10 bg-[#050505]/90 backdrop-blur-md px-8 py-4 sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-4xl">hub</span>
+</div>
+<h1 class="text-2xl font-bold tracking-tight">RANKERS LOG <span class="text-xs font-normal text-gray-500 tracking-widest ml-2">SYS.V.4.2</span></h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex h-10 items-center rounded-full bg-white/5 px-4 border border-white/10 w-64">
+<span class="material-symbols-outlined text-gray-400 text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full text-white placeholder-gray-500" placeholder="Search archives..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold">Kairos</p>
+<p class="text-xs text-primary">Lvl. 42</p>
+</div>
+<div class="h-10 w-10 rounded-full bg-cover bg-center border border-primary/50" data-alt="User cyberpunk avatar profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdaWmABVJXA2jsgAaK0-A6KfaQdF1oWID-5yztCv3l5U4qlYJDSTECr6S60s6aBycW6BghIvBQ1xOa8-DhAwvTEzDPpjRcZd0K45p4r0ZfOwdKum9Qnyac1EEnvjyeO_Kq60P6BMi4UkW9vs35XyjWPzLq4wVuhV3rWwCt6UUEUAj6mnAT-RhULGMZ8cxGGp7Uc_F5TTib0U2w_QW5cFL4wkdzQUMu-AH7iLWkIVuNlTrz5B5RRSt_BDGQakh-x3VtiqhU72W8jV3j');"></div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 max-w-[1440px] mx-auto w-full pt-8 pb-32">
+<aside class="hidden lg:flex w-80 flex-col gap-6 px-6 sticky top-28 h-[calc(100vh-140px)] overflow-y-auto no-scrollbar border-r border-white/5">
+<div class="chamfered-box bg-[#101922] p-[1px] relative group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/50 to-transparent opacity-50"></div>
+<div class="chamfered-box relative bg-[#0a0f14] p-5 h-full flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-xs text-gray-400 uppercase tracking-widest mb-1">Current Status</p>
+<h2 class="text-3xl font-bold text-white">RANK A</h2>
+</div>
+<span class="material-symbols-outlined text-primary text-3xl">military_tech</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs">
+<span class="text-primary">XP to Lvl 43</span>
+<span class="text-gray-400">2500 / 3300</span>
+</div>
+<div class="h-1.5 w-full bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%] shadow-[0_0_10px_rgba(37,140,244,0.5)]"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-2">
+<div class="bg-white/5 p-2 rounded border border-white/5 text-center">
+<p class="text-xl font-bold text-white">156</p>
+<p class="text-[10px] text-gray-400 uppercase">Quests</p>
+</div>
+<div class="bg-white/5 p-2 rounded border border-white/5 text-center">
+<p class="text-xl font-bold text-white">92%</p>
+<p class="text-[10px] text-gray-400 uppercase">Sync Rate</p>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-panel rounded-xl p-5 border-t-2 border-t-primary/50">
+<h3 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-base">assignment</span> Active Directives
+                    </h3>
+<div class="space-y-4">
+<label class="flex gap-x-3 items-start group cursor-pointer">
+<div class="relative flex items-center">
+<input class="peer h-5 w-5 appearance-none rounded border border-gray-600 bg-transparent checked:border-primary checked:bg-primary/20 focus:ring-0" type="checkbox"/>
+<span class="material-symbols-outlined absolute inset-0 text-primary opacity-0 peer-checked:opacity-100 text-sm font-bold pointer-events-none flex items-center justify-center">check</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-white group-hover:text-primary transition-colors">Finish 'Solo Leveling' Ch. 150</span>
+<span class="text-xs text-gray-500">Daily Quest • +50 XP</span>
+</div>
+</label>
+<label class="flex gap-x-3 items-start group cursor-pointer">
+<div class="relative flex items-center">
+<input class="peer h-5 w-5 appearance-none rounded border border-gray-600 bg-transparent checked:border-primary checked:bg-primary/20 focus:ring-0" type="checkbox"/>
+<span class="material-symbols-outlined absolute inset-0 text-primary opacity-0 peer-checked:opacity-100 text-sm font-bold pointer-events-none flex items-center justify-center">check</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-white group-hover:text-primary transition-colors">Watch 'Arcane' Season 2</span>
+<span class="text-xs text-gray-500">Weekly Event • +200 XP</span>
+</div>
+</label>
+</div>
+</div>
+<div class="glass-panel rounded-xl overflow-hidden relative aspect-video">
+<div class="absolute inset-0 bg-cover bg-center opacity-60" data-alt="Futuristic neon city map radar view" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBbZFCri93NCuEqpwAA_Q6hM1OP5arvBZp4V_tfv7zz758-BZ-1OoA4Wz_qSykQyDgOtk2XQtGekTLa4CYhvs-3An0_PUEH5AMzMbTDEuzXZTiiipPA77ilvfVwNJf_0lnmEOnTtqn4MFINvAcMqr3apExp6DyyTKVj4qZHaUjH85YBiHoMJeM8EfUZSF1CmidgpEjVIZk2GNWjgRpZlhNNk4snJegJLZbN9arXrlm8P9JKjvMfpRz8LQRmLaPtbM4V21KiQaek8XFg'); filter: hue-rotate(180deg) invert(1) contrast(1.2);"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-3 left-3">
+<p class="text-xs font-bold text-primary tracking-widest">NEO-TOKYO SECTOR</p>
+<p class="text-[10px] text-gray-400">Online Users: 4,203</p>
+</div>
+<div class="absolute top-3 right-3 h-2 w-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]"></div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col relative px-4 md:px-12 lg:px-20 pt-8 pb-32">
+<div class="flex justify-between items-end mb-12 relative z-10 border-b border-white/5 pb-4">
+<div>
+<h2 class="text-3xl font-bold tracking-tight text-white mb-1 flex items-center gap-3">
+                NOTIFICATIONS
+                <span class="flex h-2 w-2 rounded-full bg-rank-red animate-pulse shadow-[0_0_8px_#ef4444]"></span>
+</h2>
+<p class="text-xs text-gray-400 uppercase tracking-widest font-mono">Incoming Signals: 5 New</p>
+</div>
+<button class="group flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/30 rounded chamfered-box-sm hover:bg-primary/20 hover:shadow-[0_0_15px_rgba(37,140,244,0.4)] transition-all">
+<span class="material-symbols-outlined text-primary text-sm group-hover:animate-spin">cached</span>
+<span class="text-xs font-bold text-primary uppercase tracking-wider">Clear All</span>
+</button>
+</div>
+<div class="relative w-full max-w-4xl mx-auto">
+<div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary via-gray-800 to-transparent md:-translate-x-1/2 z-0 opacity-50"></div>
+<div class="relative flex flex-col md:flex-row md:justify-start items-center mb-10 w-full group">
+<div class="absolute left-6 md:left-1/2 w-4 h-4 -translate-x-1/2 bg-background-dark border-2 border-primary shadow-[0_0_10px_#258cf4] rotate-45 z-10 top-1/2 -mt-2 group-hover:scale-125 transition-transform duration-300"></div>
+<div class="hidden md:block absolute left-1/2 top-1/2 w-8 h-[1px] bg-primary/50 -translate-x-full group-hover:w-10 transition-all duration-300 shadow-[0_0_5px_#258cf4]"></div>
+<div class="ml-16 md:ml-0 md:mr-10 md:w-[calc(50%-40px)] w-[calc(100%-64px)]">
+<div class="chamfered-box glass-panel-active p-5 relative transition-all duration-300 group-hover:translate-x-[-5px]">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="p-1 rounded bg-primary/20 border border-primary/40">
+<span class="material-symbols-outlined text-primary text-sm">system_update</span>
+</div>
+<span class="text-[10px] text-primary font-bold uppercase tracking-wider">System • v.4.2</span>
+</div>
+<span class="text-[10px] text-gray-400 font-mono">2 min ago</span>
+</div>
+<h3 class="text-white font-bold text-lg leading-tight mb-1">Patch Notes: Skill Tree Expanded</h3>
+<p class="text-xs text-gray-300 font-body">New branches available for the 'Necromancer' class. Check your progression tab for details.</p>
+<div class="absolute right-0 top-0 w-16 h-16 bg-gradient-to-bl from-primary/10 to-transparent pointer-events-none"></div>
+</div>
+</div>
+</div>
+<div class="relative flex flex-col md:flex-row md:justify-end items-center mb-10 w-full group">
+<div class="absolute left-6 md:left-1/2 w-4 h-4 -translate-x-1/2 bg-background-dark border-2 border-rank-gold shadow-[0_0_10px_#FFD700] rotate-45 z-10 top-1/2 -mt-2 group-hover:scale-125 transition-transform duration-300"></div>
+<div class="hidden md:block absolute left-1/2 top-1/2 w-8 h-[1px] bg-rank-gold/50 group-hover:w-10 transition-all duration-300 shadow-[0_0_5px_#FFD700]"></div>
+<div class="ml-16 md:ml-0 md:pl-10 md:w-[calc(50%-40px)] w-[calc(100%-64px)]">
+<div class="chamfered-box glass-panel-active p-5 relative border-rank-gold/30 !shadow-[0_0_15px_rgba(255,215,0,0.15)] transition-all duration-300 group-hover:translate-x-[5px]">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="p-1 rounded bg-rank-gold/20 border border-rank-gold/40">
+<span class="material-symbols-outlined text-rank-gold text-sm">emoji_events</span>
+</div>
+<span class="text-[10px] text-rank-gold font-bold uppercase tracking-wider">Achievement</span>
+</div>
+<span class="text-[10px] text-gray-400 font-mono">14 min ago</span>
+</div>
+<h3 class="text-white font-bold text-lg leading-tight mb-1">Level Up! Rank A Reached</h3>
+<p class="text-xs text-gray-300 font-body">Congratulations, Kairos. You have unlocked 'Advanced Analysis' perk.</p>
+</div>
+</div>
+</div>
+<div class="relative flex flex-col md:flex-row md:justify-start items-center mb-10 w-full group opacity-80 hover:opacity-100 transition-opacity">
+<div class="absolute left-6 md:left-1/2 w-3 h-3 -translate-x-1/2 bg-gray-700 border border-gray-500 rounded-full z-10 top-1/2 -mt-1.5 group-hover:border-rank-cyan group-hover:bg-rank-cyan transition-colors"></div>
+<div class="hidden md:block absolute left-1/2 top-1/2 w-8 h-[1px] bg-gray-700 -translate-x-full group-hover:bg-rank-cyan/50"></div>
+<div class="ml-16 md:ml-0 md:mr-10 md:w-[calc(50%-40px)] w-[calc(100%-64px)]">
+<div class="chamfered-box glass-panel p-4 relative group-hover:border-rank-cyan/30 transition-all">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-rank-cyan text-sm">chat_bubble</span>
+<span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Comment</span>
+</div>
+<span class="text-[10px] text-gray-500 font-mono">1h ago</span>
+</div>
+<div class="flex items-start gap-3">
+<div class="h-8 w-8 rounded bg-gray-700 bg-cover bg-center shrink-0 border border-white/10" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAGIFyAo6ueD-dUMTcbzj-9oePgrp7PvNsW1osOYqtU1z9sCYNVYPBhj-AKGdPJtOyXqLHu88_TfZ1eJMJy-LIGTz_t-uS2GklYKxzsL4OQ4WcYTNlWL-eB46w-gVseq8xy_BqHwPN3Br2f-CN9NHV5ZtC1_ZUiaJEO0-bTpM-5Icn-N2ctOClbvf59IGR9UV-W7wZ7QUwZ_nkZKYf4KSV9Jpw4yReyXP0uT1iuIhFL1K8IaZJAkPzHlnq9VKlvRsuUHcnfzWwQPLSj');"></div>
+<div>
+<p class="text-sm text-white mb-1"><span class="font-bold text-rank-cyan">Nova_Scout</span> replied to your log:</p>
+<p class="text-xs text-gray-400 italic">"The twist in chapter 50 was absolutely insane! Did you see the easter egg?"</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="relative flex flex-col md:flex-row md:justify-end items-center mb-10 w-full group opacity-80 hover:opacity-100 transition-opacity">
+<div class="absolute left-6 md:left-1/2 w-3 h-3 -translate-x-1/2 bg-gray-700 border border-gray-500 rounded-full z-10 top-1/2 -mt-1.5 group-hover:border-rank-purple group-hover:bg-rank-purple transition-colors"></div>
+<div class="hidden md:block absolute left-1/2 top-1/2 w-8 h-[1px] bg-gray-700 group-hover:bg-rank-purple/50"></div>
+<div class="ml-16 md:ml-0 md:pl-10 md:w-[calc(50%-40px)] w-[calc(100%-64px)]">
+<div class="chamfered-box glass-panel p-4 relative group-hover:border-rank-purple/30 transition-all">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-rank-purple text-sm">explore</span>
+<span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">New Quest</span>
+</div>
+<span class="text-[10px] text-gray-500 font-mono">3h ago</span>
+</div>
+<h3 class="text-white font-bold text-sm leading-tight mb-1">Weekly Challenge: Marathon Reader</h3>
+<p class="text-xs text-gray-400 font-body">Read 50 chapters of any Manhwa within 24 hours. Reward: +150 XP.</p>
+</div>
+</div>
+</div>
+<div class="relative flex flex-col md:flex-row md:justify-start items-center mb-10 w-full group opacity-60 hover:opacity-100 transition-opacity">
+<div class="absolute left-6 md:left-1/2 w-3 h-3 -translate-x-1/2 bg-gray-800 border border-gray-600 rounded-full z-10 top-1/2 -mt-1.5 group-hover:border-white group-hover:bg-white transition-colors"></div>
+<div class="hidden md:block absolute left-1/2 top-1/2 w-8 h-[1px] bg-gray-800 -translate-x-full group-hover:bg-white/30"></div>
+<div class="ml-16 md:ml-0 md:mr-10 md:w-[calc(50%-40px)] w-[calc(100%-64px)]">
+<div class="chamfered-box glass-panel p-4 relative group-hover:border-white/20 transition-all">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-gray-400 text-sm">person_add</span>
+<span class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Social</span>
+</div>
+<span class="text-[10px] text-gray-600 font-mono">Yesterday</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-gray-800 bg-cover bg-center shrink-0 border border-white/5" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNi7Ir1_JVDK5k575XBEKw6VG8QHAiyB-d9mBlpBJO5RiXtSCo7DXGDGrAsOe7wo86lDtRXea3FxYOrPOmf44M0gRyIXNoAJF3AWYvO-q6DdmJ6glqW5W0_Esga9nt1F8N0wBJAR66XHxm1hovtEI6UpG16VmJp1mrv1cfBxDzPel7nMHFmIMACAoj47B4z-Ol562sFu6Qo6Cq0nqJhnTxpX0Nbdp_6W21MxGeUmiHBdwEsmpQncyUuWCQfWtAk5U-ujggqwJYwB81');"></div>
+<div class="flex-1">
+<p class="text-sm text-gray-300"><span class="font-bold text-white">Jin-Woo</span> sent a friend request.</p>
+</div>
+<button class="px-2 py-1 bg-primary/20 hover:bg-primary/40 text-primary text-[10px] font-bold uppercase rounded border border-primary/30 transition-colors">Accept</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<div class="hidden xl:block w-20"></div>
+</div>
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+<div class="relative flex items-center justify-between gap-6 px-8 py-3 rounded-full bg-[#101922]/80 backdrop-blur-xl border border-primary/30 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors group">
+<span class="material-symbols-outlined group-hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">home</span>
+<div class="h-1 w-1 rounded-full bg-transparent group-hover:bg-white"></div>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors group">
+<span class="material-symbols-outlined group-hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">search</span>
+<div class="h-1 w-1 rounded-full bg-transparent group-hover:bg-white"></div>
+</button>
+<div class="relative -top-6 mx-2 group cursor-pointer">
+<div class="absolute inset-0 bg-primary opacity-30 blur-lg rounded-full animate-pulse-glow"></div>
+<div class="hex-btn bg-background-dark h-16 w-14 flex items-center justify-center relative border-2 border-primary z-10 hover:scale-105 transition-transform">
+<div class="hex-btn bg-primary h-14 w-12 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-3xl">add</span>
+</div>
+</div>
+</div>
+<button class="flex flex-col items-center gap-1 text-primary group">
+<span class="material-symbols-outlined group-hover:drop-shadow-[0_0_5px_rgba(37,140,244,0.8)] transition-all">notifications</span>
+<div class="h-1 w-1 rounded-full bg-primary shadow-[0_0_5px_#258cf4]"></div>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors group">
+<span class="material-symbols-outlined group-hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">person</span>
+<div class="h-1 w-1 rounded-full bg-transparent group-hover:bg-white"></div>
+</button>
+</div>
+</div>
+</div>
+</body></html>

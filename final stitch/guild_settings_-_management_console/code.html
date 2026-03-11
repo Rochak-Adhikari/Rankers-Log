@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guild Settings - Rankers Log</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505", /* Overriding to user's request */
+                        "surface-dark": "#101a23",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    boxShadow: {
+                        "neon": "0 0 5px theme('colors.primary'), 0 0 10px theme('colors.primary')",
+                        "neon-soft": "0 0 2px theme('colors.primary'), 0 0 5px theme('colors.primary')",
+                        "neon-red": "0 0 5px #ef4444, 0 0 10px #ef4444",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Space Grotesk", "Noto Sans", sans-serif;
+            background-color: #050505;
+        }
+        .glass-panel {
+            background: rgba(16, 26, 35, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(37, 140, 244, 0.2);
+        }
+        .glass-panel:hover {
+            border-color: rgba(37, 140, 244, 0.5);
+            box-shadow: 0 0 15px rgba(37, 140, 244, 0.1);
+        }
+        /* Custom scrollbar for the table if needed */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e3a5f; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+    </style>
+</head>
+<body class="bg-[#050505] text-white overflow-x-hidden min-h-screen flex flex-col">
+<!-- Header / Navigation -->
+<div class="w-full border-b border-white/10 bg-[#050505]/90 backdrop-blur sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<div class="flex items-center gap-2 text-primary font-bold text-xl tracking-wider">
+<span class="material-symbols-outlined text-3xl">sports_esports</span>
+                RANKERS LOG
+            </div>
+<div class="flex items-center gap-6">
+<button class="p-2 text-[#90adcb] hover:text-white transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-gradient-to-tr from-primary to-blue-400 border border-white/20"></div>
+</div>
+</div>
+</div>
+<!-- Main Layout -->
+<div class="flex-1 max-w-7xl mx-auto w-full px-6 py-8 flex flex-col gap-8 relative">
+<!-- Background Grid Lines decoration -->
+<div class="absolute inset-0 pointer-events-none opacity-10" style="background-image: linear-gradient(#258cf4 1px, transparent 1px), linear-gradient(90deg, #258cf4 1px, transparent 1px); background-size: 40px 40px;">
+</div>
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 text-sm font-display tracking-wide relative z-10">
+<a class="text-[#90adcb] hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-sm">home</span> HOME
+            </a>
+<span class="text-[#90adcb]">/</span>
+<a class="text-[#90adcb] hover:text-primary transition-colors" href="#">GUILDS</a>
+<span class="text-[#90adcb]">/</span>
+<span class="text-primary font-bold neon-text">COMMAND CONSOLE</span>
+</div>
+<!-- Page Heading -->
+<div class="flex flex-col gap-2 relative z-10 mb-6">
+<div class="flex items-center gap-3">
+<h1 class="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase">Guild System Access</h1>
+<div class="px-3 py-1 bg-primary/20 border border-primary text-primary text-xs font-bold rounded tracking-widest animate-pulse">
+                    ADMIN MODE ACTIVE
+                </div>
+</div>
+<p class="text-[#90adcb] max-w-2xl text-lg">
+                Administrator privileges active for user <span class="text-white font-mono">[PlayerOne]</span>. Modify unit parameters below.
+            </p>
+</div>
+<!-- Content Area with Spine -->
+<div class="relative flex flex-col md:flex-row gap-8 items-start z-10">
+<!-- The Spine (Visual Decoration) -->
+<div class="hidden md:flex flex-col items-center absolute left-[27px] top-0 bottom-0 z-0">
+<div class="w-px h-full bg-gradient-to-b from-primary via-primary/50 to-transparent shadow-[0_0_8px_#258cf4]"></div>
+</div>
+<!-- Left Column (Nav/Status) - Optional or merged, here we treat it as the "spine connection" points -->
+<!-- Main Content Stack -->
+<div class="flex-1 flex flex-col gap-12 pl-0 md:pl-16 w-full">
+<!-- Section 1: Identity & Emblem (Split Layout) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 relative">
+<!-- Spine Connector Dot -->
+<div class="hidden md:block absolute -left-[41px] top-8 w-3 h-3 bg-[#050505] border-2 border-primary rounded-full shadow-neon z-10"></div>
+<!-- Identity Inputs -->
+<div class="glass-panel rounded-xl p-6 flex flex-col gap-6">
+<div class="flex items-center justify-between border-b border-white/5 pb-4">
+<h3 class="text-white text-lg font-bold tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">fingerprint</span>
+                                VISUAL IDENTITY
+                            </h3>
+<span class="text-xs text-primary font-mono bg-primary/10 px-2 py-1 rounded">ID-001</span>
+</div>
+<div class="space-y-5">
+<label class="flex flex-col gap-2 group">
+<span class="text-[#90adcb] text-xs font-bold tracking-wider uppercase">Unit Designation (Name)</span>
+<div class="relative">
+<input class="w-full bg-[#101a23] border border-[#314d68] rounded-lg h-12 px-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-display tracking-wide" type="text" value="Shadow Vanguards"/>
+<span class="material-symbols-outlined absolute right-4 top-3 text-[#314d68] group-focus-within:text-primary">edit</span>
+</div>
+</label>
+<label class="flex flex-col gap-2 group">
+<span class="text-[#90adcb] text-xs font-bold tracking-wider uppercase">Unit Directive (Motto)</span>
+<div class="relative">
+<input class="w-full bg-[#101a23] border border-[#314d68] rounded-lg h-12 px-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-display tracking-wide" type="text" value="Into the void, we march."/>
+<span class="material-symbols-outlined absolute right-4 top-3 text-[#314d68] group-focus-within:text-primary">format_quote</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Emblem Display -->
+<div class="glass-panel rounded-xl p-6 flex flex-col gap-6 relative overflow-hidden group">
+<!-- Holographic Scan Line Effect -->
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent bg-[length:100%_200%] animate-[scan_3s_linear_infinite] pointer-events-none"></div>
+<div class="flex items-center justify-between border-b border-white/5 pb-4 relative z-10">
+<h3 class="text-white text-lg font-bold tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">verified</span>
+                                HOLOGRAPHIC SIGIL
+                            </h3>
+</div>
+<div class="flex gap-6 items-center relative z-10">
+<div class="h-32 w-32 shrink-0 rounded-lg border-2 border-primary/30 bg-[#000] relative flex items-center justify-center overflow-hidden shadow-neon-soft">
+<div class="absolute inset-0 bg-[url('https://placeholder.pics/svg/300/101a23/258cf4/SIGIL')] bg-cover bg-center opacity-80" data-alt="Abstract geometric guild emblem featuring sharp angular shapes in blue neon style"></div>
+</div>
+<div class="flex flex-col gap-3 flex-1">
+<p class="text-sm text-[#90adcb]">Current guild emblem projection. Click below to re-initialize upload sequence.</p>
+<button class="flex items-center justify-center gap-2 bg-primary hover:bg-blue-600 text-white text-sm font-bold py-2 px-4 rounded-lg transition-all shadow-lg hover:shadow-primary/40 uppercase tracking-wide w-fit">
+<span class="material-symbols-outlined text-lg">upload_file</span>
+                                    Upload New Sigil
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Membership Management -->
+<div class="relative">
+<!-- Spine Connector Dot -->
+<div class="hidden md:block absolute -left-[41px] top-8 w-3 h-3 bg-[#050505] border-2 border-primary rounded-full shadow-neon z-10"></div>
+<div class="glass-panel rounded-xl p-6 flex flex-col gap-6">
+<div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-4">
+<h3 class="text-white text-lg font-bold tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">groups</span>
+                                PERSONNEL ROSTER
+                            </h3>
+<!-- Toggle -->
+<div class="flex items-center gap-3 bg-[#101a23] p-1.5 rounded-lg border border-white/5">
+<span class="text-xs font-bold text-[#90adcb] pl-2">RECRUITMENT:</span>
+<button class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-primary/20">
+<span class="sr-only">Use setting</span>
+<span aria-hidden="true" class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-primary shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+<span class="text-xs font-bold text-white pr-2">INVITE ONLY</span>
+</div>
+</div>
+<!-- Member Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-[#90adcb] text-xs uppercase tracking-wider border-b border-[#314d68]">
+<th class="pb-3 pl-2 font-medium">Agent Name</th>
+<th class="pb-3 font-medium">Role</th>
+<th class="pb-3 font-medium">Status</th>
+<th class="pb-3 pr-2 text-right font-medium">Actions</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="group hover:bg-white/5 transition-colors border-b border-white/5">
+<td class="py-4 pl-2 flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-gray-700 bg-cover" data-alt="Avatar of user PlayerOne" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDdYJX8B_ymltEXa19nuWKtasxQJqj2kT-z9xyPuA6c6JBQWQBuyU762_bBFGPMH93hOqxvBpanB0SBd1wanL6eVJm-k7IYTCOJNXccclRXzEjtxSjGyzkB6ffHBNnF8dcU8_QfKEgf4FP1HTCN1SJciNIhAMqAVmGwqMtIxnTEuohLQW5lTcy1HahPGJgeQJYlWVi7C7KssX_-p8kNQep9HgpuzqvM_Thugdm17gd6CJt8VDwZcnp_9VPPJYKgc6aRoQfUW70eX-iD')"></div>
+<span class="font-bold text-white">PlayerOne</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] bg-yellow-500/20 text-yellow-500 border border-yellow-500/30">LEADER</span>
+</td>
+<td class="py-4 text-[#90adcb]">Guild Master</td>
+<td class="py-4"><span class="flex h-2 w-2 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span></td>
+<td class="py-4 pr-2 text-right">
+<button class="text-gray-500 cursor-not-allowed" disabled=""><span class="material-symbols-outlined">block</span></button>
+</td>
+</tr>
+<tr class="group hover:bg-white/5 transition-colors border-b border-white/5">
+<td class="py-4 pl-2 flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-gray-700 bg-cover" data-alt="Avatar of user NightRogue" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_kgmELj8CizYs63wH8qsfYYn1HiTdVsnplOak3FEIdz8kayULFKN358a7ZcC5KsO7dCA-YNAta2FrmIS5k_3RoCufRrUg4a9ClQlB9eDblwoEzVoTkdxGypLFQc4_ib23JQJHhWFaduVRgjYJXQhsmKydhQqmZV0T-eO-d8CpiYHaNxW_jQg3RRjpNmKoULl9Ii0isfZf-GoqkTaK5jo1h-dbtbRLXXw7NhgXRjxt0z6Uh7C_y878MvA_P14Ar--dDomhRbWaz1dj')"></div>
+<span class="font-bold text-white">NightRogue</span>
+</td>
+<td class="py-4 text-[#90adcb]">Officer</td>
+<td class="py-4"><span class="flex h-2 w-2 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span></td>
+<td class="py-4 pr-2 text-right flex justify-end gap-2">
+<button class="text-[#90adcb] hover:text-white transition-colors" title="Manage Role"><span class="material-symbols-outlined">badge</span></button>
+<button class="text-red-400 hover:text-red-200 transition-colors" title="Kick"><span class="material-symbols-outlined">person_remove</span></button>
+</td>
+</tr>
+<tr class="group hover:bg-white/5 transition-colors">
+<td class="py-4 pl-2 flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-gray-700 bg-cover" data-alt="Avatar of user MysticMage" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAXcgpMOJffCyV_8yuAe0GI4CnymeZvZ2Z7eyp_vhvDFwMAgDiMza1vO6K_z19IbDwtf_4afKdT1NHl6E5yZbzOp8ZnXXHICH-Of7OurykcP8YxbTgoB2wQ7o0C3Iyyzy7LJuM_vshnUWOSZGp6kX3_ulTiESA8gFD6_us5ArABNc8Mnj1LHhG39E2l20svVpdqtcgVDIbH4-Qz9trs6BGEmJ8gldywOLNVc3h4oNxFHCwhdnUqQjHpkyjSPAidX3KL-xsZdJzOl1FJ')"></div>
+<span class="font-bold text-white">MysticMage</span>
+</td>
+<td class="py-4 text-[#90adcb]">Member</td>
+<td class="py-4"><span class="flex h-2 w-2 rounded-full bg-gray-500"></span></td>
+<td class="py-4 pr-2 text-right flex justify-end gap-2">
+<button class="text-[#90adcb] hover:text-white transition-colors" title="Manage Role"><span class="material-symbols-outlined">badge</span></button>
+<button class="text-red-400 hover:text-red-200 transition-colors" title="Kick"><span class="material-symbols-outlined">person_remove</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Section 3: Quest Creation -->
+<div class="relative">
+<!-- Spine Connector Dot -->
+<div class="hidden md:block absolute -left-[41px] top-8 w-3 h-3 bg-[#050505] border-2 border-primary rounded-full shadow-neon z-10"></div>
+<div class="glass-panel rounded-xl p-6 flex flex-col gap-6 border-l-4 border-l-primary">
+<div class="flex items-center justify-between border-b border-white/5 pb-4">
+<h3 class="text-white text-lg font-bold tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">add_task</span>
+                                QUEST FABRICATION
+                            </h3>
+<span class="text-xs text-[#90adcb]">New operations for guild members</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2 md:col-span-2">
+<span class="text-[#90adcb] text-xs font-bold tracking-wider uppercase">Operation Title</span>
+<input class="w-full bg-[#101a23] border border-[#314d68] rounded-lg h-12 px-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-display" placeholder="e.g. Raid on the Crystal Caverns" type="text"/>
+</label>
+<label class="flex flex-col gap-2 md:col-span-2">
+<span class="text-[#90adcb] text-xs font-bold tracking-wider uppercase">Mission Briefing</span>
+<textarea class="w-full bg-[#101a23] border border-[#314d68] rounded-lg p-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-display resize-none" placeholder="Describe objectives and clear conditions..." rows="3"></textarea>
+</label>
+<div class="bg-[#182634] p-4 rounded-lg border border-[#314d68]">
+<div class="flex justify-between mb-2">
+<span class="text-[#90adcb] text-xs font-bold tracking-wider uppercase">Experience Reward</span>
+<span class="text-primary font-bold text-sm">2500 XP</span>
+</div>
+<input class="w-full h-2 bg-[#101a23] rounded-lg appearance-none cursor-pointer accent-primary" max="10000" min="100" step="100" type="range" value="2500"/>
+</div>
+<div class="bg-[#182634] p-4 rounded-lg border border-[#314d68]">
+<div class="flex justify-between mb-2">
+<span class="text-[#90adcb] text-xs font-bold tracking-wider uppercase">Deadline</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#90adcb]">calendar_month</span>
+<input class="bg-transparent text-white w-full focus:outline-none text-sm font-medium" type="date"/>
+</div>
+</div>
+</div>
+<div class="flex justify-end pt-2">
+<button class="bg-primary/10 hover:bg-primary/20 border border-primary text-primary hover:text-white font-bold py-3 px-6 rounded-lg transition-all flex items-center gap-2 uppercase tracking-wider">
+<span class="material-symbols-outlined">rocket_launch</span>
+                                Initialize Operation
+                            </button>
+</div>
+</div>
+</div>
+<!-- Section 4: Danger Zone -->
+<div class="relative mt-4">
+<!-- Spine Connector Dot (Red) -->
+<div class="hidden md:block absolute -left-[41px] top-1/2 -translate-y-1/2 w-3 h-3 bg-[#050505] border-2 border-red-500 rounded-full shadow-neon-red z-10"></div>
+<div class="border border-red-900/50 bg-red-950/10 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-sm">
+<div class="flex flex-col gap-2 text-center md:text-left">
+<h3 class="text-red-500 text-lg font-bold tracking-tight flex items-center justify-center md:justify-start gap-2">
+<span class="material-symbols-outlined">warning</span>
+                                CRITICAL ZONE: DISBAND UNIT
+                            </h3>
+<p class="text-red-200/60 text-sm max-w-md">
+                                This action is irreversible. All guild data, achievements, and assets will be purged from the mainframe permanently.
+                            </p>
+</div>
+<button class="whitespace-nowrap bg-red-600/20 hover:bg-red-600 border border-red-600 text-red-100 font-bold py-3 px-6 rounded-lg transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:shadow-[0_0_20px_rgba(220,38,38,0.6)]">
+<span class="material-symbols-outlined">delete_forever</span>
+                            DISBAND GUILD
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Save Actions Footer (Floating) -->
+<div class="sticky bottom-6 z-40 flex justify-center w-full pointer-events-none">
+<div class="pointer-events-auto bg-[#101a23]/90 backdrop-blur-xl border border-primary/30 rounded-full py-3 px-8 flex items-center gap-4 shadow-neon shadow-black/50">
+<span class="text-[#90adcb] text-sm font-medium hidden sm:block">Unsaved changes in queue...</span>
+<div class="h-4 w-px bg-white/10 hidden sm:block"></div>
+<button class="text-white hover:text-red-400 text-sm font-bold px-4 py-2 rounded transition-colors">RESET</button>
+<button class="bg-primary hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-lg shadow-blue-500/20 transition-all transform hover:scale-105 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">save</span>
+                    EXECUTE CHANGES
+                </button>
+</div>
+</div>
+</div>
+<!-- Animation Keyframes definition for Tailwind inline usage wasn't standard, so added style here for scan effect -->
+<style>
+        @keyframes scan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
+        }
+    </style>
+</body></html>

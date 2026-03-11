@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Notification Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "primary-glow": "rgba(37, 140, 244, 0.5)",
+                        "background-dark": "#050505",
+                        "panel-bg": "rgba(20, 30, 40, 0.6)",
+                        "panel-border": "rgba(37, 140, 244, 0.3)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    boxShadow: {
+                        "neon": "0 0 10px rgba(37, 140, 244, 0.3), 0 0 20px rgba(37, 140, 244, 0.1)",
+                        "neon-strong": "0 0 15px rgba(37, 140, 244, 0.6), 0 0 30px rgba(37, 140, 244, 0.2)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #223649; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+
+        /* Scanline effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(255, 255, 255, 0.02) 0.5%,
+                transparent 1%
+            );
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Glowing text utility */
+        .text-glow {
+            text-shadow: 0 0 10px rgba(37, 140, 244, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display overflow-x-hidden min-h-screen flex flex-col selection:bg-primary selection:text-white">
+<!-- Scanline Overlay -->
+<div class="scanlines"></div>
+<!-- Header / HUD Top Bar -->
+<header class="sticky top-0 z-40 w-full border-b border-[#223649]/50 bg-[#050505]/80 backdrop-blur-sm px-6 py-4">
+<div class="max-w-6xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button class="group flex items-center justify-center size-10 rounded border border-[#223649] bg-[#101a23] hover:bg-primary/20 hover:border-primary transition-all duration-300">
+<span class="material-symbols-outlined text-[#90adcb] group-hover:text-primary transition-colors">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<h1 class="text-sm font-bold tracking-[0.2em] text-[#90adcb] uppercase">Rankers Log // Sys_Config</h1>
+<div class="h-0.5 w-12 bg-primary mt-1 shadow-neon"></div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-2 text-xs font-mono text-[#556d86]">
+<span>STATUS: ONLINE</span>
+<span class="size-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+</div>
+<div class="size-10 rounded border border-[#223649] bg-[#101a23] flex items-center justify-center relative overflow-hidden">
+<img alt="User avatar profile picture" class="w-full h-full object-cover opacity-80" data-alt="User profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJHlcL6U14OXj6e8a1Ywr1reXFX_zf9nk76wQRRRoLa6rUt_Wm1jts3xAF5x-pJK_V40FsJeJH9y7nU5ATPeiVmI7Hlkv734qW5oEjXIEYnGnuazKKcpGZcp5OnbseJrj4slDJNtDfohgCvpWQ0cOiZ1ZifkWI2WyVE77sJQInoWlkn4e3PCx79Ly7rZwpAgGzkvUW0auUtlWCJ9rXlKjyR7IrHqUOqTzt1l4plAgyCvnMHEZfA66QXvzpbjYauLkf_ZwkmwXWVFl5"/>
+<div class="absolute inset-0 bg-primary/10"></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col items-center relative py-12 px-4">
+<!-- Background decorative elements -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none">
+<div class="absolute top-[10%] left-[5%] text-[#101a23] text-[10rem] font-bold opacity-20 select-none">01</div>
+<div class="absolute bottom-[20%] right-[5%] text-[#101a23] text-[10rem] font-bold opacity-20 select-none">SYS</div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[100px]"></div>
+</div>
+<div class="relative z-10 w-full max-w-4xl flex flex-col items-center">
+<!-- Page Title Node -->
+<div class="mb-12 text-center relative group">
+<div class="absolute -inset-4 bg-primary/5 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<h2 class="text-4xl md:text-5xl font-black tracking-tighter text-white mb-2 relative">NOTIFICATION <span class="text-primary text-glow">PROTOCOLS</span></h2>
+<p class="text-[#90adcb] font-mono text-sm tracking-widest uppercase">Configure Signal Reception Parameters</p>
+</div>
+<!-- The Skill Tree Spine Structure -->
+<div class="relative w-full flex flex-col items-center">
+<!-- Central Glowing Spine Line -->
+<div class="absolute left-1/2 top-0 bottom-12 w-0.5 bg-gradient-to-b from-transparent via-primary to-transparent -translate-x-1/2 shadow-neon opacity-60"></div>
+<!-- 1. Master Control Node (Top) -->
+<div class="relative mb-16 w-full max-w-xl">
+<div class="absolute left-1/2 -top-8 w-px h-8 bg-primary/50 -translate-x-1/2"></div>
+<div class="relative bg-[#101922] border border-primary/50 p-1 clip-path-hexagon shadow-neon-strong rounded-lg overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-50">
+<span class="text-[10px] font-mono text-primary">MS-NODE-01</span>
+</div>
+<div class="bg-[#0a0f14] p-6 flex items-center justify-between gap-6 relative z-10">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded bg-primary/20 flex items-center justify-center border border-primary/30 text-primary shadow-neon">
+<span class="material-symbols-outlined text-3xl">power_settings_new</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-white tracking-wide">GLOBAL OVERRIDE</h3>
+<p class="text-xs text-[#90adcb] font-mono">Master switch for all incoming signals</p>
+</div>
+</div>
+<!-- Tech Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-7 bg-[#1c2a38] peer-focus:outline-none rounded-sm border border-[#314d68] peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-[#90adcb] after:border-gray-300 after:border after:rounded-sm after:h-6 after:w-6 after:transition-all peer-checked:bg-primary/20 peer-checked:border-primary peer-checked:after:bg-primary peer-checked:after:shadow-neon"></div>
+</label>
+</div>
+<!-- Background grid pattern -->
+<div class="absolute inset-0 bg-[linear-gradient(rgba(37,140,244,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(37,140,244,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
+</div>
+</div>
+<!-- 2. Activity Cluster (Branching Left & Right) -->
+<div class="w-full grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-8 mb-16 relative">
+<!-- Branch Connections -->
+<div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-transparent -translate-x-1/2">
+<!-- Horizontal connectors -->
+<div class="absolute top-10 left-1/2 w-12 h-px bg-primary/40 -translate-x-full shadow-neon"></div>
+<div class="absolute top-10 right-1/2 w-12 h-px bg-primary/40 translate-x-full shadow-neon"></div>
+<div class="absolute top-32 left-1/2 w-12 h-px bg-primary/40 -translate-x-full shadow-neon"></div>
+<div class="absolute top-32 right-1/2 w-12 h-px bg-primary/40 translate-x-full shadow-neon"></div>
+</div>
+<!-- Left Branch: Social Interaction -->
+<div class="flex flex-col gap-4 items-end text-right md:pr-12 relative group">
+<div class="absolute -right-3 top-10 size-2 bg-primary rounded-full shadow-neon hidden md:block"></div>
+<h4 class="text-sm font-bold text-primary tracking-[0.2em] mb-2 uppercase flex items-center gap-2">
+                             Social Signals <span class="material-symbols-outlined text-sm">hub</span>
+</h4>
+<!-- Item 1 -->
+<div class="w-full bg-panel-bg border border-[#223649] hover:border-primary/50 hover:shadow-neon transition-all duration-300 p-4 rounded-sm flex items-center justify-between group/item backdrop-blur-md">
+<div class="flex-1 pr-4">
+<p class="font-medium text-white group-hover/item:text-primary transition-colors">Followed User Posts</p>
+<p class="text-[10px] text-[#556d86] font-mono">ACT-01 // FREQ: HIGH</p>
+</div>
+<label class="cursor-pointer">
+<input class="w-5 h-5 rounded border-[#314d68] bg-[#101a23] text-primary focus:ring-offset-0 focus:ring-0 checked:bg-primary checked:border-primary transition-colors" type="checkbox"/>
+</label>
+</div>
+<!-- Item 2 -->
+<div class="w-full bg-panel-bg border border-[#223649] hover:border-primary/50 hover:shadow-neon transition-all duration-300 p-4 rounded-sm flex items-center justify-between group/item backdrop-blur-md">
+<div class="flex-1 pr-4">
+<p class="font-medium text-white group-hover/item:text-primary transition-colors">Comments on Posts</p>
+<p class="text-[10px] text-[#556d86] font-mono">ACT-02 // FREQ: MED</p>
+</div>
+<label class="cursor-pointer">
+<input checked="" class="w-5 h-5 rounded border-[#314d68] bg-[#101a23] text-primary focus:ring-offset-0 focus:ring-0 checked:bg-primary checked:border-primary transition-colors" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Right Branch: Status Updates -->
+<div class="flex flex-col gap-4 items-start md:pl-12 relative group">
+<div class="absolute -left-3 top-10 size-2 bg-primary rounded-full shadow-neon hidden md:block"></div>
+<h4 class="text-sm font-bold text-primary tracking-[0.2em] mb-2 uppercase flex items-center gap-2 flex-row-reverse md:flex-row">
+<span class="material-symbols-outlined text-sm">monitoring</span> Status Updates
+                        </h4>
+<!-- Item 3 -->
+<div class="w-full bg-panel-bg border border-[#223649] hover:border-primary/50 hover:shadow-neon transition-all duration-300 p-4 rounded-sm flex items-center justify-between group/item backdrop-blur-md">
+<div class="flex-1 pr-4 order-2 md:order-1">
+<p class="font-medium text-white group-hover/item:text-primary transition-colors">Rank Change Alerts</p>
+<p class="text-[10px] text-[#556d86] font-mono">SYS-RK // PRIORITY: CRITICAL</p>
+</div>
+<label class="cursor-pointer order-1 md:order-2 mr-4 md:mr-0">
+<input checked="" class="w-5 h-5 rounded border-[#314d68] bg-[#101a23] text-primary focus:ring-offset-0 focus:ring-0 checked:bg-primary checked:border-primary transition-colors" type="checkbox"/>
+</label>
+</div>
+<!-- Item 4 -->
+<div class="w-full bg-panel-bg border border-[#223649] hover:border-primary/50 hover:shadow-neon transition-all duration-300 p-4 rounded-sm flex items-center justify-between group/item backdrop-blur-md">
+<div class="flex-1 pr-4 order-2 md:order-1">
+<p class="font-medium text-white group-hover/item:text-primary transition-colors">Friend Progress</p>
+<p class="text-[10px] text-[#556d86] font-mono">SOC-PR // FREQ: LOW</p>
+</div>
+<label class="cursor-pointer order-1 md:order-2 mr-4 md:mr-0">
+<input class="w-5 h-5 rounded border-[#314d68] bg-[#101a23] text-primary focus:ring-offset-0 focus:ring-0 checked:bg-primary checked:border-primary transition-colors" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+<!-- 3. Method Selectors (Horizontal Hub) -->
+<div class="relative w-full max-w-2xl mb-16">
+<div class="absolute left-1/2 -top-8 w-px h-8 bg-gradient-to-b from-transparent to-primary/50 -translate-x-1/2"></div>
+<div class="bg-[#101922]/80 border-t border-b border-primary/20 backdrop-blur-sm py-6 px-8 relative">
+<!-- Decorative corners -->
+<div class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary"></div>
+<div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-primary"></div>
+<div class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-primary"></div>
+<div class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary"></div>
+<div class="flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="text-left">
+<h3 class="text-lg font-bold text-white tracking-widest uppercase">Delivery Channels</h3>
+<p class="text-xs text-[#90adcb] font-mono">Select active transmission mediums</p>
+</div>
+<div class="flex items-center gap-4">
+<!-- Method 1: Push -->
+<label class="group cursor-pointer flex flex-col items-center gap-2">
+<input checked="" class="hidden peer" type="checkbox"/>
+<div class="size-14 rounded-full bg-[#0a0f14] border border-[#314d68] flex items-center justify-center text-[#556d86] peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:text-primary peer-checked:shadow-neon transition-all duration-300">
+<span class="material-symbols-outlined text-2xl">smartphone</span>
+</div>
+<span class="text-[10px] font-bold tracking-wider text-[#556d86] peer-checked:text-primary">PUSH</span>
+</label>
+<div class="w-8 h-px bg-[#223649]"></div>
+<!-- Method 2: In-App -->
+<label class="group cursor-pointer flex flex-col items-center gap-2">
+<input checked="" class="hidden peer" type="checkbox"/>
+<div class="size-14 rounded-full bg-[#0a0f14] border border-[#314d68] flex items-center justify-center text-[#556d86] peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:text-primary peer-checked:shadow-neon transition-all duration-300">
+<span class="material-symbols-outlined text-2xl">notifications_active</span>
+</div>
+<span class="text-[10px] font-bold tracking-wider text-[#556d86] peer-checked:text-primary">IN-APP</span>
+</label>
+<div class="w-8 h-px bg-[#223649]"></div>
+<!-- Method 3: Email -->
+<label class="group cursor-pointer flex flex-col items-center gap-2">
+<input class="hidden peer" type="checkbox"/>
+<div class="size-14 rounded-full bg-[#0a0f14] border border-[#314d68] flex items-center justify-center text-[#556d86] peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:text-primary peer-checked:shadow-neon transition-all duration-300">
+<span class="material-symbols-outlined text-2xl">mail</span>
+</div>
+<span class="text-[10px] font-bold tracking-wider text-[#556d86] peer-checked:text-primary">EMAIL</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. System Cluster (Lower Branch) -->
+<div class="w-full max-w-3xl mb-16 relative">
+<!-- Connector to spine -->
+<div class="absolute left-1/2 -top-16 bottom-0 w-px bg-primary/20 -translate-x-1/2"></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-panel-bg border border-[#223649] p-4 rounded flex items-center gap-3 hover:border-primary/40 transition-colors">
+<div class="p-2 bg-[#101a23] rounded text-[#90adcb]">
+<span class="material-symbols-outlined">system_update</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-white">App Updates</p>
+<p class="text-xs text-[#556d86]">Patch notes &amp; maintenance</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-[#1c2a38] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="bg-panel-bg border border-[#223649] p-4 rounded flex items-center gap-3 hover:border-primary/40 transition-colors">
+<div class="p-2 bg-[#101a23] rounded text-[#90adcb]">
+<span class="material-symbols-outlined">newspaper</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-white">Weekly Digest</p>
+<p class="text-xs text-[#556d86]">Summary of stats</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-[#1c2a38] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- 5. Terminal Node (Save Action) -->
+<div class="relative w-full max-w-sm">
+<!-- Connector -->
+<div class="absolute left-1/2 -top-8 h-8 w-0.5 bg-primary shadow-neon -translate-x-1/2"></div>
+<div class="absolute left-1/2 top-0 size-3 bg-primary rounded-full shadow-neon -translate-x-1/2 -translate-y-1/2 z-20"></div>
+<button class="group relative w-full overflow-hidden bg-[#101922] p-0 clip-path-polygon border-0 focus:outline-none">
+<!-- Animated border gradient -->
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 z-0"></div>
+<div class="relative z-10 m-[1px] bg-[#0a0f14] hover:bg-[#15202b] transition-colors p-6 flex flex-col items-center justify-center gap-2 border border-primary/40 group-hover:border-primary group-hover:shadow-neon-strong">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform">save</span>
+<span class="text-lg font-black tracking-[0.2em] text-white group-hover:text-primary group-hover:text-glow transition-colors">INITIALIZE CHANGES</span>
+<span class="text-[10px] font-mono text-[#556d86]">COMMIT TO DATABASE</span>
+</div>
+<!-- Corner accents -->
+<div class="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-primary"></div>
+<div class="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-primary"></div>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Command Deck (Bottom Nav) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+<div class="bg-[#101922]/90 border border-[#223649] backdrop-blur-md rounded-full px-6 py-3 flex items-center gap-8 shadow-neon">
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-[#556d86] group-hover:text-white transition-colors">home</span>
+<span class="size-1 rounded-full bg-transparent group-hover:bg-primary"></span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-[#556d86] group-hover:text-white transition-colors">explore</span>
+<span class="size-1 rounded-full bg-transparent group-hover:bg-primary"></span>
+</button>
+<!-- Active Settings Item -->
+<div class="relative -top-6">
+<button class="size-14 rounded-full bg-primary flex items-center justify-center text-white shadow-neon hover:scale-105 transition-transform border-4 border-[#050505]">
+<span class="material-symbols-outlined text-2xl animate-pulse">settings</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-[#556d86] group-hover:text-white transition-colors">forum</span>
+<span class="size-1 rounded-full bg-transparent group-hover:bg-primary"></span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-[#556d86] group-hover:text-white transition-colors">person</span>
+<span class="size-1 rounded-full bg-transparent group-hover:bg-primary"></span>
+</button>
+</div>
+</div>
+</body></html>

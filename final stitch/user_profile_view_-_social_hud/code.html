@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - User Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505", /* Overridden to match void request */
+                        "card-dark": "#101922", /* Standard panel color */
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(16, 25, 34, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(37, 140, 244, 0.15);
+        }
+        .tech-border {
+            position: relative;
+        }
+        .tech-border::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px;
+            width: 10px; height: 10px;
+            border-top: 2px solid #258cf4;
+            border-left: 2px solid #258cf4;
+            border-top-left-radius: 0.5rem;
+            opacity: 0.7;
+        }
+        .tech-border::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; right: -1px;
+            width: 10px; height: 10px;
+            border-bottom: 2px solid #258cf4;
+            border-right: 2px solid #258cf4;
+            border-bottom-right-radius: 0.5rem;
+            opacity: 0.7;
+        }
+        .scan-line {
+            background: linear-gradient(to bottom, transparent, #258cf4, transparent);
+            opacity: 0.2;
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display min-h-screen overflow-x-hidden flex flex-col">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 glass-panel border-b border-[#223649]/50 w-full px-6 py-3">
+<div class="flex items-center justify-between whitespace-nowrap">
+<div class="flex items-center gap-8">
+<!-- Logo Area -->
+<div class="flex items-center gap-3 text-white">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[32px]">radar</span>
+</div>
+<div>
+<h2 class="text-white text-lg font-bold leading-none tracking-wider">RANKERS LOG</h2>
+<span class="text-primary text-[10px] tracking-[0.2em] opacity-80">TARGET SCAN // ONLINE</span>
+</div>
+</div>
+<!-- Top Nav Links -->
+<nav class="hidden md:flex items-center gap-8 ml-4">
+<a class="text-white/70 hover:text-primary transition-colors text-sm font-medium tracking-wide" href="#">SYSTEM</a>
+<a class="text-white/70 hover:text-primary transition-colors text-sm font-medium tracking-wide" href="#">DATABASE</a>
+<a class="text-white/70 hover:text-primary transition-colors text-sm font-medium tracking-wide" href="#">GUILDS</a>
+<a class="text-white/70 hover:text-primary transition-colors text-sm font-medium tracking-wide" href="#">MARKETPLACE</a>
+</nav>
+</div>
+<!-- Right Actions -->
+<div class="flex items-center gap-6">
+<!-- Search Bar -->
+<div class="hidden lg:flex w-64 h-9 items-center rounded bg-card-dark border border-[#314d68]/50 overflow-hidden group focus-within:border-primary/50 transition-colors">
+<div class="flex items-center justify-center pl-3 text-[#90adcb]">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-transparent border-none text-sm text-white placeholder-[#90adcb]/50 focus:ring-0 px-2 font-body" placeholder="Search Database..."/>
+</div>
+<!-- Notification Icons -->
+<div class="flex gap-3">
+<button class="flex items-center justify-center size-9 rounded bg-card-dark border border-[#314d68]/30 hover:bg-primary/20 hover:border-primary/50 text-white transition-all">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center size-9 rounded bg-card-dark border border-[#314d68]/30 hover:bg-primary/20 hover:border-primary/50 text-white transition-all">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+<!-- User Avatar -->
+<div class="relative size-9 rounded overflow-hidden border border-primary/30">
+<img alt="My Profile" class="w-full h-full object-cover" data-alt="User avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxkeu8G33OdstWFgZveO0Nj9fOEGqf3fm4-UQ1qTtsG8MUpScGQTG0mYzHQGNpcU0nkyEKVLOvbEeTo26ysVBQxT3etr8vtMdd70gBLkZRAnTQM8WWwrBRrvGvojAt05PIqanA4KOIC-5fYflJ9RxlUVBTiJRX9BkOtnha0Du0hUBHLlVc4PkZV_it56tqOFqrO-tE8pjYKxl8qxv-MOx3jsiPfK-hU-p9CdcSm40_l42GiQ08VhjwpXb0lDmlAn_bcibMU7qkd2L9"/>
+<div class="absolute bottom-0 right-0 size-2 bg-green-500 rounded-full border border-black"></div>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 layout-container max-w-[1600px] mx-auto w-full pt-6 pb-12 px-4 gap-6">
+<!-- SideNavBar / Command Deck -->
+<aside class="hidden md:flex flex-col w-64 shrink-0 gap-6 sticky top-24 h-[calc(100vh-8rem)]">
+<!-- Navigation Panel -->
+<div class="glass-panel tech-border rounded-lg p-5 flex flex-col gap-6 h-full">
+<div class="flex items-center gap-3 pb-4 border-b border-[#314d68]/30">
+<div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<div>
+<h1 class="text-sm font-bold tracking-wider text-white">COMMAND DECK</h1>
+<p class="text-[10px] text-[#90adcb] font-mono">SYS.VER.4.0.2</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 flex-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded hover:bg-primary/10 group transition-all border border-transparent hover:border-primary/20" href="#">
+<span class="material-symbols-outlined text-[#90adcb] group-hover:text-primary">person</span>
+<span class="text-sm font-medium text-[#90adcb] group-hover:text-white">Profile Scan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded bg-primary/10 border border-primary/30" href="#">
+<span class="material-symbols-outlined text-primary">diversity_3</span>
+<span class="text-sm font-bold text-white">Social HUD</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded hover:bg-primary/10 group transition-all border border-transparent hover:border-primary/20" href="#">
+<span class="material-symbols-outlined text-[#90adcb] group-hover:text-primary">query_stats</span>
+<span class="text-sm font-medium text-[#90adcb] group-hover:text-white">Stat Compare</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded hover:bg-primary/10 group transition-all border border-transparent hover:border-primary/20" href="#">
+<span class="material-symbols-outlined text-[#90adcb] group-hover:text-primary">history_edu</span>
+<span class="text-sm font-medium text-[#90adcb] group-hover:text-white">Logs</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-[#314d68]/30">
+<div class="flex items-center justify-between text-[#90adcb] text-xs font-mono mb-2">
+<span>SERVER TIME</span>
+<span>23:42:09</span>
+</div>
+<div class="flex items-center justify-between text-[#90adcb] text-xs font-mono">
+<span>PING</span>
+<span class="text-green-500">12ms</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col gap-6 min-w-0">
+<!-- Target Profile Header -->
+<section class="glass-panel tech-border rounded-lg p-6 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[120px] text-white">fingerprint</span>
+</div>
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center relative z-10">
+<!-- Avatar -->
+<div class="relative shrink-0">
+<div class="size-32 rounded-lg p-1 bg-gradient-to-br from-primary via-transparent to-primary/50">
+<img alt="Target Profile" class="w-full h-full object-cover rounded bg-black" data-alt="Cyberpunk character portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD19E8VdqXXh6dESgjTOgPNZPU6yDbAFMOI7I6ieeX-BARWKnISf6C4ZV1nql_BkswhdPWR-gory2T0rVeFncGa0tFTeJMFKmvrpyFiQPggBxgHTJHoHwQBjrLOgNUyxl01bqVoE56B9uT_kH7hVLRxMQmQGWK9a77nyTnhHqFhyIxVsfdyorgAEi8OLBGrtEVq2RVcWjEwKv6UxBaqlzIMm6Jzs7NZB9YPm-QteWcjSXW4X2HT0DAEngu7ls2F40RInbHRMILABHNp"/>
+</div>
+<div class="absolute -bottom-3 -right-3 bg-card-dark border border-primary text-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider shadow-[0_0_10px_rgba(37,140,244,0.3)]">
+                            Online
+                        </div>
+</div>
+<!-- Info -->
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-3 mb-1">
+<h1 class="text-3xl font-bold text-white tracking-tight">NIGHT_STALKER_99</h1>
+<span class="px-2 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/30 text-yellow-500 text-xs font-bold tracking-wider">MVP</span>
+</div>
+<p class="text-primary font-mono text-sm mb-4 tracking-wider">CLASS: S-RANK CHRONICLER // LVL 52</p>
+<div class="flex flex-wrap gap-4 text-sm text-[#90adcb]">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span>Guild: <span class="text-white">Midnight Suns</span></span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Reputation: <span class="text-green-400">Excellent</span></span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>Region: <span class="text-white">Neo-Tokyo</span></span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col gap-3 w-full md:w-auto shrink-0">
+<button class="flex items-center justify-center gap-2 h-11 px-8 rounded bg-primary hover:bg-primary/90 text-white font-bold tracking-wider shadow-[0_0_15px_rgba(37,140,244,0.4)] transition-all transform active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add_link</span>
+                            INITIATE LINK
+                        </button>
+<div class="flex gap-2">
+<button class="flex-1 flex items-center justify-center h-9 rounded border border-[#314d68] hover:border-primary/50 text-[#90adcb] hover:text-white hover:bg-[#314d68]/30 transition-colors">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</button>
+<button class="flex-1 flex items-center justify-center h-9 rounded border border-[#314d68] hover:border-primary/50 text-[#90adcb] hover:text-white hover:bg-[#314d68]/30 transition-colors">
+<span class="material-symbols-outlined text-[18px]">compare_arrows</span>
+</button>
+<button class="flex-1 flex items-center justify-center h-9 rounded border border-[#314d68] hover:border-red-500/50 text-[#90adcb] hover:text-red-400 hover:bg-red-500/10 transition-colors">
+<span class="material-symbols-outlined text-[18px]">flag</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column: Stats & Compatibility -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<!-- Compatibility Matrix -->
+<div class="glass-panel rounded-lg p-6">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-white font-bold tracking-wide flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">ssid_chart</span>
+                                    COMPATIBILITY MATRIX // SYNC RATE
+                                </h3>
+<p class="text-[#90adcb] text-xs font-mono mt-1">CROSS-REFERENCING TASTE PROFILES...</p>
+</div>
+<div class="text-right">
+<span class="block text-3xl font-bold text-white leading-none">85%</span>
+<span class="text-green-400 text-xs font-mono font-bold">HIGH SYNC DETECTED</span>
+</div>
+</div>
+<!-- Chart Visualization Area -->
+<div class="relative h-64 w-full bg-[#101922]/50 rounded border border-[#314d68]/30 overflow-hidden flex items-end px-4 pb-0">
+<!-- Grid Lines -->
+<div class="absolute inset-0 grid grid-cols-6 grid-rows-4 opacity-10 pointer-events-none">
+<div class="border-r border-white"></div><div class="border-r border-white"></div>
+<div class="border-r border-white"></div><div class="border-r border-white"></div>
+<div class="border-r border-white"></div><div class="border-r border-white"></div>
+</div>
+<div class="absolute inset-0 grid grid-rows-4 opacity-10 pointer-events-none">
+<div class="border-b border-white"></div><div class="border-b border-white"></div>
+<div class="border-b border-white"></div><div class="border-b border-white"></div>
+</div>
+<!-- Graph SVG -->
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 100 100">
+<defs>
+<lineargradient id="gradientMyStats" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#258cf4" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#258cf4" stop-opacity="0"></stop>
+</lineargradient>
+<lineargradient id="gradientTargetStats" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#ffffff" stop-opacity="0.1"></stop>
+<stop offset="100%" stop-color="#ffffff" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- My Stats (Blue) -->
+<path d="M0,80 Q10,70 20,40 T40,30 T60,50 T80,20 T100,60 L100,100 L0,100 Z" fill="url(#gradientMyStats)"></path>
+<path d="M0,80 Q10,70 20,40 T40,30 T60,50 T80,20 T100,60" fill="none" stroke="#258cf4" stroke-width="0.5"></path>
+<!-- Target Stats (White/Gray) -->
+<path d="M0,90 Q15,85 25,50 T45,40 T65,60 T85,30 T100,50 L100,100 L0,100 Z" fill="url(#gradientTargetStats)"></path>
+<path d="M0,90 Q15,85 25,50 T45,40 T65,60 T85,30 T100,50" fill="none" stroke="#90adcb" stroke-dasharray="2,1" stroke-width="0.5"></path>
+</svg>
+<!-- Legend Overlay -->
+<div class="absolute top-4 left-4 flex gap-4 text-[10px] font-mono font-bold tracking-wider">
+<div class="flex items-center gap-2">
+<div class="w-3 h-0.5 bg-primary"></div> YOU
+                                </div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-0.5 bg-[#90adcb] border-t border-dashed"></div> TARGET
+                                </div>
+</div>
+</div>
+<div class="flex justify-between mt-4 px-2">
+<span class="text-[#90adcb] text-xs font-bold uppercase tracking-widest">Anime</span>
+<span class="text-[#90adcb] text-xs font-bold uppercase tracking-widest">Manga</span>
+<span class="text-[#90adcb] text-xs font-bold uppercase tracking-widest">RPG</span>
+<span class="text-[#90adcb] text-xs font-bold uppercase tracking-widest">FPS</span>
+<span class="text-[#90adcb] text-xs font-bold uppercase tracking-widest">VN</span>
+</div>
+</div>
+<!-- Shared Titles List -->
+<div class="glass-panel rounded-lg p-6 flex-1">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-white font-bold tracking-wide flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">dataset</span>
+                                SHARED LOGS DETECTED
+                            </h3>
+<button class="text-xs text-primary hover:text-white transition-colors">VIEW ALL (14)</button>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Item 1 -->
+<div class="flex items-center gap-4 p-2 rounded bg-[#101922] border border-[#314d68]/30 hover:border-primary/40 transition-colors group">
+<div class="w-12 h-16 bg-gray-700 rounded overflow-hidden shrink-0">
+<img alt="Game Cover" class="w-full h-full object-cover" data-alt="Cyberpunk city art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVtaOlhbxj4zfdbg0_VWAu5SJv3Me5YF-psKfpI8QJdqFtLAT-EVkoEeaJM6AEnjkY-4VrpxUj4goUhPovOciGi6uQivs8cSjeHP4drDbbv-7cZUtIyMu44UFjEbfI0AjnjP8c05hUHK3imQL46FXm0l_VX-v9DbO-JUCK6n4QNVlGnf5L8ym4Sot5rR2srUKZLALuWTEA60wixbKaSQO4SEyeJd4c3I0byBNbPG81Bc_gfvI-f3WeLR_ChCl8fSJwQ9U8m2X-aK6w"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-white font-bold text-sm truncate group-hover:text-primary transition-colors">Cyberpunk: Edgerunners</h4>
+<p class="text-[#90adcb] text-xs">Anime • Completed</p>
+</div>
+<div class="flex items-center gap-6 px-4 border-l border-[#314d68]/30">
+<div class="text-center">
+<p class="text-[10px] text-[#90adcb] font-mono uppercase">You</p>
+<p class="text-white font-bold">9.0</p>
+</div>
+<div class="text-center">
+<p class="text-[10px] text-[#90adcb] font-mono uppercase">Them</p>
+<p class="text-white font-bold">10.0</p>
+</div>
+<div class="hidden sm:block">
+<span class="text-xs text-green-400 font-mono">+1.0 Diff</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 p-2 rounded bg-[#101922] border border-[#314d68]/30 hover:border-primary/40 transition-colors group">
+<div class="w-12 h-16 bg-gray-700 rounded overflow-hidden shrink-0">
+<img alt="Game Cover" class="w-full h-full object-cover" data-alt="Abstract sword art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj1pgfagth7SWXMLUtq4nHiqDomv_nuV4uXITRHompFquneXJJYIXLNRoSvhJ6rmEmw7gK50l0JZyKmOYS-nivuVbbCw6B9oBirsal1oHQZl_wEjL36U1ssO5pLh_HVRiueNOj2Wuafz_khK3N2ckAQ6AQGkEhSQu9t6el1IedF1lp-HYS85JYkNlsKf02C0AnM1n_9TbJ18PyK941b3lxPyRzDMpIJ4a72bkfBCSd4Ih--2NyiEvsrMSENVNUEc15IK0xo1q_0qhw"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-white font-bold text-sm truncate group-hover:text-primary transition-colors">Elden Ring</h4>
+<p class="text-[#90adcb] text-xs">Game • 140h Playtime</p>
+</div>
+<div class="flex items-center gap-6 px-4 border-l border-[#314d68]/30">
+<div class="text-center">
+<p class="text-[10px] text-[#90adcb] font-mono uppercase">You</p>
+<p class="text-white font-bold">10.0</p>
+</div>
+<div class="text-center">
+<p class="text-[10px] text-[#90adcb] font-mono uppercase">Them</p>
+<p class="text-white font-bold">9.5</p>
+</div>
+<div class="hidden sm:block">
+<span class="text-xs text-gray-400 font-mono">-0.5 Diff</span>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-4 p-2 rounded bg-[#101922] border border-[#314d68]/30 hover:border-primary/40 transition-colors group">
+<div class="w-12 h-16 bg-gray-700 rounded overflow-hidden shrink-0">
+<img alt="Book Cover" class="w-full h-full object-cover" data-alt="Dark fantasy book cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtqCvNgOU1Ju8sO11q8XmSO5aeLmTFjdSvmCNzHSAMBRyChu3rKnkEqHT6ai1RpjFbyZm_yANqxd0tmQh-mEwPVqwrcPI_7D3pYdzZ3IbL1UwhE47tw7zx_QNUEe6SaCI9z0wjl2TvTymkDW8uD5JItBAiuEfKfE0l_JOE25cOMcIaEH8Y8hZWdN2bF8DhchOJ76VwIVSmP9-WsJKu1gRNAnQkYRoq6ijUqHB-YzEr-7JZ7i45W-BYdFFvvfoytXqRWFsHCkB3Y8HH"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-white font-bold text-sm truncate group-hover:text-primary transition-colors">Solo Leveling</h4>
+<p class="text-[#90adcb] text-xs">Manhwa • Reading (Ch. 120)</p>
+</div>
+<div class="flex items-center gap-6 px-4 border-l border-[#314d68]/30">
+<div class="text-center">
+<p class="text-[10px] text-[#90adcb] font-mono uppercase">You</p>
+<p class="text-white font-bold">8.5</p>
+</div>
+<div class="text-center">
+<p class="text-[10px] text-[#90adcb] font-mono uppercase">Them</p>
+<p class="text-white font-bold">8.5</p>
+</div>
+<div class="hidden sm:block">
+<span class="text-xs text-primary font-mono">Exact</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Stats & Mutuals -->
+<div class="flex flex-col gap-6">
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-card-dark border border-[#314d68] p-4 rounded-lg flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-[#90adcb] mb-2">military_tech</span>
+<p class="text-2xl font-bold text-white leading-none">842</p>
+<p class="text-[10px] text-[#90adcb] uppercase tracking-wider mt-1">Logs Created</p>
+</div>
+<div class="bg-card-dark border border-[#314d68] p-4 rounded-lg flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-[#90adcb] mb-2">schedule</span>
+<p class="text-2xl font-bold text-white leading-none">4.2k</p>
+<p class="text-[10px] text-[#90adcb] uppercase tracking-wider mt-1">Hours Logged</p>
+</div>
+<div class="bg-card-dark border border-[#314d68] p-4 rounded-lg flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-[#90adcb] mb-2">done_all</span>
+<p class="text-2xl font-bold text-white leading-none">315</p>
+<p class="text-[10px] text-[#90adcb] uppercase tracking-wider mt-1">Completed</p>
+</div>
+<div class="bg-card-dark border border-[#314d68] p-4 rounded-lg flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-[#90adcb] mb-2">stars</span>
+<p class="text-2xl font-bold text-white leading-none">1.2M</p>
+<p class="text-[10px] text-[#90adcb] uppercase tracking-wider mt-1">Total XP</p>
+</div>
+</div>
+<!-- Mutual Guilds -->
+<div class="glass-panel rounded-lg p-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-white font-bold tracking-wide flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">hub</span>
+                                MUTUAL GUILDS
+                            </h3>
+<span class="bg-primary/20 text-primary text-xs font-bold px-2 py-0.5 rounded">3</span>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between p-3 rounded bg-[#101922] border border-[#314d68]/30 group hover:border-primary/50 cursor-pointer transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-purple-900/50 flex items-center justify-center border border-purple-500/30">
+<span class="material-symbols-outlined text-white text-sm">rocket_launch</span>
+</div>
+<span class="text-sm font-bold text-white group-hover:text-primary transition-colors">Starlight Brigade</span>
+</div>
+<span class="material-symbols-outlined text-[#90adcb] text-sm">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded bg-[#101922] border border-[#314d68]/30 group hover:border-primary/50 cursor-pointer transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-red-900/50 flex items-center justify-center border border-red-500/30">
+<span class="material-symbols-outlined text-white text-sm">swords</span>
+</div>
+<span class="text-sm font-bold text-white group-hover:text-primary transition-colors">Raid Shadows</span>
+</div>
+<span class="material-symbols-outlined text-[#90adcb] text-sm">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded bg-[#101922] border border-[#314d68]/30 group hover:border-primary/50 cursor-pointer transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-blue-900/50 flex items-center justify-center border border-blue-500/30">
+<span class="material-symbols-outlined text-white text-sm">sports_esports</span>
+</div>
+<span class="text-sm font-bold text-white group-hover:text-primary transition-colors">Elite Gamers</span>
+</div>
+<span class="material-symbols-outlined text-[#90adcb] text-sm">chevron_right</span>
+</div>
+</div>
+<button class="w-full mt-4 text-xs font-bold text-[#90adcb] hover:text-white border border-[#314d68] hover:bg-[#314d68] py-2 rounded transition-colors uppercase tracking-wider">
+                            Invite to new Guild
+                        </button>
+</div>
+<!-- System Note -->
+<div class="rounded border border-[#314d68]/50 p-4 bg-[#101922]/50 relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[100px] text-primary">security</span>
+</div>
+<p class="text-xs text-[#90adcb] font-mono mb-1">SECURITY CLEARANCE:</p>
+<p class="text-sm text-white font-bold">LEVEL 4 - PUBLIC ACCESS</p>
+<div class="w-full h-1 bg-[#314d68] rounded-full mt-3 overflow-hidden">
+<div class="h-full w-[70%] bg-primary"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

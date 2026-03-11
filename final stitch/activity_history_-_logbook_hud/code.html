@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Activity HUD</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505", /* Updated to deep void dark */
+                        "card-dark": "#0f161e",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    boxShadow: {
+                        "glow": "0 0 15px rgba(37, 140, 244, 0.3)",
+                        "glow-sm": "0 0 8px rgba(37, 140, 244, 0.4)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom HUD Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+
+        /* Tech Background Grid */
+        .tech-grid {
+            background-image: 
+                linear-gradient(rgba(37, 140, 244, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 140, 244, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display overflow-x-hidden min-h-screen relative selection:bg-primary/30 selection:text-primary">
+<!-- Ambient Background Effects -->
+<div class="fixed inset-0 z-0 tech-grid pointer-events-none"></div>
+<div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none z-0"></div>
+<!-- Top Status Bar (Minimal) -->
+<header class="fixed top-0 left-0 right-0 z-40 h-16 border-b border-white/5 bg-[#050505]/80 backdrop-blur-md flex items-center justify-between px-6 lg:px-12">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary animate-pulse">terminal</span>
+<span class="text-sm font-bold tracking-[0.2em] text-gray-400">RANKERS LOG // SYSTEM V.2.4</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right hidden sm:block">
+<p class="text-xs text-gray-500 uppercase tracking-wider">Operator</p>
+<p class="text-sm font-bold text-primary">USER_01</p>
+</div>
+<div class="h-10 w-10 rounded-full border border-primary/30 p-0.5 relative group cursor-pointer hover:shadow-glow transition-all">
+<div class="absolute inset-0 rounded-full animate-ping bg-primary/20"></div>
+<div class="h-full w-full rounded-full bg-cover bg-center" data-alt="Cyberpunk style user avatar with glowing visor" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBHfjaGHXEPF_NyDccH4CQsMNGP_S_GrYI-zxH2evlR_BEvcgukqcSTmtaIRP96upvQ9Z3BdIrCZIdexD1G-5GpxlU3N8iGw0bzcGyShVLz3u_NtTZxjo1QPfhnjbDAieuD7DG8Adusl-wGC9BbiFTwwBwXVKVgZ1aIfy7jVL0RkiqbnId5-yF4J4FuG0zRkaDO1iMRjyyFxthO1f1BS-JhE3zSMMRMKDItXqCPUnn1L5BECE-ylKBK2Kn57SWnAzKKAVEBxNDZfJVH');"></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="relative z-10 pt-24 pb-32 px-4 max-w-6xl mx-auto flex flex-col gap-10">
+<!-- Header Section -->
+<section class="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-l-2 border-primary pl-6">
+<div>
+<h1 class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-2">ACTIVITY LOG</h1>
+<p class="text-primary/60 font-mono text-sm tracking-widest uppercase">Synchronizing Data Stream...</p>
+</div>
+<div class="flex items-center gap-2 text-green-400 bg-green-500/10 px-3 py-1 rounded border border-green-500/20">
+<span class="material-symbols-outlined text-sm">wifi</span>
+<span class="text-xs font-bold tracking-widest">ONLINE</span>
+</div>
+</div>
+<!-- HUD Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+<!-- Stat 1 -->
+<div class="relative group bg-card-dark/60 backdrop-blur-sm border border-white/10 rounded-lg p-5 overflow-hidden hover:border-primary/50 transition-all duration-300">
+<div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity text-primary">
+<span class="material-symbols-outlined text-3xl">military_tech</span>
+</div>
+<p class="text-gray-400 text-xs font-mono uppercase tracking-widest mb-1">Current Rank</p>
+<p class="text-3xl font-bold text-white group-hover:text-primary transition-colors">S-CLASS</p>
+<div class="w-full bg-white/5 h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[85%] shadow-glow-sm"></div>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="relative group bg-card-dark/60 backdrop-blur-sm border border-white/10 rounded-lg p-5 overflow-hidden hover:border-primary/50 transition-all duration-300">
+<div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity text-primary">
+<span class="material-symbols-outlined text-3xl">bolt</span>
+</div>
+<p class="text-gray-400 text-xs font-mono uppercase tracking-widest mb-1">Total XP</p>
+<p class="text-3xl font-bold text-white group-hover:text-primary transition-colors">45,200</p>
+<p class="text-xs text-primary/70 mt-3 font-mono">+1,240 this week</p>
+</div>
+<!-- Stat 3 -->
+<div class="relative group bg-card-dark/60 backdrop-blur-sm border border-white/10 rounded-lg p-5 overflow-hidden hover:border-primary/50 transition-all duration-300">
+<div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity text-primary">
+<span class="material-symbols-outlined text-3xl">trophy</span>
+</div>
+<p class="text-gray-400 text-xs font-mono uppercase tracking-widest mb-1">Achievements</p>
+<p class="text-3xl font-bold text-white group-hover:text-primary transition-colors">142</p>
+<p class="text-xs text-gray-500 mt-3 font-mono">Latest: God Slayer</p>
+</div>
+</div>
+</section>
+<!-- Filter Matrix -->
+<section class="flex flex-wrap justify-center gap-3 md:gap-6 py-4 sticky top-16 z-30 bg-background-dark/90 backdrop-blur-lg border-y border-white/5 mx-[-1rem] px-4 md:mx-0 md:rounded-xl md:border md:bg-card-dark/50">
+<button class="flex items-center gap-2 px-5 py-2 rounded bg-primary text-white border border-primary shadow-glow-sm transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm">grid_view</span>
+<span class="text-sm font-bold tracking-wide">ALL LOGS</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2 rounded bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-transparent hover:border-white/20 transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-sm group-hover:text-primary">movie</span>
+<span class="text-sm font-medium tracking-wide">ANIME</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2 rounded bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-transparent hover:border-white/20 transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-sm group-hover:text-primary">auto_stories</span>
+<span class="text-sm font-medium tracking-wide">MANGA</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2 rounded bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-transparent hover:border-white/20 transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-sm group-hover:text-primary">sports_esports</span>
+<span class="text-sm font-medium tracking-wide">GAMES</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2 rounded bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-transparent hover:border-white/20 transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-sm group-hover:text-primary">assignment_late</span>
+<span class="text-sm font-medium tracking-wide">QUESTS</span>
+</button>
+</section>
+<!-- Timeline Construction -->
+<div class="relative w-full mt-4">
+<!-- Central Spine -->
+<div class="absolute left-8 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary via-primary/40 to-transparent shadow-[0_0_8px_rgba(37,140,244,0.6)] z-0"></div>
+<!-- Timeline Entries -->
+<div class="flex flex-col gap-12 relative z-10 pb-20">
+<!-- ENTRY 1: Right Aligned (Desktop) -->
+<div class="flex flex-col md:flex-row items-center w-full group">
+<div class="w-full md:w-[45%] hidden md:block"></div> <!-- Spacer -->
+<!-- Center Icon Node -->
+<div class="absolute left-8 md:left-1/2 md:-translate-x-1/2 w-10 h-10 -translate-x-1/2 flex items-center justify-center bg-[#050505] border-2 border-primary rounded-lg z-20 shadow-glow group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-primary text-sm">play_circle</span>
+</div>
+<!-- Card Content -->
+<div class="w-full md:w-[45%] pl-20 md:pl-10">
+<div class="relative bg-card-dark/80 backdrop-blur-md border border-primary/30 p-5 rounded-tr-xl rounded-bl-xl rounded-tl-sm rounded-br-sm hover:border-primary transition-colors duration-300 shadow-lg group-hover:shadow-glow-sm">
+<!-- Connector Line (Visual) -->
+<div class="absolute top-1/2 -left-12 md:-left-10 w-8 md:w-10 h-[2px] bg-primary/50 group-hover:bg-primary transition-colors"></div>
+<div class="absolute top-1/2 -left-[5px] w-1.5 h-1.5 bg-primary rotate-45"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-mono text-primary/80 border border-primary/30 px-2 py-0.5 rounded bg-primary/10">ANIME</span>
+<span class="text-xs font-mono text-gray-500">2023.10.27 - 14:00</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-1 group-hover:text-primary transition-colors">Attack on Titan: Final Season</h3>
+<div class="text-sm text-gray-400 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-yellow-500 text-sm">star</span>
+<span>Rated 5/5</span>
+<span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+<span>Completed</span>
+</div>
+<div class="flex items-center justify-between border-t border-white/5 pt-3 mt-1">
+<span class="text-xs text-gray-500 font-mono">EPISODE 28/28</span>
+<div class="text-primary font-bold font-mono text-sm shadow-glow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-base">add</span> 500 XP
+                                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- ENTRY 2: Left Aligned (Desktop) -->
+<div class="flex flex-col md:flex-row-reverse items-center w-full group">
+<div class="w-full md:w-[45%] hidden md:block"></div> <!-- Spacer -->
+<!-- Center Icon Node -->
+<div class="absolute left-8 md:left-1/2 md:-translate-x-1/2 w-10 h-10 -translate-x-1/2 flex items-center justify-center bg-[#050505] border-2 border-red-500 rounded-lg z-20 shadow-[0_0_15px_rgba(239,68,68,0.4)] group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-red-500 text-sm">swords</span>
+</div>
+<!-- Card Content -->
+<div class="w-full md:w-[45%] pl-20 md:pr-10 md:pl-0">
+<div class="relative bg-card-dark/80 backdrop-blur-md border border-red-500/30 p-5 rounded-tl-xl rounded-br-xl rounded-tr-sm rounded-bl-sm hover:border-red-500 transition-colors duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+<!-- Connector Line (Visual) -->
+<div class="absolute top-1/2 -left-12 md:left-auto md:-right-10 w-8 md:w-10 h-[2px] bg-red-500/50 group-hover:bg-red-500 transition-colors"></div>
+<div class="absolute top-1/2 -left-[5px] md:left-auto md:-right-[5px] w-1.5 h-1.5 bg-red-500 rotate-45"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-mono text-red-400 border border-red-500/30 px-2 py-0.5 rounded bg-red-500/10">GAME</span>
+<span class="text-xs font-mono text-gray-500">2023.10.26 - 22:45</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-1 group-hover:text-red-400 transition-colors">Boss Defeated: Malenia</h3>
+<div class="text-sm text-gray-400 mb-4 flex items-center gap-2">
+<span>Elden Ring</span>
+<span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+<span>Hard Mode</span>
+</div>
+<div class="flex items-center justify-between border-t border-white/5 pt-3 mt-1">
+<span class="text-xs text-gray-500 font-mono">Blade of Miquella</span>
+<div class="text-red-400 font-bold font-mono text-sm shadow-[0_0_10px_rgba(239,68,68,0.4)] flex items-center gap-1">
+<span class="material-symbols-outlined text-base">add</span> 2000 XP
+                                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- ENTRY 3: Right Aligned (Desktop) -->
+<div class="flex flex-col md:flex-row items-center w-full group">
+<div class="w-full md:w-[45%] hidden md:block"></div> <!-- Spacer -->
+<!-- Center Icon Node -->
+<div class="absolute left-8 md:left-1/2 md:-translate-x-1/2 w-10 h-10 -translate-x-1/2 flex items-center justify-center bg-[#050505] border-2 border-green-500 rounded-lg z-20 shadow-[0_0_15px_rgba(34,197,94,0.4)] group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-green-500 text-sm">auto_stories</span>
+</div>
+<!-- Card Content -->
+<div class="w-full md:w-[45%] pl-20 md:pl-10">
+<div class="relative bg-card-dark/80 backdrop-blur-md border border-green-500/30 p-5 rounded-tr-xl rounded-bl-xl rounded-tl-sm rounded-br-sm hover:border-green-500 transition-colors duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(34,197,94,0.2)]">
+<!-- Connector Line (Visual) -->
+<div class="absolute top-1/2 -left-12 md:-left-10 w-8 md:w-10 h-[2px] bg-green-500/50 group-hover:bg-green-500 transition-colors"></div>
+<div class="absolute top-1/2 -left-[5px] w-1.5 h-1.5 bg-green-500 rotate-45"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-mono text-green-400 border border-green-500/30 px-2 py-0.5 rounded bg-green-500/10">MANGA</span>
+<span class="text-xs font-mono text-gray-500">2023.10.25 - 09:15</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-1 group-hover:text-green-400 transition-colors">Solo Leveling</h3>
+<div class="text-sm text-gray-400 mb-4 flex items-center gap-2">
+<span>Manhwa</span>
+<span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+<span>Reading</span>
+</div>
+<div class="flex items-center justify-between border-t border-white/5 pt-3 mt-1">
+<span class="text-xs text-gray-500 font-mono">CHAPTER 150</span>
+<div class="text-green-400 font-bold font-mono text-sm shadow-[0_0_10px_rgba(34,197,94,0.4)] flex items-center gap-1">
+<span class="material-symbols-outlined text-base">add</span> 50 XP
+                                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- ENTRY 4: Left Aligned (Desktop) -->
+<div class="flex flex-col md:flex-row-reverse items-center w-full group">
+<div class="w-full md:w-[45%] hidden md:block"></div> <!-- Spacer -->
+<!-- Center Icon Node -->
+<div class="absolute left-8 md:left-1/2 md:-translate-x-1/2 w-10 h-10 -translate-x-1/2 flex items-center justify-center bg-[#050505] border-2 border-purple-500 rounded-lg z-20 shadow-[0_0_15px_rgba(168,85,247,0.4)] group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-purple-500 text-sm">assignment_turned_in</span>
+</div>
+<!-- Card Content -->
+<div class="w-full md:w-[45%] pl-20 md:pr-10 md:pl-0">
+<div class="relative bg-card-dark/80 backdrop-blur-md border border-purple-500/30 p-5 rounded-tl-xl rounded-br-xl rounded-tr-sm rounded-bl-sm hover:border-purple-500 transition-colors duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+<!-- Connector Line (Visual) -->
+<div class="absolute top-1/2 -left-12 md:left-auto md:-right-10 w-8 md:w-10 h-[2px] bg-purple-500/50 group-hover:bg-purple-500 transition-colors"></div>
+<div class="absolute top-1/2 -left-[5px] md:left-auto md:-right-[5px] w-1.5 h-1.5 bg-purple-500 rotate-45"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-mono text-purple-400 border border-purple-500/30 px-2 py-0.5 rounded bg-purple-500/10">QUEST</span>
+<span class="text-xs font-mono text-gray-500">2023.10.24 - 18:00</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-1 group-hover:text-purple-400 transition-colors">Weekly Review Challenge</h3>
+<div class="text-sm text-gray-400 mb-4 flex items-center gap-2">
+<span>System Reward</span>
+<span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+<span>Recurring</span>
+</div>
+<div class="flex items-center justify-between border-t border-white/5 pt-3 mt-1">
+<span class="text-xs text-gray-500 font-mono">COMPLETE</span>
+<div class="text-purple-400 font-bold font-mono text-sm shadow-[0_0_10px_rgba(168,85,247,0.4)] flex items-center gap-1">
+<span class="material-symbols-outlined text-base">add</span> 150 XP
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- End Marker -->
+<div class="relative flex flex-col items-center justify-center gap-2 mt-8 opacity-60">
+<div class="w-3 h-3 bg-primary/50 rotate-45 shadow-glow"></div>
+<p class="text-xs font-mono text-primary/70 tracking-[0.3em] uppercase">End of Transmission</p>
+</div>
+</div>
+</main>
+<!-- Floating Command Deck (Navigation) -->
+<nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+<div class="flex items-center gap-1 bg-[#0f161e]/90 backdrop-blur-xl border border-white/10 rounded-full px-2 py-2 shadow-2xl shadow-black/50 ring-1 ring-primary/20">
+<a class="p-3 rounded-full text-primary hover:bg-primary/20 transition-colors relative group" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Home Base</span>
+</a>
+<a class="p-3 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-colors relative group" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Profile</span>
+</a>
+<div class="w-[1px] h-6 bg-white/10 mx-1"></div>
+<a class="p-3 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-colors relative group" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Inventory</span>
+</a>
+<a class="p-3 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-colors relative group" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Settings</span>
+</a>
+</div>
+</nav>
+</body></html>

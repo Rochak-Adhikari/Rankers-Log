@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Guild Chat</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-dark": "#050505",
+                        "panel-dark": "#0a1118",
+                        "border-dark": "#1f2f40",
+                        "text-dim": "#64748b",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1f2f40 1px, transparent 1px), linear-gradient(to bottom, #1f2f40 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for Webkit browsers */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a1118; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2f40; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+        
+        .hex-avatar {
+            clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+        }
+
+        .hud-border {
+            position: relative;
+        }
+        .hud-border::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #258cf4 50%, transparent 100%);
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display overflow-hidden flex flex-col h-screen selection:bg-primary/30">
+<!-- Decorative Background Grid -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.03]" style="background-size: 40px 40px; background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px);"></div>
+<!-- Top HUD Header -->
+<header class="flex-none z-30 bg-background-dark/90 backdrop-blur-md border-b border-border-dark hud-border">
+<div class="w-full px-6 py-3 flex items-center justify-between">
+<!-- Left: Guild Info -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3 text-primary animate-pulse">
+<span class="material-symbols-outlined text-[28px]">token</span>
+</div>
+<div>
+<h2 class="text-white text-lg font-bold tracking-widest uppercase leading-none">
+                        GUILD COMM: <span class="text-primary">[SOLARIS VANGUARD]</span>
+</h2>
+<div class="flex items-center gap-2 mt-1">
+<div class="h-1.5 w-1.5 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]"></div>
+<span class="text-xs text-text-dim font-mono tracking-widest">SIGNAL_STRENGTH: 100%</span>
+</div>
+</div>
+</div>
+<!-- Right: Status Indicators -->
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-panel-dark border border-border-dark rounded-md px-3 py-1.5 gap-2 group hover:border-primary/50 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-green-500 text-[16px]">wifi</span>
+<span class="text-xs font-bold text-gray-300">ONLINE: 24</span>
+</div>
+<div class="flex items-center bg-panel-dark border border-border-dark rounded-md px-3 py-1.5 gap-2">
+<span class="material-symbols-outlined text-primary text-[16px]">schedule</span>
+<span class="text-xs font-bold text-gray-300">22:45 GT</span>
+</div>
+<button class="bg-panel-dark border border-border-dark rounded-md p-1.5 hover:bg-primary hover:text-white transition-all text-gray-400">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Workspace -->
+<div class="flex flex-1 overflow-hidden relative z-10">
+<!-- Left Command Deck (Nav) -->
+<nav class="w-20 lg:w-64 flex-none bg-[#080d12] border-r border-border-dark flex flex-col justify-between hidden md:flex">
+<div class="flex flex-col py-6 px-3 gap-6">
+<!-- User Profile Summary -->
+<div class="hidden lg:flex flex-col px-2 mb-4">
+<h1 class="text-white text-xs font-bold tracking-widest text-primary mb-1">RANKERS LOG // V.4.2</h1>
+<div class="flex items-center gap-3 mt-2 bg-panel-dark border border-border-dark p-2 rounded relative overflow-hidden group">
+<div class="absolute inset-0 bg-primary/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500"></div>
+<img class="w-10 h-10 object-cover hex-avatar bg-gray-800" data-alt="Cyberpunk male avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwskjx7Frnhd6UC62_we_HSG592TchDnTuK32zZHaJKnnrvuZQsF61srXpTGG7B4CODveWFG0-LhYHRLDlj7gRpRzm1WT0HFs-SHEjzmtlBSWR3ggcOf0zpocvFG1ii6rWzCAK-9EKnTbMhcTEoWQ9bozqdiWriZnLVPEkviv68dWp75Ans3JqQLHODQxcqwAxuYYD_3f_lDdelCU7oGbmsscQpusA1WK19AQ3sSoAQrs8rCaxiTfCxbmyEsj3uc9Y5PVFMeyY5-i-"/>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-white">Cmdr_X</span>
+<span class="text-[10px] text-primary">LVL. 84</span>
+</div>
+</div>
+</div>
+<!-- Nav Items -->
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-3 rounded-md hover:bg-primary/10 text-gray-400 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">home</span>
+<span class="hidden lg:block text-sm font-medium">Command Center</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-md hover:bg-primary/10 text-gray-400 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">menu_book</span>
+<span class="hidden lg:block text-sm font-medium">Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-md bg-primary/20 text-white border-l-2 border-primary shadow-[0_0_15px_rgba(37,140,244,0.15)] transition-all" href="#">
+<span class="material-symbols-outlined fill-1">diversity_3</span>
+<span class="hidden lg:block text-sm font-medium">Guild Comms</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-md hover:bg-primary/10 text-gray-400 hover:text-primary transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">hub</span>
+<span class="hidden lg:block text-sm font-medium">Skill Tree</span>
+</a>
+</div>
+<!-- Guild Channels Sub-nav -->
+<div class="mt-4 border-t border-border-dark pt-4 hidden lg:block">
+<h3 class="px-3 text-[10px] text-gray-500 uppercase tracking-widest mb-2">Channels</h3>
+<div class="flex flex-col gap-1">
+<button class="flex items-center justify-between px-3 py-2 w-full text-left hover:bg-white/5 rounded text-sm text-gray-300">
+<span class="flex items-center gap-2">
+<span class="text-primary">#</span> general-chat
+                            </span>
+</button>
+<button class="flex items-center justify-between px-3 py-2 w-full text-left bg-white/5 rounded text-sm text-white">
+<span class="flex items-center gap-2">
+<span class="text-primary">#</span> raid-planning
+                            </span>
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+</button>
+<button class="flex items-center justify-between px-3 py-2 w-full text-left hover:bg-white/5 rounded text-sm text-gray-300">
+<span class="flex items-center gap-2">
+<span class="text-primary">#</span> off-topic
+                            </span>
+</button>
+<button class="flex items-center justify-between px-3 py-2 w-full text-left hover:bg-white/5 rounded text-sm text-gray-300">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-green-500">volume_up</span> Voice: Lobby
+                            </span>
+<span class="text-[10px] bg-panel-dark px-1 rounded border border-border-dark">4</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Action -->
+<div class="p-4 border-t border-border-dark">
+<button class="w-full flex items-center justify-center gap-2 bg-panel-dark hover:bg-red-500/20 hover:text-red-400 border border-border-dark hover:border-red-500/50 text-gray-400 text-xs font-bold py-2 px-4 rounded transition-all">
+<span class="material-symbols-outlined text-[16px]">power_settings_new</span>
+<span class="hidden lg:inline">DISCONNECT</span>
+</button>
+</div>
+</nav>
+<!-- Center Chat Area -->
+<section class="flex-1 flex flex-col relative bg-background-dark/50 backdrop-blur-sm min-w-0">
+<!-- Chat Header/Title -->
+<div class="h-16 flex items-center justify-between px-6 border-b border-border-dark bg-background-dark/80">
+<div>
+<h3 class="text-xl font-bold text-white tracking-wide"># RAID-PLANNING</h3>
+<p class="text-xs text-text-dim">Topic: Abyssal dungeon boss strategy discussion.</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative group">
+<input class="bg-panel-dark border border-border-dark text-xs rounded-md pl-8 pr-3 py-1.5 focus:outline-none focus:border-primary text-white w-48 transition-all" placeholder="Search logs..." type="text"/>
+<span class="material-symbols-outlined absolute left-2 top-1.5 text-[16px] text-gray-500">search</span>
+</div>
+</div>
+</div>
+<!-- Messages Stream -->
+<div class="flex-1 overflow-y-auto px-4 py-6 flex flex-col gap-6" id="chat-stream">
+<!-- System Message -->
+<div class="flex items-center gap-4 opacity-70">
+<div class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
+<span class="text-[10px] font-mono text-primary tracking-widest uppercase">Today, 10:23 AM</span>
+<div class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
+</div>
+<!-- Message 1 -->
+<div class="flex gap-4 group">
+<div class="flex-shrink-0 mt-1">
+<img class="w-12 h-12 hex-avatar object-cover bg-gray-800 ring-2 ring-transparent group-hover:ring-primary/50 transition-all" data-alt="Anime style warrior avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq6Wh_sjd_d5rkbMLg1fj81x8keHBbTPWzoslG_aqpOAGZuY6EiP0eLEB0jiLg4SXFFRaxgst-w0KEt2Bt-4r3UkUo6Kfys7oyJZ9g8qxvMNgUIQtzE_Vqc8rmCA_URt5Mpz6e9d4BGYJ9kPwlH90R9JMEoVvxjJMoMrFf9Xzp3W1RrNlFavIKo5-rcINpP6ngGfTIqwkNFG2nAvwiYMGTYvAMbG-Eebs0aw_aRc3IordJaSTT_ND7tcrTakA9J9J3PPYZccuUTCGo"/>
+</div>
+<div class="flex-1 max-w-3xl">
+<div class="flex items-baseline gap-2 mb-1">
+<span class="text-primary font-bold text-sm tracking-wide">Vanguard_01</span>
+<span class="text-[10px] text-text-dim px-1.5 py-0.5 rounded bg-white/5 border border-white/5">Officer</span>
+<span class="text-xs text-gray-600">10:42 AM</span>
+</div>
+<div class="bg-[#111923] border border-[#1f2f40] p-4 rounded-lg rounded-tl-none relative shadow-lg group-hover:border-primary/30 transition-colors">
+<div class="absolute -top-[1px] -left-[1px] w-3 h-3 border-t border-l border-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="absolute -bottom-[1px] -right-[1px] w-3 h-3 border-b border-r border-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<p class="text-gray-200 text-sm leading-relaxed">
+                                Anyone up for the dungeon raid? Need a tank for the boss level. The DPS checks on the last phase are brutal if we don't have proper aggro management.
+                            </p>
+</div>
+</div>
+</div>
+<!-- Message 2 -->
+<div class="flex gap-4 group">
+<div class="flex-shrink-0 mt-1">
+<img class="w-12 h-12 hex-avatar object-cover bg-gray-800 ring-2 ring-transparent group-hover:ring-primary/50 transition-all" data-alt="Futuristic cyborg avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv1Ag3F4w2e4YfSLe2GezJFQJpVNfemaO3vInEAUbLubhaObTJLQSYsYXTra3gHeJgw4NrGp7mQ7Lp5FGAxBRuV2c-jzWbRz1H_k7Cl-OFXu6oO7WcU19zbi18Klmo97fDC1l9wqjMw8na9QK7nqm6unuNCvEJgA3B0ZrfQaYWEM1eUyjskTzrh4P3WvnRmrr2bki-wloOxYAguFvHIyZu-f443_empHiEEEizANklTHOALQRd2RYwxN8qHUeNWzAXDWteXBYyF3T9"/>
+</div>
+<div class="flex-1 max-w-3xl">
+<div class="flex items-baseline gap-2 mb-1">
+<span class="text-white font-bold text-sm tracking-wide">Neon_Rogue</span>
+<span class="text-xs text-gray-600">10:44 AM</span>
+</div>
+<div class="bg-[#111923] border border-[#1f2f40] p-4 rounded-lg rounded-tl-none relative shadow-lg group-hover:border-primary/30 transition-colors">
+<p class="text-gray-200 text-sm leading-relaxed">
+                                Just finished my manga log. Give me 5 mins to gear up. I can bring my Paladin build, lvl 92.
+                            </p>
+</div>
+</div>
+</div>
+<!-- System Alert -->
+<div class="flex justify-center my-2">
+<div class="bg-primary/10 border border-primary/20 px-4 py-1 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[16px]">celebration</span>
+<span class="text-xs text-primary font-mono"><span class="font-bold">SYSTEM:</span> "Shadow_Hunter" has obtained [Legendary Item: Void Edge]</span>
+</div>
+</div>
+<!-- Message 3 (User) -->
+<div class="flex gap-4 group flex-row-reverse">
+<div class="flex-shrink-0 mt-1">
+<img class="w-12 h-12 hex-avatar object-cover bg-gray-800 ring-2 ring-primary transition-all" data-alt="My user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDIhScxiY_SCr19pXf1xK4Q3-TIHdG2iXyWbagcBEYczMi5umXeSk-f7I5SBHm5ZWXxrOs3Qa3Z22A_56qHApd6N3VodKSug9N8Qqc620KxTFtSl0Hel0ypyDcha6fFgy735KeLadfdEx1WwoqSZNqiM4AmeVaLiprcYLzSSyWNdSzdrRLIyVBiwaVzZeBTx3gbJLD4QHNdX84KMliOjTtk0-alOgEm5p3GJoovXdP7tr2MTe3GXxfK3lOTIJy0ZbbbeiFlXECRxf9"/>
+</div>
+<div class="flex-1 max-w-3xl flex flex-col items-end">
+<div class="flex items-baseline gap-2 mb-1">
+<span class="text-xs text-gray-600">10:46 AM</span>
+<span class="text-primary font-bold text-sm tracking-wide">Me</span>
+</div>
+<div class="bg-primary/10 border border-primary/30 p-4 rounded-lg rounded-tr-none relative shadow-[0_0_15px_rgba(37,140,244,0.1)] text-right">
+<p class="text-white text-sm leading-relaxed">
+                                I'm in. Let me swap my loadout real quick.
+                            </p>
+<!-- Attachment Preview -->
+<div class="mt-3 flex justify-end">
+<div class="bg-black/40 rounded p-2 border border-white/10 flex items-center gap-3 max-w-[200px]">
+<div class="h-8 w-8 bg-purple-500/20 rounded flex items-center justify-center border border-purple-500/40">
+<span class="material-symbols-outlined text-purple-400 text-sm">swords</span>
+</div>
+<div class="text-left overflow-hidden">
+<div class="text-[10px] text-gray-400 truncate">Loadout_V2.json</div>
+<div class="text-[9px] text-gray-600">4kb</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-6 pt-2 bg-gradient-to-t from-background-dark via-background-dark to-transparent z-20">
+<div class="relative bg-panel-dark border border-primary/30 rounded-lg shadow-[0_0_20px_rgba(37,140,244,0.1)] transition-all focus-within:shadow-[0_0_25px_rgba(37,140,244,0.25)] focus-within:border-primary">
+<!-- Text Area -->
+<textarea class="w-full bg-transparent border-none text-white text-sm p-4 focus:ring-0 resize-none h-14 placeholder-gray-600" placeholder="Transmission input..."></textarea>
+<!-- Toolbar -->
+<div class="flex items-center justify-between px-3 pb-2">
+<div class="flex gap-1">
+<button class="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded transition-colors" title="Attach Media">
+<span class="material-symbols-outlined text-[20px]">add_photo_alternate</span>
+</button>
+<button class="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded transition-colors" title="Voice Note">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+<button class="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded transition-colors" title="Inventory Item">
+<span class="material-symbols-outlined text-[20px]">backpack</span>
+</button>
+</div>
+<button class="bg-primary hover:bg-blue-500 text-white px-6 py-1.5 rounded text-sm font-bold tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-blue-500/20 active:scale-95">
+                            SEND <span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+</div>
+<!-- Decor Corners -->
+<div class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary"></div>
+<div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-primary"></div>
+<div class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-primary"></div>
+<div class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary"></div>
+</div>
+</div>
+</section>
+<!-- Right Roster Sidebar -->
+<aside class="w-64 bg-[#080d12] border-l border-border-dark hidden xl:flex flex-col">
+<div class="p-4 border-b border-border-dark">
+<h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Guild Roster</h3>
+<div class="flex gap-2 text-[10px] text-gray-600">
+<span>24 Online</span>
+<span>•</span>
+<span>156 Total</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-6">
+<!-- Group: Officers -->
+<div>
+<h4 class="text-[10px] text-primary font-bold uppercase mb-3 flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span> Officers
+                    </h4>
+<div class="space-y-3">
+<div class="flex items-center gap-3 group cursor-pointer opacity-100 hover:opacity-100 transition-opacity">
+<div class="relative">
+<img class="w-8 h-8 hex-avatar object-cover bg-gray-800" data-alt="Officer avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOBziZRtNSE3somK4MuaVh5wq6eEYRnRzc7Gkh7-NnwogIo_G-NigzTlVEdniNfmgSNJf-JlGkeg7J0zgnWwdu-2DfAANHwUEAyG6eeXw8KYktg2tNaZitZRdWDAXM4qiYcOx8-ZGtxF4UXk-WF0xM1SKTMRLd1RlTUpC-Zite-tgWp8-eaohw7hbzcxT4muQ0n5Bch8GFyiW1jEGk9SFKI4-d80L9d2KfxpDprrMrbCV5dUn5x3yO2Jl2t7-RZcNdObRVM3TR7_Qe"/>
+<div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#080d12] rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-gray-200 group-hover:text-primary">Vanguard_01</span>
+<span class="text-[10px] text-gray-500">Lvl 99 • Tank</span>
+</div>
+</div>
+<div class="flex items-center gap-3 group cursor-pointer">
+<div class="relative">
+<img class="w-8 h-8 hex-avatar object-cover bg-gray-800" data-alt="Officer avatar 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAatRbCNe6E1xDM6EhM6BF7ZzyAwFYKIVgtaIust3WjCezSN1EmhjTiQIolexAQo4shX-t7g9VMHCM6XfOA5HOp-OfWOvTUahPn2dX1aUUb5plcpEUuYtyO6lfu1wG0GEKSGHWBYBRIAYLxOKbTFAAdIk03SE4c1D6a9fy-xuF4Mlyo5emkeYBDTzEG6GiflVFiXxIIKDAU4z3vT9sEgsy6qayQHAWfcx2yBgm6GFv4Q5AyCMRNMHsVCRq5R09gZ0IhJbNDS1Wtfhgx"/>
+<div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-yellow-500 border-2 border-[#080d12] rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-gray-200 group-hover:text-primary">Star_Gazer</span>
+<span class="text-[10px] text-gray-500">AFK (10m)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Group: Members -->
+<div>
+<h4 class="text-[10px] text-gray-500 font-bold uppercase mb-3 flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-gray-600 rounded-full"></span> Members
+                    </h4>
+<div class="space-y-3">
+<!-- Member Item -->
+<div class="flex items-center gap-3 group cursor-pointer">
+<div class="relative">
+<img class="w-8 h-8 hex-avatar object-cover bg-gray-800" data-alt="Member avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJa0uyyGXlOUDOm_-08Kk2HdZoaIFHnMQlack2DCEVIG0s9cZK_oXIN2TEG-qk5cDv6jm8zBcTMy-jxX44XB1aQU-jPWKUdYqOnymiSyJtIYV-RRKCbBbuZ2-tpAzVUWPEqmWVFWy4hEVSQTKasV6FMnSgz7qOS2LNHBO1xfblUyZe_b1_AivGIK1gRQK91nJ3x37N-AlK6tShxmgHquem7s5ErEZ2giPGXtDgixBw_LXntO2BjKdti8Qx6B7sv-dhQ8_Pd2MHbJmS"/>
+<div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#080d12] rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-gray-300 group-hover:text-white">Neon_Rogue</span>
+<span class="text-[10px] text-primary">In Dungeon</span>
+</div>
+</div>
+<!-- Member Item -->
+<div class="flex items-center gap-3 group cursor-pointer">
+<div class="relative">
+<img class="w-8 h-8 hex-avatar object-cover bg-gray-800" data-alt="Member avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3SgcL5Vm5zFhBbPcuPLrBuMfrXqqUR2Lqe1cyu1UzL9RVQ0QtUZLLKLfpWw8Jg6Hjpe_YVI8ZRkCwRWTkjG6yUsjjIeS3iAfDYZ5x91YZKmby0tNt3ttqLypkK4Kii0HCKyCE2RzEf12g7Z12jdyDrHT3PKvmYRPR-kcX94YETnC_4q4nvFgCCsbtqt6o-HY9DvlGd2QKMCExfbtJjetl2DTwYjSfBnG7IpjtN4RZ2woFI_igp6d0PKcCVN69eVkEXpdl-mLEqFVV"/>
+<div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#080d12] rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-gray-300 group-hover:text-white">Luna_Moth</span>
+<span class="text-[10px] text-gray-500">Lvl 42 • Healer</span>
+</div>
+</div>
+<!-- Member Item -->
+<div class="flex items-center gap-3 group cursor-pointer opacity-50">
+<div class="relative">
+<img class="w-8 h-8 hex-avatar object-cover bg-gray-800 grayscale" data-alt="Member avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRmakeSyl174rJHAcP0y_6uE_cbWyz5--N_KxlXX0qdKKz4rsMm04hyEC1H-XVIOHF0lEamM5PpFYflq4ouTUsG64dvjGy9lq96wt8PWsLkZR7-MVsJJRArA8xGD3u81Iq0-zHGvOWNOjWQ0DOyazeBoAOhkD6Ed_cTvYEMnhCpdmABwNPrNoDFBasBwY5Hucyr8dU0cmbp_nUgb2XO1Cl4339mgN-FWhS17fpsvtqButS0gJJqR_Xxje3P1ptn84Tf9c5hxhFT4vr"/>
+<div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-gray-500 border-2 border-[#080d12] rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-gray-300">Iron_Fist</span>
+<span class="text-[10px] text-gray-500">Offline 2h</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</body></html>

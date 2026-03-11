@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Sync Modal</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "primary-dark": "#1a6bb5",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                        "surface-dark": "#182634",
+                        "border-dark": "#314d68",
+                        "text-secondary": "#90adcb",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    boxShadow: {
+                        'glow': '0 0 10px rgba(37, 140, 244, 0.5)',
+                        'glow-lg': '0 0 20px rgba(37, 140, 244, 0.4)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for the modal content */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #101922;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #314d68;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #258cf4;
+        }
+        
+        /* Range Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #258cf4;
+            box-shadow: 0 0 10px rgba(37, 140, 244, 0.8);
+            cursor: pointer;
+            margin-top: -8px; 
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #314d68;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display overflow-hidden relative h-screen w-full flex items-center justify-center">
+<!-- Background Layer (Blurred Context) -->
+<div class="absolute inset-0 z-0 overflow-hidden">
+<div class="absolute inset-0 bg-[#101922]/80 backdrop-blur-sm z-10"></div>
+<img class="w-full h-full object-cover opacity-40 grayscale" data-alt="Abstract futuristic interface background with neon lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdKZYOejjaT0DATW3qeI1ouxcUwuIFn-lY_hbNvSJ7PQnAwTb9erN4WtxzH2gPotVlQ2zn0IK4Blh5VSsmzvooNpWc_RzvZCHcdEL3Hr58Yh1l1K_cM3KF9M0TpChcmNzRQglXf3sI-wTEfwVLrbg53BTgNFNnKmY3F8O5WQvOgFiwOKoceGxe-s5Pk7Do5BqsNoFON_8TAH7cSIIwTIyvBQOiamCZ_iwxXY_3KkK-VMmB2Ax0NQcNpJueI8j0TwVr_bfOMCdRYxBd"/>
+</div>
+<!-- Modal Container -->
+<div class="relative z-20 w-full max-w-4xl h-[90vh] flex flex-col md:flex-row bg-[#101922]/90 backdrop-blur-md rounded-xl border border-border-dark shadow-2xl overflow-hidden group/modal">
+<!-- Decorative HUD Corners -->
+<div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary rounded-tl-lg pointer-events-none z-30"></div>
+<div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary rounded-tr-lg pointer-events-none z-30"></div>
+<div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary rounded-bl-lg pointer-events-none z-30"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary rounded-br-lg pointer-events-none z-30"></div>
+<!-- Left Column: Visual & Quick Stats (Hidden on mobile for space) -->
+<div class="hidden md:flex w-1/3 flex-col bg-surface-dark/50 border-r border-border-dark p-6 relative">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none"></div>
+<div class="mb-8">
+<h3 class="text-xs font-bold tracking-widest text-primary mb-1">USER_ID</h3>
+<p class="text-lg font-medium">RANKER_01</p>
+<div class="h-0.5 w-12 bg-primary mt-2 shadow-glow"></div>
+</div>
+<div class="flex-1 flex flex-col justify-center items-center gap-6">
+<!-- Circular Progress Mockup -->
+<div class="relative w-40 h-40 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90">
+<circle cx="80" cy="80" fill="none" r="70" stroke="#182634" stroke-width="8"></circle>
+<circle class="drop-shadow-[0_0_8px_rgba(37,140,244,0.5)]" cx="80" cy="80" fill="none" r="70" stroke="#258cf4" stroke-dasharray="440" stroke-dashoffset="110" stroke-width="8"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="text-3xl font-bold">Lvl 42</span>
+<span class="text-xs text-text-secondary tracking-widest">ELITE</span>
+</div>
+</div>
+<div class="w-full space-y-3">
+<div class="flex justify-between text-xs text-text-secondary uppercase tracking-wider">
+<span>Daily Syncs</span>
+<span class="text-white">4/5</span>
+</div>
+<div class="h-1.5 w-full bg-border-dark rounded-full overflow-hidden">
+<div class="h-full w-[80%] bg-primary shadow-glow"></div>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-6 border-t border-border-dark/50">
+<p class="text-[10px] text-text-secondary uppercase tracking-widest text-center">System Status: Online</p>
+</div>
+</div>
+<!-- Right Column: Form Inputs -->
+<div class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header -->
+<div class="flex items-center justify-between px-6 py-5 border-b border-border-dark bg-[#101922]/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary animate-pulse">terminal</span>
+<h2 class="text-xl font-bold tracking-tight text-white">SYNC_DATA <span class="text-primary">//</span> NEW_ENTRY</h2>
+</div>
+<button class="text-text-secondary hover:text-white transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
+<!-- Section 1: Data Type -->
+<div class="space-y-3">
+<label class="text-xs font-bold text-text-secondary tracking-widest uppercase">Select Data Stream</label>
+<div class="flex gap-2">
+<label class="flex-1 cursor-pointer group">
+<input checked="" class="peer sr-only" name="type" type="radio" value="anime"/>
+<div class="flex flex-col items-center justify-center h-20 rounded-lg bg-surface-dark border border-border-dark peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:shadow-glow transition-all duration-300 group-hover:bg-surface-dark/80">
+<span class="material-symbols-outlined text-text-secondary peer-checked:text-primary mb-1">movie</span>
+<span class="text-xs font-bold text-text-secondary peer-checked:text-white tracking-wider">ANIME</span>
+</div>
+</label>
+<label class="flex-1 cursor-pointer group">
+<input class="peer sr-only" name="type" type="radio" value="manga"/>
+<div class="flex flex-col items-center justify-center h-20 rounded-lg bg-surface-dark border border-border-dark peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:shadow-glow transition-all duration-300 group-hover:bg-surface-dark/80">
+<span class="material-symbols-outlined text-text-secondary peer-checked:text-primary mb-1">menu_book</span>
+<span class="text-xs font-bold text-text-secondary peer-checked:text-white tracking-wider">MANGA</span>
+</div>
+</label>
+<label class="flex-1 cursor-pointer group">
+<input class="peer sr-only" name="type" type="radio" value="game"/>
+<div class="flex flex-col items-center justify-center h-20 rounded-lg bg-surface-dark border border-border-dark peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:shadow-glow transition-all duration-300 group-hover:bg-surface-dark/80">
+<span class="material-symbols-outlined text-text-secondary peer-checked:text-primary mb-1">sports_esports</span>
+<span class="text-xs font-bold text-text-secondary peer-checked:text-white tracking-wider">GAME</span>
+</div>
+</label>
+<label class="flex-1 cursor-pointer group">
+<input class="peer sr-only" name="type" type="radio" value="novel"/>
+<div class="flex flex-col items-center justify-center h-20 rounded-lg bg-surface-dark border border-border-dark peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:shadow-glow transition-all duration-300 group-hover:bg-surface-dark/80">
+<span class="material-symbols-outlined text-text-secondary peer-checked:text-primary mb-1">book</span>
+<span class="text-xs font-bold text-text-secondary peer-checked:text-white tracking-wider">NOVEL</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Section 2: Target Identification -->
+<div class="space-y-3">
+<label class="text-xs font-bold text-text-secondary tracking-widest uppercase">Target Identification</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-secondary group-focus-within:text-primary">search</span>
+</div>
+<input class="w-full bg-surface-dark border border-border-dark text-white text-sm rounded-lg focus:ring-1 focus:ring-primary focus:border-primary block w-full pl-12 p-3.5 placeholder-text-secondary/50 focus:shadow-glow transition-all" placeholder="Search database for title..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+<span class="text-[10px] text-primary border border-primary/30 px-1.5 py-0.5 rounded bg-primary/10">REQ</span>
+</div>
+</div>
+</div>
+<!-- Section 3: Progress Slider -->
+<div class="space-y-4 p-4 rounded-lg border border-border-dark bg-surface-dark/30">
+<div class="flex justify-between items-end">
+<label class="text-xs font-bold text-text-secondary tracking-widest uppercase">Progress Tracker</label>
+<span class="text-primary font-bold font-mono text-lg">EPISODE <span class="text-white">12</span></span>
+</div>
+<div class="relative w-full h-8 flex items-center">
+<input class="w-full z-10" max="24" min="0" type="range" value="12"/>
+<!-- Custom ticks -->
+<div class="absolute w-full flex justify-between px-1 top-1/2 -mt-1 pointer-events-none">
+<div class="w-0.5 h-2 bg-border-dark"></div>
+<div class="w-0.5 h-2 bg-border-dark"></div>
+<div class="w-0.5 h-2 bg-border-dark"></div>
+<div class="w-0.5 h-2 bg-border-dark"></div>
+<div class="w-0.5 h-2 bg-border-dark"></div>
+</div>
+</div>
+<div class="flex justify-between text-[10px] text-text-secondary uppercase">
+<span>Start</span>
+<span>Complete</span>
+</div>
+</div>
+<!-- Section 4: Review & Rating -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-3">
+<label class="text-xs font-bold text-text-secondary tracking-widest uppercase">Combat Rating</label>
+<div class="flex items-center gap-2" id="star-rating">
+<!-- Interactive Stars -->
+<button class="text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined fill-current" style="font-variation-settings: 'FILL' 1;">star</span></button>
+<button class="text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined fill-current" style="font-variation-settings: 'FILL' 1;">star</span></button>
+<button class="text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined fill-current" style="font-variation-settings: 'FILL' 1;">star</span></button>
+<button class="text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined fill-current" style="font-variation-settings: 'FILL' 1;">star</span></button>
+<button class="text-text-secondary hover:text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined">star</span></button>
+<span class="ml-auto text-2xl font-black text-white">8.0</span>
+</div>
+<div class="bg-surface-dark border border-border-dark rounded-lg p-3">
+<label class="block text-[10px] text-text-secondary uppercase mb-2">Upload Evidence (Screenshot)</label>
+<div class="border-2 border-dashed border-border-dark rounded flex flex-col items-center justify-center py-4 hover:border-primary hover:bg-primary/5 cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-primary mb-1">cloud_upload</span>
+<span class="text-xs text-text-secondary">Drop file or click</span>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<label class="text-xs font-bold text-text-secondary tracking-widest uppercase">Mission Report</label>
+<textarea class="w-full h-32 bg-surface-dark border border-border-dark text-white text-sm rounded-lg focus:ring-1 focus:ring-primary focus:border-primary p-3 placeholder-text-secondary/50 resize-none custom-scrollbar focus:shadow-glow transition-all" placeholder="Log your thoughts, analysis, and critique here..."></textarea>
+</div>
+</div>
+<!-- Section 5: Visibility -->
+<div class="space-y-3">
+<label class="text-xs font-bold text-text-secondary tracking-widest uppercase">Access Level</label>
+<div class="flex p-1 bg-surface-dark rounded-lg border border-border-dark w-fit">
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="privacy" type="radio" value="public"/>
+<span class="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium text-text-secondary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm transition-all">
+<span class="material-symbols-outlined text-[14px]">public</span> Public
+                            </span>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="privacy" type="radio" value="friends"/>
+<span class="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium text-text-secondary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm transition-all">
+<span class="material-symbols-outlined text-[14px]">group</span> Friends
+                            </span>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="privacy" type="radio" value="guild"/>
+<span class="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium text-text-secondary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm transition-all">
+<span class="material-symbols-outlined text-[14px]">shield</span> Guild
+                            </span>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="privacy" type="radio" value="private"/>
+<span class="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium text-text-secondary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-sm transition-all">
+<span class="material-symbols-outlined text-[14px]">lock</span> Private
+                            </span>
+</label>
+</div>
+</div>
+</div>
+<!-- Footer Action Bar -->
+<div class="border-t border-border-dark p-6 bg-[#101922] flex items-center justify-between z-10 relative">
+<!-- XP Preview Floating Badge -->
+<div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-surface-dark border border-primary/50 px-3 py-1 rounded-full shadow-glow flex items-center gap-1 animate-bounce">
+<span class="text-primary font-bold text-xs">+150 XP</span>
+<span class="material-symbols-outlined text-primary text-xs">bolt</span>
+</div>
+<button class="px-6 py-2.5 rounded-lg border border-border-dark text-text-secondary hover:text-white hover:border-white hover:bg-white/5 transition-all text-sm font-bold tracking-wide uppercase">
+                    Abort
+                </button>
+<button class="relative group px-8 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg shadow-glow hover:shadow-glow-lg transition-all flex items-center gap-2 overflow-hidden">
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+<span class="relative z-10 text-sm font-bold tracking-wide uppercase">Confirm Sync</span>
+<span class="material-symbols-outlined relative z-10 text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

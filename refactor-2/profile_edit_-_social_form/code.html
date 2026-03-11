@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Profile Edit</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "primary-dark": "#1a6ac4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                        "surface-dark": "#16202a",
+                        "border-dark": "#223649",
+                        "text-dim": "#90adcb",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    boxShadow: {
+                        'glow': '0 0 10px rgba(37, 140, 244, 0.3)',
+                        'glow-hover': '0 0 15px rgba(37, 140, 244, 0.5)',
+                        'hud': 'inset 0 0 20px rgba(37, 140, 244, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for the RPG feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101922; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #223649; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+        
+        /* Glass effect utilities */
+        .glass-panel {
+            background: rgba(22, 32, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(34, 54, 73, 0.5);
+        }
+        
+        .input-tech {
+            background-color: #0d141c;
+            border: 1px solid #223649;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .input-tech:focus {
+            border-color: #258cf4;
+            box-shadow: 0 0 8px rgba(37, 140, 244, 0.3);
+            outline: none;
+        }
+
+        /* Diagonal corner cut effect */
+        .cut-corner {
+            clip-path: polygon(
+                0 0,
+                100% 0,
+                100% calc(100% - 10px),
+                calc(100% - 10px) 100%,
+                0 100%
+            );
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen font-display text-white overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 glass-panel border-b border-border-dark px-4 md:px-8 py-3 w-full">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary animate-pulse">
+<span class="material-symbols-outlined text-4xl">hexagon</span>
+</div>
+<h1 class="text-white text-xl font-bold tracking-wider uppercase">Rankers Log <span class="text-primary text-xs align-top">SYS.V.2.0</span></h1>
+</div>
+<nav class="hidden md:flex gap-6 text-sm font-medium text-text-dim">
+<a class="hover:text-primary transition-colors" href="#">DASHBOARD</a>
+<a class="hover:text-primary transition-colors" href="#">QUESTS</a>
+<a class="hover:text-primary transition-colors" href="#">LEADERBOARD</a>
+<a class="text-white relative after:content-[''] after:absolute after:-bottom-5 after:left-0 after:w-full after:h-0.5 after:bg-primary" href="#">OPERATOR</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="flex items-center justify-center size-9 rounded bg-surface-dark border border-border-dark text-text-dim hover:text-white hover:border-primary hover:shadow-glow transition-all">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center size-9 rounded bg-surface-dark border border-border-dark text-text-dim hover:text-white hover:border-primary hover:shadow-glow transition-all">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+<div class="relative group cursor-pointer">
+<div class="size-9 rounded bg-surface-dark border border-primary/50 overflow-hidden" data-alt="User avatar small thumbnail">
+<img alt="Avatar" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDk6xqI-PBd5HYNzXx6ElPoCZTg23Dvv-eo_-02jIFlFNS4eFFaXqNP2D55IWznqtlE9bGFatDVGauNHgtzW6nfgeu-TYncxLM0cDOqvK5uF3mWBxImCI6IE71NDhM-LItcae5XSRe4ER51ls5PZCnFqdHK_DRlPMYL0Zi8X6-YFpXOeI9rLclwLSYcfHhfAzZ00ax4wjXV3SrQNT0y_yqN_4mki3e0jPYHnmrWp1yUPSoYqBN2DfE465MfpfI0pasMQeKCwGrEPZPV"/>
+</div>
+<div class="absolute -bottom-1 -right-1 size-3 bg-green-500 rounded-full border-2 border-background-dark"></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Layout Container -->
+<div class="max-w-7xl mx-auto px-4 md:px-8 py-8 flex flex-col md:flex-row gap-8 min-h-[calc(100vh-80px)]">
+<!-- Sidebar Navigation (HUD Style) -->
+<aside class="w-full md:w-64 flex-shrink-0">
+<div class="glass-panel rounded-lg p-1 sticky top-24">
+<div class="bg-surface-dark/50 rounded p-4 mb-1 border-b border-border-dark">
+<h2 class="text-xs font-bold text-text-dim tracking-widest mb-1">SYSTEM CONFIG</h2>
+<p class="text-white font-bold text-lg">SETTINGS</p>
+</div>
+<nav class="flex flex-col gap-1 p-2">
+<a class="group flex items-center gap-3 px-4 py-3 rounded bg-primary/10 border-l-2 border-primary text-white shadow-glow transition-all" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:animate-pulse">manage_accounts</span>
+<span class="text-sm font-medium tracking-wide">EDIT IDENTITY</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 rounded hover:bg-surface-dark border-l-2 border-transparent hover:border-text-dim text-text-dim hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">lock_reset</span>
+<span class="text-sm font-medium tracking-wide">SECURITY KEY</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 rounded hover:bg-surface-dark border-l-2 border-transparent hover:border-text-dim text-text-dim hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">link</span>
+<span class="text-sm font-medium tracking-wide">NEURAL LINKS</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 rounded hover:bg-surface-dark border-l-2 border-transparent hover:border-text-dim text-text-dim hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
+<span class="text-sm font-medium tracking-wide">PRIVACY PROTOCOLS</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 rounded hover:bg-surface-dark border-l-2 border-transparent hover:border-text-dim text-text-dim hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">notifications_active</span>
+<span class="text-sm font-medium tracking-wide">SIGNALS</span>
+</a>
+</nav>
+<div class="mt-4 p-4 border-t border-border-dark/50">
+<div class="flex items-center justify-between text-xs text-text-dim">
+<span>SYS.STATUS</span>
+<span class="text-green-400">ONLINE</span>
+</div>
+<div class="w-full bg-border-dark h-1 mt-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[85%] shadow-glow"></div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col gap-6">
+<!-- Header Section -->
+<div class="flex flex-col gap-2 border-b border-border-dark pb-4">
+<div class="flex items-center gap-2 text-primary text-xs font-bold tracking-[0.2em] uppercase">
+<span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+                    Access Level: Operator
+                </div>
+<h2 class="text-3xl md:text-4xl font-bold text-white uppercase tracking-tight">Profile Configuration</h2>
+<p class="text-text-dim max-w-2xl">Customize your public operator identity and system preferences. Changes will be synchronized across the network immediately.</p>
+</div>
+<!-- Identity Module (Images) -->
+<section class="glass-panel rounded-lg p-6 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-50">
+<span class="material-symbols-outlined text-6xl text-border-dark">id_card</span>
+</div>
+<h3 class="text-white text-lg font-bold tracking-wide mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">badge</span>
+                    VISUAL IDENTITY MODULE
+                </h3>
+<!-- Banner & Avatar Wrapper -->
+<div class="relative">
+<!-- Banner -->
+<div class="w-full h-48 md:h-64 rounded-lg bg-cover bg-center bg-no-repeat relative overflow-hidden border border-border-dark group/banner" data-alt="Futuristic cyberpunk city skyline banner" style="background-image: linear-gradient(180deg, rgba(16,25,34,0) 0%, rgba(16,25,34,0.8) 100%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuAzwZ20J7uHTCt0ks1pYUvu68UtGqR6jCs2tlWZqgDdcqhUyG6Lu9EBLYqEYwr_MDjoMhUIx7IZoIhFfEnV4apIm6rd1QqS2JynRRRpR9nmJfPGk0MQJV3X2VYQyhdTVdJR-GMYlg_-TaX7BkXuB7hCCe1ogkSannk3gXmKT8tPeN9icSoDXr5O2UIjUwBlOF01K9c-DV9zJ7a5F7mEYG_gJzyA6FxD-qr27TnQ5wEGgSAmnQqf9Uh3K06kxOu9R3GhwEPSFd8EKl_n');">
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover/banner:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+<button class="absolute top-4 right-4 bg-black/60 hover:bg-primary text-white text-xs font-bold py-2 px-4 rounded border border-white/20 backdrop-blur-sm transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">upload_file</span>
+                            UPDATE BANNER
+                        </button>
+</div>
+<!-- Avatar -->
+<div class="absolute -bottom-10 left-6 md:left-10 flex items-end">
+<div class="relative group/avatar">
+<div class="size-24 md:size-32 rounded-xl border-4 border-background-dark bg-surface-dark overflow-hidden relative shadow-lg" data-alt="User avatar profile picture">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7BW9ve0hbmDJyxS0HKN72ytJkN_gAGq9uQOtWbDnNYvxjP7TSQPilF4CqIHu6RDqv7ZznItX3tj8r6A-dbheEoIDxWgG_ghra21O-2Mi0V_bu_qrnUp4sn0QqC5lTpDJ4SzPrAcdIf1KP9lWcYRjBTID5qc9ixuXNsf8jAnu9qh8wDceg1fjMPMwflI-fsz9KsS5XKZJl71DrX-tjk6JGgi0cqIrLQH8Ji-i1zUNmheeXDhC-0Vkubp7FiIXGhGs7_Ne70vN1q9JQ"/>
+<div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity cursor-pointer backdrop-blur-sm">
+<span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+</div>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-primary text-white p-1.5 rounded-lg border-2 border-background-dark cursor-pointer hover:scale-110 transition-transform shadow-glow">
+<span class="material-symbols-outlined text-[16px] block">edit</span>
+</div>
+</div>
+</div>
+</div>
+<div class="h-12 w-full"></div> <!-- Spacer for avatar overflow -->
+</section>
+<!-- Basic Data Form -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Left Column: Core Info -->
+<div class="glass-panel rounded-lg p-6 flex flex-col gap-6 h-full">
+<h3 class="text-white text-lg font-bold tracking-wide flex items-center gap-2 border-b border-border-dark pb-3">
+<span class="material-symbols-outlined text-primary">person</span>
+                        CORE DATA
+                    </h3>
+<div class="space-y-4">
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-text-dim uppercase tracking-wider">Operator Handle (Username)</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim text-sm">@</span>
+<input class="w-full pl-7 pr-4 py-3 rounded bg-[#0d141c] border border-border-dark text-white focus:border-primary focus:ring-1 focus:ring-primary placeholder-gray-600 font-mono text-sm shadow-inner" type="text" value="NeonReaper_99"/>
+</div>
+<p class="text-[10px] text-text-dim">Unique identifier on the network.</p>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-text-dim uppercase tracking-wider">Display Name</label>
+<input class="w-full px-4 py-3 rounded bg-[#0d141c] border border-border-dark text-white focus:border-primary focus:ring-1 focus:ring-primary placeholder-gray-600 font-mono text-sm shadow-inner" type="text" value="Kaelthas V."/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-text-dim uppercase tracking-wider">Mission Statement (Bio)</label>
+<textarea class="w-full px-4 py-3 rounded bg-[#0d141c] border border-border-dark text-white focus:border-primary focus:ring-1 focus:ring-primary placeholder-gray-600 font-mono text-sm shadow-inner resize-none" rows="4">Level 45 Paladin seeking guild for late night raids. Top 100 in regional PvP. Don't message me about crypto.</textarea>
+<div class="flex justify-between text-[10px] text-text-dim">
+<span>Publicly visible</span>
+<span>84/150 CHARS</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Links & System Prefs -->
+<div class="flex flex-col gap-6">
+<!-- Social Links -->
+<div class="glass-panel rounded-lg p-6">
+<h3 class="text-white text-lg font-bold tracking-wide flex items-center gap-2 border-b border-border-dark pb-3 mb-4">
+<span class="material-symbols-outlined text-primary">share</span>
+                            EXTERNAL UPLINKS
+                        </h3>
+<div class="space-y-4">
+<div class="flex items-center gap-3 group">
+<div class="size-10 rounded bg-[#16202a] flex items-center justify-center border border-border-dark group-hover:border-[#5865F2] group-hover:text-[#5865F2] transition-colors">
+<i class="fa-brands fa-discord text-xl"></i> <!-- Placeholder for brand icon, using generic shape -->
+<span class="material-symbols-outlined">captive_portal</span>
+</div>
+<div class="flex-1">
+<input class="w-full px-4 py-2 rounded bg-[#0d141c] border border-border-dark text-white focus:border-[#5865F2] focus:ring-0 text-sm h-10" placeholder="Discord Username" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3 group">
+<div class="size-10 rounded bg-[#16202a] flex items-center justify-center border border-border-dark group-hover:border-[#1DA1F2] group-hover:text-[#1DA1F2] transition-colors">
+<span class="material-symbols-outlined">public</span>
+</div>
+<div class="flex-1">
+<input class="w-full px-4 py-2 rounded bg-[#0d141c] border border-border-dark text-white focus:border-[#1DA1F2] focus:ring-0 text-sm h-10" placeholder="Twitter / X Handle" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3 group">
+<div class="size-10 rounded bg-[#16202a] flex items-center justify-center border border-border-dark group-hover:border-[#6441a5] group-hover:text-[#6441a5] transition-colors">
+<span class="material-symbols-outlined">videogame_asset</span>
+</div>
+<div class="flex-1">
+<input class="w-full px-4 py-2 rounded bg-[#0d141c] border border-border-dark text-white focus:border-[#6441a5] focus:ring-0 text-sm h-10" placeholder="Twitch Channel" type="text"/>
+</div>
+</div>
+<button class="w-full py-2 border border-dashed border-text-dim/40 rounded text-text-dim text-xs font-bold hover:bg-surface-dark hover:text-white transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                                ADD CONNECTION SLOT
+                            </button>
+</div>
+</div>
+<!-- System Preferences -->
+<div class="glass-panel rounded-lg p-6 flex-1">
+<h3 class="text-white text-lg font-bold tracking-wide flex items-center gap-2 border-b border-border-dark pb-3 mb-4">
+<span class="material-symbols-outlined text-primary">tune</span>
+                            SYSTEM PREFERENCES
+                        </h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 rounded border border-border-dark bg-[#0d141c]">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-white">Profile Visibility</span>
+<span class="text-[10px] text-text-dim">Allow other operators to scan your logs.</span>
+</div>
+<!-- Custom Toggle -->
+<label class="inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="relative w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-sm peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-sm after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-3 rounded border border-border-dark bg-[#0d141c]">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-white">Online Status</span>
+<span class="text-[10px] text-text-dim">Broadcast active signal.</span>
+</div>
+<label class="inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="relative w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-sm peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-sm after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Bar -->
+<div class="sticky bottom-4 z-40">
+<div class="glass-panel p-4 rounded-lg flex items-center justify-between shadow-2xl border-t border-primary/30">
+<div class="flex items-center gap-2 text-text-dim text-xs hidden sm:flex">
+<span class="material-symbols-outlined text-yellow-500 text-[18px]">warning</span>
+<span>Unsaved changes will be lost upon system exit.</span>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+<button class="px-6 py-2.5 rounded bg-transparent border border-border-dark text-text-dim font-bold text-sm hover:text-white hover:bg-surface-dark transition-colors cut-corner">
+                            RESET
+                        </button>
+<button class="px-8 py-2.5 rounded bg-primary hover:bg-primary-dark text-white font-bold text-sm shadow-glow hover:shadow-glow-hover transition-all flex items-center gap-2 cut-corner">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                            SAVE CONFIGURATION
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

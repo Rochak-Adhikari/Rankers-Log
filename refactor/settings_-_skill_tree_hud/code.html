@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - System Configuration</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;family=Rajdhani:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "primary-glow": "rgba(37, 140, 244, 0.5)",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505", // Deep void dark
+                        "panel-dark": "rgba(16, 26, 35, 0.8)",
+                        "panel-border": "#314d68",
+                        "danger": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Rajdhani", "Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #111 1px, transparent 1px), linear-gradient(to bottom, #111 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for deep immersion */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #314d68; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+
+        .glow-text {
+            text-shadow: 0 0 10px rgba(37, 140, 244, 0.5);
+        }
+        .glow-border {
+            box-shadow: 0 0 8px rgba(37, 140, 244, 0.3), inset 0 0 4px rgba(37, 140, 244, 0.1);
+        }
+        .node-connector::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #258cf4, transparent);
+            z-index: -1;
+        }
+        .node-connector-right::before {
+            right: 100%;
+            background: linear-gradient(90deg, transparent, #258cf4);
+        }
+        .node-connector-left::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-body selection:bg-primary selection:text-white overflow-x-hidden min-h-screen flex flex-col relative">
+<!-- Ambient Background Grid -->
+<div class="fixed inset-0 pointer-events-none z-0 opacity-20" style="background-image: linear-gradient(#1a2634 1px, transparent 1px), linear-gradient(90deg, #1a2634 1px, transparent 1px); background-size: 40px 40px;"></div>
+<!-- Top HUD Bar -->
+<header class="sticky top-0 z-50 w-full backdrop-blur-md border-b border-[#223649] bg-[#050505]/80">
+<div class="layout-container flex h-full grow flex-col">
+<div class="flex justify-center">
+<div class="layout-content-container flex flex-col w-full max-w-[1200px]">
+<div class="flex items-center justify-between whitespace-nowrap px-6 py-3">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary animate-pulse">
+<span class="material-symbols-outlined" style="font-size: 24px;">hub</span>
+</div>
+<h2 class="text-white text-xl font-display font-bold tracking-widest">RANKERS LOG // <span class="text-primary glow-text">CONFIG</span></h2>
+</div>
+<div class="flex gap-3">
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 rounded border border-primary/30 bg-primary/10">
+<span class="size-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-xs font-mono text-primary uppercase tracking-wider">Sys.Online</span>
+</div>
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#223649] text-white hover:bg-[#314d68] transition-colors border border-transparent hover:border-primary/50">
+<span class="material-symbols-outlined" style="font-size: 20px;">settings_power</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 relative z-10 w-full flex flex-col items-center py-10 px-4 md:px-6">
+<!-- Page Title & Intro -->
+<div class="w-full max-w-[900px] mb-12 text-center md:text-left relative">
+<div class="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-transparent hidden md:block"></div>
+<h1 class="text-4xl md:text-5xl font-display font-black tracking-tighter text-white mb-2 uppercase">System Configuration</h1>
+<p class="text-[#90adcb] font-mono text-sm md:text-base max-w-2xl">
+                &gt; Initializing skill tree protocols...<br/>
+                &gt; Configure neural link, interface preferences, and privacy nodes below.
+            </p>
+</div>
+<!-- The Skill Tree Container -->
+<div class="relative w-full max-w-[1000px] flex flex-col items-center">
+<!-- Central Spine Line -->
+<div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-[#223649] md:-translate-x-1/2 z-0">
+<div class="absolute top-0 w-full h-1/2 bg-gradient-to-b from-primary via-primary/50 to-transparent shadow-[0_0_10px_rgba(37,140,244,0.5)]"></div>
+</div>
+<!-- TREE NODE 1: Account Core (Left Branch Desktop, Right Indent Mobile) -->
+<section class="w-full flex flex-col md:flex-row items-start md:justify-end md:pr-[50%] relative mb-16 group">
+<!-- Connector Dot on Spine -->
+<div class="absolute left-[13px] md:left-1/2 md:-translate-x-1/2 top-8 w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#258cf4] z-10 ring-4 ring-[#050505]"></div>
+<!-- Connector Line -->
+<div class="absolute left-[15px] md:left-auto md:right-[50%] top-9 w-[30px] md:w-[60px] h-[1px] bg-primary group-hover:shadow-[0_0_8px_#258cf4] transition-all duration-300"></div>
+<!-- Node Content -->
+<div class="ml-12 md:ml-0 md:mr-16 w-[calc(100%-3rem)] md:w-[400px]">
+<div class="relative bg-[#101a23]/90 backdrop-blur-sm border border-[#314d68] rounded-xl p-6 transition-all duration-300 hover:border-primary hover:shadow-[0_0_15px_rgba(37,140,244,0.15)] group-hover:-translate-y-1">
+<!-- Node Header -->
+<div class="flex items-center gap-3 mb-4 pb-3 border-b border-[#223649]">
+<div class="p-2 bg-primary/20 rounded text-primary">
+<span class="material-symbols-outlined">shield_person</span>
+</div>
+<div>
+<h3 class="font-display font-bold text-lg tracking-wide">ACCOUNT CORE</h3>
+<p class="text-xs text-[#90adcb] font-mono">ID: USER_9921 // SECURITY_LEVEL_5</p>
+</div>
+</div>
+<!-- Sub-Nodes / Options -->
+<div class="space-y-3">
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-[#0a1118] border border-transparent hover:border-primary/50 hover:bg-[#15202b] group/btn transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#90adcb] group-hover/btn:text-white" style="font-size: 20px;">edit_square</span>
+<span class="text-sm font-medium text-gray-300 group-hover/btn:text-white">Edit Identity Profile</span>
+</div>
+<span class="material-symbols-outlined text-gray-500 group-hover/btn:text-primary" style="font-size: 16px;">arrow_forward_ios</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-[#0a1118] border border-transparent hover:border-primary/50 hover:bg-[#15202b] group/btn transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#90adcb] group-hover/btn:text-white" style="font-size: 20px;">lock</span>
+<span class="text-sm font-medium text-gray-300 group-hover/btn:text-white">Security &amp; Password</span>
+</div>
+<span class="material-symbols-outlined text-gray-500 group-hover/btn:text-primary" style="font-size: 16px;">arrow_forward_ios</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-[#0a1118] border border-transparent hover:border-primary/50 hover:bg-[#15202b] group/btn transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#90adcb] group-hover/btn:text-white" style="font-size: 20px;">link</span>
+<span class="text-sm font-medium text-gray-300 group-hover/btn:text-white">Neural Links (Connected Apps)</span>
+</div>
+<span class="material-symbols-outlined text-gray-500 group-hover/btn:text-primary" style="font-size: 16px;">arrow_forward_ios</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- TREE NODE 2: App Preferences (Right Branch Desktop) -->
+<section class="w-full flex flex-col md:flex-row items-start md:justify-start md:pl-[50%] relative mb-16 group">
+<!-- Connector Dot on Spine -->
+<div class="absolute left-[13px] md:left-1/2 md:-translate-x-1/2 top-8 w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#258cf4] z-10 ring-4 ring-[#050505]"></div>
+<!-- Connector Line -->
+<div class="absolute left-[15px] md:left-[50%] top-9 w-[30px] md:w-[60px] h-[1px] bg-primary group-hover:shadow-[0_0_8px_#258cf4] transition-all duration-300"></div>
+<!-- Node Content -->
+<div class="ml-12 md:ml-16 w-[calc(100%-3rem)] md:w-[400px]">
+<div class="relative bg-[#101a23]/90 backdrop-blur-sm border border-[#314d68] rounded-xl p-6 transition-all duration-300 hover:border-primary hover:shadow-[0_0_15px_rgba(37,140,244,0.15)] group-hover:-translate-y-1">
+<!-- Node Header -->
+<div class="flex items-center gap-3 mb-4 pb-3 border-b border-[#223649]">
+<div class="p-2 bg-primary/20 rounded text-primary">
+<span class="material-symbols-outlined">tune</span>
+</div>
+<div>
+<h3 class="font-display font-bold text-lg tracking-wide">SYSTEM PREFERENCES</h3>
+<p class="text-xs text-[#90adcb] font-mono">UI_VER: 4.2.0 // INTERFACE_MODS</p>
+</div>
+</div>
+<!-- Sub-Nodes / Options -->
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 rounded-lg bg-[#0a1118] border border-transparent">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#90adcb]" style="font-size: 20px;">notifications_active</span>
+<span class="text-sm font-medium text-gray-300">Global Notifications</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-[#223649] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-[#0a1118] border border-transparent hover:border-primary/50 hover:bg-[#15202b] group/btn transition-all opacity-70 cursor-not-allowed" disabled="">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#90adcb]" style="font-size: 20px;">dark_mode</span>
+<span class="text-sm font-medium text-gray-300">Theme: Dark Mode</span>
+</div>
+<span class="text-[10px] font-mono text-primary border border-primary/30 px-1 rounded">LOCKED</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-[#0a1118] border border-transparent hover:border-primary/50 hover:bg-[#15202b] group/btn transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#90adcb] group-hover/btn:text-white" style="font-size: 20px;">translate</span>
+<span class="text-sm font-medium text-gray-300 group-hover/btn:text-white">Language Pack</span>
+</div>
+<span class="text-xs text-gray-500">EN-US</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- TREE NODE 3: Gamification (Left Branch Desktop) -->
+<section class="w-full flex flex-col md:flex-row items-start md:justify-end md:pr-[50%] relative mb-16 group">
+<!-- Connector Dot on Spine -->
+<div class="absolute left-[13px] md:left-1/2 md:-translate-x-1/2 top-8 w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#258cf4] z-10 ring-4 ring-[#050505]"></div>
+<!-- Connector Line -->
+<div class="absolute left-[15px] md:left-auto md:right-[50%] top-9 w-[30px] md:w-[60px] h-[1px] bg-primary group-hover:shadow-[0_0_8px_#258cf4] transition-all duration-300"></div>
+<!-- Node Content -->
+<div class="ml-12 md:ml-0 md:mr-16 w-[calc(100%-3rem)] md:w-[400px]">
+<div class="relative bg-[#101a23]/90 backdrop-blur-sm border border-[#314d68] rounded-xl p-6 transition-all duration-300 hover:border-primary hover:shadow-[0_0_15px_rgba(37,140,244,0.15)] group-hover:-translate-y-1">
+<!-- Node Header -->
+<div class="flex items-center gap-3 mb-4 pb-3 border-b border-[#223649]">
+<div class="p-2 bg-primary/20 rounded text-primary">
+<span class="material-symbols-outlined">military_tech</span>
+</div>
+<div>
+<h3 class="font-display font-bold text-lg tracking-wide">GAMIFICATION</h3>
+<p class="text-xs text-[#90adcb] font-mono">XP_LOGS // BADGE_DISPLAY_MATRIX</p>
+</div>
+</div>
+<!-- Sub-Nodes / Options -->
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 rounded-lg bg-[#0a1118] border border-transparent">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#90adcb]" style="font-size: 20px;">visibility</span>
+<span class="text-sm font-medium text-gray-300">Show XP Progress on HUD</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-[#223649] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-[#0a1118] border border-transparent hover:border-primary/50 hover:bg-[#15202b] group/btn transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#90adcb] group-hover/btn:text-white" style="font-size: 20px;">workspace_premium</span>
+<span class="text-sm font-medium text-gray-300 group-hover/btn:text-white">Rank Badge Visibility</span>
+</div>
+<span class="material-symbols-outlined text-gray-500 group-hover/btn:text-primary" style="font-size: 16px;">arrow_forward_ios</span>
+</button>
+<div class="flex items-center justify-between p-3 rounded-lg bg-[#0a1118] border border-transparent">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#90adcb]" style="font-size: 20px;">campaign</span>
+<span class="text-sm font-medium text-gray-300">Achievement Popups</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-[#223649] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- TREE NODE 4: Help (Right Branch Desktop) -->
+<section class="w-full flex flex-col md:flex-row items-start md:justify-start md:pl-[50%] relative mb-24 group">
+<!-- Connector Dot on Spine -->
+<div class="absolute left-[13px] md:left-1/2 md:-translate-x-1/2 top-8 w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#258cf4] z-10 ring-4 ring-[#050505]"></div>
+<!-- Connector Line -->
+<div class="absolute left-[15px] md:left-[50%] top-9 w-[30px] md:w-[60px] h-[1px] bg-primary group-hover:shadow-[0_0_8px_#258cf4] transition-all duration-300"></div>
+<!-- Node Content -->
+<div class="ml-12 md:ml-16 w-[calc(100%-3rem)] md:w-[400px]">
+<div class="relative bg-[#101a23]/90 backdrop-blur-sm border border-[#314d68] rounded-xl p-6 transition-all duration-300 hover:border-primary hover:shadow-[0_0_15px_rgba(37,140,244,0.15)] group-hover:-translate-y-1">
+<!-- Node Header -->
+<div class="flex items-center gap-3 mb-4 pb-3 border-b border-[#223649]">
+<div class="p-2 bg-primary/20 rounded text-primary">
+<span class="material-symbols-outlined">support_agent</span>
+</div>
+<div>
+<h3 class="font-display font-bold text-lg tracking-wide">SUPPORT UPLINK</h3>
+<p class="text-xs text-[#90adcb] font-mono">FAQ // DIRECT_LINE // VERSION_LOG</p>
+</div>
+</div>
+<!-- Sub-Nodes / Options -->
+<div class="space-y-3">
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-[#0a1118] border border-transparent hover:border-primary/50 hover:bg-[#15202b] group/btn transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#90adcb] group-hover/btn:text-white" style="font-size: 20px;">help_center</span>
+<span class="text-sm font-medium text-gray-300 group-hover/btn:text-white">FAQ Database</span>
+</div>
+<span class="material-symbols-outlined text-gray-500 group-hover/btn:text-primary" style="font-size: 16px;">arrow_forward_ios</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-[#0a1118] border border-transparent hover:border-primary/50 hover:bg-[#15202b] group/btn transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#90adcb] group-hover/btn:text-white" style="font-size: 20px;">mail</span>
+<span class="text-sm font-medium text-gray-300 group-hover/btn:text-white">Contact Mods</span>
+</div>
+<span class="material-symbols-outlined text-gray-500 group-hover/btn:text-primary" style="font-size: 16px;">arrow_forward_ios</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- TERMINAL NODE: Danger Zone -->
+<section class="w-full flex flex-col items-center relative z-10 pb-20">
+<!-- Bottom Connector -->
+<div class="absolute top-[-96px] bottom-1/2 w-[2px] bg-gradient-to-b from-[#223649] to-danger/50 left-[16px] md:left-1/2 md:-translate-x-1/2 z-[-1]"></div>
+<div class="relative w-full max-w-md px-6 flex flex-col gap-4">
+<div class="flex items-center gap-4 text-danger/80 mb-2 justify-center">
+<span class="h-[1px] w-12 bg-danger/40"></span>
+<span class="text-xs font-mono tracking-widest uppercase">System Termination</span>
+<span class="h-[1px] w-12 bg-danger/40"></span>
+</div>
+<button class="relative w-full group overflow-hidden rounded-lg bg-transparent border border-[#314d68] hover:border-primary/80 transition-all p-4">
+<div class="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+<div class="flex items-center justify-center gap-3 relative z-10">
+<span class="material-symbols-outlined text-white">logout</span>
+<span class="font-bold text-white tracking-wider">LOGOUT SESSION</span>
+</div>
+</button>
+<button class="relative w-full group overflow-hidden rounded-lg bg-transparent border border-danger/30 hover:border-danger hover:bg-danger/10 transition-all p-4">
+<div class="flex items-center justify-center gap-3 relative z-10">
+<span class="material-symbols-outlined text-danger">delete_forever</span>
+<span class="font-bold text-danger tracking-wider">DELETE ACCOUNT DATA</span>
+</div>
+</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Floating Command Deck (Bottom Nav) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 px-4 pb-4 pt-8 bg-gradient-to-t from-[#050505] via-[#050505]/95 to-transparent pointer-events-none">
+<div class="pointer-events-auto max-w-lg mx-auto bg-[#101a23]/90 backdrop-blur-md border border-[#223649] rounded-2xl flex items-center justify-between p-2 shadow-2xl relative overflow-hidden">
+<!-- Glow effect behind -->
+<div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-32 h-20 bg-primary/20 blur-[40px] rounded-full"></div>
+<a class="flex-1 flex flex-col items-center justify-center py-2 text-[#90adcb] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:-translate-y-0.5 transition-transform" style="font-size: 24px;">home_app_logo</span>
+<span class="text-[10px] font-bold tracking-wider opacity-60 group-hover:opacity-100">HOME</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center py-2 text-[#90adcb] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:-translate-y-0.5 transition-transform" style="font-size: 24px;">swords</span>
+<span class="text-[10px] font-bold tracking-wider opacity-60 group-hover:opacity-100">QUESTS</span>
+</a>
+<!-- Active Settings Item with Glow -->
+<a class="flex-1 flex flex-col items-center justify-center py-2 text-primary relative z-10" href="#">
+<div class="absolute inset-0 bg-primary/10 rounded-xl scale-90"></div>
+<div class="relative">
+<span class="material-symbols-outlined mb-1 animate-pulse drop-shadow-[0_0_8px_rgba(37,140,244,0.8)]" style="font-size: 24px;">settings</span>
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-ping"></div>
+</div>
+<span class="text-[10px] font-bold tracking-wider glow-text">CONFIG</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center py-2 text-[#90adcb] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:-translate-y-0.5 transition-transform" style="font-size: 24px;">forum</span>
+<span class="text-[10px] font-bold tracking-wider opacity-60 group-hover:opacity-100">COMMS</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center py-2 text-[#90adcb] hover:text-white transition-colors group" href="#">
+<div class="size-7 rounded-lg overflow-hidden border border-[#314d68] mb-1 group-hover:border-white transition-colors">
+<!-- Avatar Image -->
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="User profile avatar showing a stylized digital portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC52S-u2wJC-yriTLxj_JQtQmgAWS0hob0ZmlxXgOeXqTTBcdn1nER5JcF3HsNAgCzz30HBN_BCqy0khyTx2W-cUEvsIu8--2jz5CAEGc4iCnDdKW6enMzXjSp8EUoBfnMQaQP6XAO_dP-VlDEfH2c4m4V-1RVH30iTQbvF3kkvs-U4RO9gwG5CsniwMyUcQ7xkBkw8QOwPznIEPA4dzNxgw0Mzp010UPI2q3R-5Tp3QRcntmDWdQHFCON5aeC5Bj0oobKjB2dBsDMe"/>
+</div>
+<span class="text-[10px] font-bold tracking-wider opacity-60 group-hover:opacity-100">RANKER</span>
+</a>
+</div>
+</nav>
+</body></html>

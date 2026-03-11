@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Daily Ritual</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#050505", // Deep void dark
+                        "panel-dark": "#0a0f14",
+                        "border-dark": "#223649",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Scrollbar for HUD feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #223649; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+
+        /* Neon Glow Utilities */
+        .text-glow {
+            text-shadow: 0 0 10px rgba(37, 140, 244, 0.5), 0 0 20px rgba(37, 140, 244, 0.3);
+        }
+        .box-glow {
+            box-shadow: 0 0 15px rgba(37, 140, 244, 0.15);
+        }
+        .border-glow {
+            box-shadow: inset 0 0 10px rgba(37, 140, 244, 0.1);
+        }
+        
+        .glass-panel {
+            background: rgba(16, 26, 35, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            box-shadow: 0 0 0 0 rgba(37, 140, 244, 0.7);
+            animation: pulse-blue 2s infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse-blue {
+            0% {
+                transform: translate(-50%, -50%) scale(0.95);
+                box-shadow: 0 0 0 0 rgba(37, 140, 244, 0.7);
+            }
+            70% {
+                transform: translate(-50%, -50%) scale(1.05);
+                box-shadow: 0 0 0 10px rgba(37, 140, 244, 0);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0.95);
+                box-shadow: 0 0 0 0 rgba(37, 140, 244, 0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display overflow-hidden selection:bg-primary selection:text-white">
+<div class="flex h-screen w-full relative">
+<!-- Subtle Background Grid Effect -->
+<div class="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style="background-size: 40px 40px; background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px);"></div>
+<!-- Left Side Navigation (Command Deck) -->
+<aside class="w-20 lg:w-72 hidden md:flex flex-col border-r border-border-dark glass-panel z-20 h-full justify-between flex-shrink-0">
+<div class="flex flex-col gap-6 p-4">
+<!-- Branding -->
+<div class="flex items-center gap-3 px-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-lg size-10 shadow-lg shadow-primary/20" data-alt="Rankers Log Logo Abstract" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZ4XPtk4wjrH_QltWfAZ4oKIhkBLZewQoC0Oo5i5Esc_ZxpPR7NL86b16zFZxzSR11P0sU7vc55RDxhTCLnK-I2koDa-h-xpO-Lr131GZL8BQOkRIOhleF8n30mPD8AtVxDfqRGhEttIiBfTSoTqvzx-iaf9l49znLxz87G1I0dY6-MXS2TXW6UbxWM2J5LTfxUUypG8JoydQEQf9IP9UNFsjDv8r0zBPoC2axF6z2_0dI5w4ti9Ag-8ot2DE8ecCQ03EjhoN0z_mw");'></div>
+<div class="flex-col hidden lg:flex">
+<h1 class="text-white text-lg font-bold leading-none tracking-wider">RANKERS LOG</h1>
+<p class="text-[#90adcb] text-xs font-normal tracking-widest mt-1">SYS.VER.2.4</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-4 px-3 py-3 text-[#90adcb] hover:text-white hover:bg-white/5 rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium hidden lg:block">Command Deck</span>
+</a>
+<a class="flex items-center gap-4 px-3 py-3 text-[#90adcb] hover:text-white hover:bg-white/5 rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">menu_book</span>
+<span class="text-sm font-medium hidden lg:block">Anime Log</span>
+</a>
+<a class="flex items-center gap-4 px-3 py-3 text-[#90adcb] hover:text-white hover:bg-white/5 rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">auto_stories</span>
+<span class="text-sm font-medium hidden lg:block">Manga Log</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-4 px-3 py-3 text-white bg-primary/20 border border-primary/30 rounded-lg shadow-[0_0_15px_rgba(37,140,244,0.15)]" href="#">
+<span class="material-symbols-outlined text-2xl text-primary">event_available</span>
+<span class="text-sm font-bold tracking-wide hidden lg:block text-primary">Daily Ritual</span>
+</a>
+<a class="flex items-center gap-4 px-3 py-3 text-[#90adcb] hover:text-white hover:bg-white/5 rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">trophy</span>
+<span class="text-sm font-medium hidden lg:block">Achievements</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Settings -->
+<div class="p-4 border-t border-border-dark">
+<a class="flex items-center gap-4 px-3 py-2 text-[#90adcb] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<span class="text-sm font-medium hidden lg:block">System Config</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-full relative overflow-hidden z-10">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-border-dark glass-panel px-6 py-4 z-30 flex-shrink-0">
+<!-- Search -->
+<div class="hidden md:flex items-center w-full max-w-md">
+<div class="relative w-full group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[#90adcb]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 bg-[#16202a] border border-border-dark rounded-lg leading-5 text-white placeholder-[#5a728a] focus:outline-none focus:bg-[#1a2632] focus:border-primary/50 focus:ring-1 focus:ring-primary/50 sm:text-sm transition-all" placeholder="Search logs, entries, or users..." type="text"/>
+</div>
+</div>
+<!-- Mobile Menu Button (Visible only on small screens) -->
+<button class="md:hidden p-2 text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- Right Actions -->
+<div class="flex items-center gap-4 md:gap-6 ml-auto">
+<div class="hidden lg:flex items-center gap-6 mr-4">
+<a class="text-sm font-medium text-[#90adcb] hover:text-white transition-colors" href="#">Community</a>
+<a class="text-sm font-medium text-[#90adcb] hover:text-white transition-colors" href="#">Marketplace</a>
+</div>
+<div class="flex items-center gap-3 border-l border-border-dark pl-6">
+<button class="relative p-2 text-[#90adcb] hover:text-white hover:bg-white/5 rounded-lg transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.6)]"></span>
+</button>
+<div class="flex items-center gap-3 pl-2 cursor-pointer group">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-white leading-tight group-hover:text-primary transition-colors">SoloRanker</p>
+<p class="text-xs text-primary font-medium tracking-wider">LVL. 42</p>
+</div>
+<div class="size-10 rounded-full border border-border-dark overflow-hidden ring-2 ring-transparent group-hover:ring-primary/50 transition-all">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgYRUOxkdR-VDeXTKLwnuLJ3aM0N8vtPzTl2hAOaA9NcdookAxvXnudQDEiFvvYWEmxVkrDFj2We3xf3Qv_KeLimLUjo5XbU2vab15pZ6ejr74w2avmdHmPSrwbv9G3z_EnO2_-Y1gNpPQnKd2nS9g17CTFzZQRrPewPOoPTmaEUqlbyxzgIvP05JUK2RSwnwg4hX1VuVMfmw3S6WlEVo4hHWVbPUhl9tC31bWuCk3itYxmvtzE9TvwN5v4JTUU9h3tyqT7yDHhEi4"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Page Content -->
+<main class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12 pb-24">
+<div class="max-w-7xl mx-auto flex flex-col gap-8">
+<!-- Page Heading -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-6">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="size-2 bg-primary rounded-full animate-pulse"></span>
+<span class="text-primary text-xs font-bold tracking-[0.2em] uppercase">System Online</span>
+</div>
+<h1 class="text-3xl md:text-5xl font-bold text-white tracking-tight">DAILY LOG <span class="text-white/20">//</span> SYNC</h1>
+<p class="text-[#90adcb] mt-2 max-w-xl text-sm md:text-base">Maintain your streak to amplify signal strength and earn bonus XP multipliers. Don't let the void consume your progress.</p>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg">
+<span class="material-symbols-outlined text-primary text-lg">bolt</span>
+<span class="text-primary font-bold text-sm">XP BOOST ACTIVE: x1.5</span>
+</div>
+</div>
+<!-- Main Dashboard Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+<!-- Left Column: Streak Hero & Action (Span 8) -->
+<div class="xl:col-span-8 flex flex-col gap-6">
+<!-- Hero Streak Card -->
+<div class="relative glass-panel rounded-2xl p-8 md:p-12 overflow-hidden group">
+<!-- Background Gradient Effect -->
+<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3 opacity-50 group-hover:opacity-70 transition-opacity duration-700"></div>
+<div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="flex flex-col items-center md:items-start text-center md:text-left">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold tracking-wider mb-4">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                            SEQUENCE ACTIVE
+                                        </div>
+<h2 class="text-6xl md:text-8xl font-black text-white leading-none tracking-tighter text-glow">DAY 07</h2>
+<p class="text-xl text-[#90adcb] font-medium tracking-[0.3em] mt-2 uppercase">Current Streak</p>
+</div>
+<div class="flex flex-col items-center justify-center relative">
+<!-- Pulsing Glow Behind Button -->
+<div class="absolute inset-0 bg-primary/30 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<button class="relative group/btn flex flex-col items-center justify-center w-64 h-24 bg-primary hover:bg-blue-500 text-white rounded-xl shadow-[0_0_30px_rgba(37,140,244,0.4)] hover:shadow-[0_0_50px_rgba(37,140,244,0.6)] transition-all duration-300 transform hover:-translate-y-1 active:scale-95 overflow-hidden">
+<div class="pulse-ring"></div>
+<div class="flex items-center gap-3 z-10">
+<span class="material-symbols-outlined text-3xl group-hover/btn:rotate-180 transition-transform duration-500">sync</span>
+<span class="text-xl font-bold tracking-wider">CHECK-IN</span>
+</div>
+<span class="text-xs font-medium text-blue-100 mt-1 z-10 tracking-widest">[+50 XP REWARD]</span>
+<!-- Shine Effect -->
+<div class="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover/btn:animate-[shine_1s_infinite]"></div>
+</button>
+<p class="mt-4 text-xs text-[#5a728a] font-mono">NEXT RESET IN 14H 32M 10S</p>
+</div>
+</div>
+</div>
+<!-- Calendar HUD -->
+<div class="glass-panel rounded-2xl p-6 border-t-4 border-t-primary">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+                                        Log History
+                                    </h3>
+<div class="flex gap-2">
+<button class="p-1 rounded hover:bg-white/10 text-[#90adcb] transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<span class="text-sm font-bold text-white px-2 py-1">OCTOBER 2023</span>
+<button class="p-1 rounded hover:bg-white/10 text-[#90adcb] transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<!-- Calendar Grid -->
+<div class="grid grid-cols-7 gap-3 mb-2">
+<!-- Days Header -->
+<div class="text-center text-xs font-bold text-[#5a728a] py-2">MON</div>
+<div class="text-center text-xs font-bold text-[#5a728a] py-2">TUE</div>
+<div class="text-center text-xs font-bold text-[#5a728a] py-2">WED</div>
+<div class="text-center text-xs font-bold text-[#5a728a] py-2">THU</div>
+<div class="text-center text-xs font-bold text-[#5a728a] py-2">FRI</div>
+<div class="text-center text-xs font-bold text-[#5a728a] py-2">SAT</div>
+<div class="text-center text-xs font-bold text-[#5a728a] py-2">SUN</div>
+</div>
+<div class="grid grid-cols-7 gap-2 md:gap-3">
+<!-- Empty/Inactive Days -->
+<div class="aspect-square rounded-lg border border-white/5 bg-white/[0.02] flex items-center justify-center text-[#5a728a] text-sm font-medium opacity-50">28</div>
+<div class="aspect-square rounded-lg border border-white/5 bg-white/[0.02] flex items-center justify-center text-[#5a728a] text-sm font-medium opacity-50">29</div>
+<div class="aspect-square rounded-lg border border-white/5 bg-white/[0.02] flex items-center justify-center text-[#5a728a] text-sm font-medium opacity-50">30</div>
+<!-- Missed Day -->
+<div class="relative group aspect-square rounded-lg border border-white/10 bg-[#16202a] flex items-center justify-center text-[#5a728a] hover:border-red-500/50 transition-colors cursor-pointer">
+<span class="text-sm font-bold">1</span>
+<div class="absolute bottom-1 w-1 h-1 bg-red-500 rounded-full"></div>
+</div>
+<!-- Active Streak Days (Connected visually via style similarity) -->
+<!-- Day 2 -->
+<div class="relative group aspect-square rounded-lg border border-primary/50 bg-primary/10 flex items-center justify-center text-white border-glow shadow-[0_0_10px_rgba(37,140,244,0.1)]">
+<span class="text-sm font-bold">2</span>
+<div class="absolute bottom-1 w-1 h-1 bg-primary rounded-full shadow-[0_0_5px_#258cf4]"></div>
+</div>
+<!-- Day 3 -->
+<div class="relative group aspect-square rounded-lg border border-primary/50 bg-primary/10 flex items-center justify-center text-white border-glow shadow-[0_0_10px_rgba(37,140,244,0.1)]">
+<span class="text-sm font-bold">3</span>
+<div class="absolute bottom-1 w-1 h-1 bg-primary rounded-full shadow-[0_0_5px_#258cf4]"></div>
+<!-- Connector Line (Pseudo) -->
+<div class="absolute top-1/2 -left-2 w-4 h-0.5 bg-primary/50 hidden md:block z-0"></div>
+</div>
+<!-- Day 4 -->
+<div class="relative group aspect-square rounded-lg border border-primary/50 bg-primary/10 flex items-center justify-center text-white border-glow shadow-[0_0_10px_rgba(37,140,244,0.1)]">
+<span class="text-sm font-bold">4</span>
+<div class="absolute bottom-1 w-1 h-1 bg-primary rounded-full shadow-[0_0_5px_#258cf4]"></div>
+<div class="absolute top-1/2 -left-2 w-4 h-0.5 bg-primary/50 hidden md:block z-0"></div>
+</div>
+<!-- Day 5 -->
+<div class="relative group aspect-square rounded-lg border border-primary/50 bg-primary/10 flex items-center justify-center text-white border-glow shadow-[0_0_10px_rgba(37,140,244,0.1)]">
+<span class="text-sm font-bold">5</span>
+<div class="absolute bottom-1 w-1 h-1 bg-primary rounded-full shadow-[0_0_5px_#258cf4]"></div>
+<div class="absolute top-1/2 -left-2 w-4 h-0.5 bg-primary/50 hidden md:block z-0"></div>
+</div>
+<!-- Day 6 -->
+<div class="relative group aspect-square rounded-lg border border-primary/50 bg-primary/10 flex items-center justify-center text-white border-glow shadow-[0_0_10px_rgba(37,140,244,0.1)]">
+<span class="text-sm font-bold">6</span>
+<div class="absolute bottom-1 w-1 h-1 bg-primary rounded-full shadow-[0_0_5px_#258cf4]"></div>
+<div class="absolute top-1/2 -left-2 w-4 h-0.5 bg-primary/50 hidden md:block z-0"></div>
+</div>
+<!-- Day 7 (Today - Active Pulsing) -->
+<div class="relative group aspect-square rounded-lg bg-primary text-white flex items-center justify-center shadow-[0_0_20px_rgba(37,140,244,0.4)] z-10 border-2 border-white">
+<span class="text-sm font-bold text-lg">7</span>
+<span class="absolute -top-1 -right-1 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+</span>
+</div>
+<!-- Future Days -->
+<div class="aspect-square rounded-lg border border-white/10 bg-[#16202a] flex items-center justify-center text-[#5a728a] text-sm font-medium">8</div>
+<div class="aspect-square rounded-lg border border-white/10 bg-[#16202a] flex items-center justify-center text-[#5a728a] text-sm font-medium">9</div>
+<div class="aspect-square rounded-lg border border-white/10 bg-[#16202a] flex items-center justify-center text-[#5a728a] text-sm font-medium">10</div>
+<div class="aspect-square rounded-lg border border-white/10 bg-[#16202a] flex items-center justify-center text-[#5a728a] text-sm font-medium">11</div>
+<div class="aspect-square rounded-lg border border-white/10 bg-[#16202a] flex items-center justify-center text-[#5a728a] text-sm font-medium">12</div>
+<!-- ... placeholders for rest of month -->
+</div>
+</div>
+</div>
+<!-- Right Column: Stats & Progress (Span 4) -->
+<div class="xl:col-span-4 flex flex-col gap-6">
+<!-- Monthly Progress -->
+<div class="glass-panel p-6 rounded-2xl">
+<h3 class="text-lg font-bold text-white mb-4 flex items-center justify-between">
+<span>Monthly Target</span>
+<span class="text-primary text-sm font-mono">7/31</span>
+</h3>
+<div class="w-full bg-[#16202a] rounded-full h-4 mb-4 border border-white/5 relative overflow-hidden">
+<div class="bg-primary h-4 rounded-full" style="width: 22%"></div>
+<!-- Grid lines on progress bar -->
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEwIDBMMCAxMFoiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiLz48L3N2Zz4=')] opacity-30"></div>
+</div>
+<div class="flex justify-between text-xs text-[#90adcb]">
+<span>Novice</span>
+<span>Apprentice</span>
+<span>Master</span>
+</div>
+</div>
+<!-- Next Milestone Reward -->
+<div class="glass-panel p-6 rounded-2xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-9xl text-white">military_tech</span>
+</div>
+<div class="relative z-10">
+<div class="text-[#90adcb] text-xs font-bold tracking-widest uppercase mb-1">Upcoming Reward</div>
+<h3 class="text-2xl font-bold text-white mb-1">Badge: Timekeeper</h3>
+<p class="text-sm text-[#90adcb] mb-4">Reach a 14-day streak to unlock.</p>
+<div class="flex items-center gap-4 bg-[#16202a]/50 p-3 rounded-lg border border-white/5">
+<div class="size-12 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-white">lock_clock</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-white font-bold">Progress</span>
+<span class="text-purple-400">50%</span>
+</div>
+<div class="w-full bg-[#0a0f14] rounded-full h-2">
+<div class="bg-gradient-to-r from-purple-500 to-indigo-500 h-2 rounded-full" style="width: 50%"></div>
+</div>
+<p class="text-[10px] text-[#90adcb] mt-1 text-right">7 days remaining</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Stat Blocks -->
+<div class="grid grid-cols-2 gap-4">
+<div class="glass-panel p-4 rounded-xl flex flex-col items-center justify-center text-center gap-2 border border-white/5 hover:border-primary/30 transition-colors">
+<div class="text-[#90adcb] text-xs font-bold tracking-wider uppercase">Total XP</div>
+<div class="text-2xl font-bold text-white">12,450</div>
+<span class="text-xs text-green-400 flex items-center"><span class="material-symbols-outlined text-sm">arrow_drop_up</span> +350</span>
+</div>
+<div class="glass-panel p-4 rounded-xl flex flex-col items-center justify-center text-center gap-2 border border-white/5 hover:border-primary/30 transition-colors">
+<div class="text-[#90adcb] text-xs font-bold tracking-wider uppercase">Longest Streak</div>
+<div class="text-2xl font-bold text-white">42 Days</div>
+<span class="text-xs text-[#5a728a]">Record</span>
+</div>
+</div>
+<!-- Tip of the day -->
+<div class="bg-gradient-to-br from-primary/20 to-transparent p-5 rounded-2xl border border-primary/20">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">tips_and_updates</span>
+<div>
+<h4 class="text-white font-bold text-sm mb-1">Ranker's Tip</h4>
+<p class="text-xs text-[#90adcb] leading-relaxed">Logging activity for 3 different categories (Anime, Game, Manga) in one day awards a "Polymath" bonus.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+<!-- Toast Notification (Simulated) -->
+<div class="fixed bottom-10 right-10 z-50 animate-[slideIn_0.5s_ease-out_forwards]" style="display: none;"> <!-- Hidden by default, just for structure -->
+<div class="glass-panel p-4 rounded-lg flex items-center gap-4 border-l-4 border-l-primary shadow-2xl">
+<div class="bg-primary/20 p-2 rounded-full text-primary">
+<span class="material-symbols-outlined">celebration</span>
+</div>
+<div>
+<h4 class="text-white font-bold text-sm">System Sync Complete!</h4>
+<p class="text-xs text-[#90adcb]">+50 XP added to your profile.</p>
+</div>
+<button class="text-[#5a728a] hover:text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+</div>
+</body></html>

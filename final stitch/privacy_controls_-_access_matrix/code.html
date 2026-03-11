@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Privacy Controls</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#258cf4",
+              "primary-dim": "#1a5f9e",
+              "background-light": "#f5f7f8", // Fallback, mostly unused in this dark UI
+              "background-dark": "#050505",
+              "surface-glass": "rgba(37, 140, 244, 0.05)",
+              "surface-glass-hover": "rgba(37, 140, 244, 0.1)",
+              "void": "#0a0f16",
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"],
+              "body": ["Noto Sans", "sans-serif"],
+            },
+            backgroundImage: {
+              'grid-pattern': "linear-gradient(to right, #258cf411 1px, transparent 1px), linear-gradient(to bottom, #258cf411 1px, transparent 1px)",
+              'scanline': "linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2))",
+            },
+            boxShadow: {
+              'neon': '0 0 10px rgba(37, 140, 244, 0.3), 0 0 20px rgba(37, 140, 244, 0.1)',
+              'neon-strong': '0 0 15px rgba(37, 140, 244, 0.6), 0 0 30px rgba(37, 140, 244, 0.2)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: white;
+        }
+        
+        /* Custom Scrollbar for that tech feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0f16; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #258cf4; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5aaafc; 
+        }
+
+        /* Scanline Overlay */
+        .crt-overlay {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+        }
+        
+        .glass-panel {
+            background: rgba(16, 26, 35, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(37, 140, 244, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .radio-check:checked + div {
+            background-color: rgba(37, 140, 244, 0.15);
+            border-color: #258cf4;
+            box-shadow: 0 0 15px rgba(37, 140, 244, 0.2);
+        }
+        
+        .radio-check:checked + div .indicator {
+            background-color: #258cf4;
+            box-shadow: 0 0 8px #258cf4;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-dark min-h-screen overflow-x-hidden text-white relative selection:bg-primary selection:text-white">
+<!-- Background Grid Effect -->
+<div class="fixed inset-0 bg-grid-pattern bg-[length:40px_40px] opacity-20 pointer-events-none z-0"></div>
+<div class="fixed inset-0 bg-gradient-to-b from-transparent via-background-dark/80 to-background-dark pointer-events-none z-0"></div>
+<!-- CRT Scanline Overlay -->
+<div class="fixed inset-0 crt-overlay z-50 pointer-events-none opacity-40 mix-blend-overlay"></div>
+<div class="relative z-10 flex h-full flex-col max-w-7xl mx-auto min-h-screen pb-32">
+<!-- Top Bar / Breadcrumbs -->
+<header class="w-full pt-8 px-6 lg:px-12 mb-8">
+<div class="flex flex-wrap gap-2 items-center text-sm tracking-wider uppercase">
+<div class="flex items-center gap-1 text-primary/60 hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+<span>Main Menu</span>
+</div>
+<span class="text-primary/40">/</span>
+<div class="flex items-center gap-1 text-primary/60 hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span>System Config</span>
+</div>
+<span class="text-primary/40">/</span>
+<span class="text-white font-bold drop-shadow-[0_0_5px_rgba(37,140,244,0.5)]">Privacy Matrix</span>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 px-6 lg:px-12 flex flex-col gap-10">
+<!-- Page Heading -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-primary/20 pb-6">
+<div class="flex flex-col gap-2">
+<h1 class="text-4xl md:text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-primary/50 uppercase">
+                        Access Matrix <span class="text-primary text-2xl align-top opacity-80">// Privacy</span>
+</h1>
+<p class="text-primary/60 max-w-2xl font-body text-sm md:text-base leading-relaxed">
+                        Configure inbound transmission protocols and surveillance countermeasures. Define entity access levels for your personal data stream.
+                    </p>
+</div>
+<!-- Status Indicator -->
+<div class="flex items-center gap-3 bg-primary/5 border border-primary/20 px-4 py-2 rounded-full">
+<div class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+</div>
+<span class="text-xs font-bold tracking-widest text-primary uppercase">System Online v4.2.0</span>
+</div>
+</div>
+<!-- Content Grid with "Spine" -->
+<div class="flex flex-col lg:flex-row gap-12 relative">
+<!-- Decorative Spine Line (Desktop) -->
+<div class="hidden lg:block absolute left-[26px] top-4 bottom-0 w-[2px] bg-gradient-to-b from-primary/50 via-primary/20 to-transparent"></div>
+<!-- Section 1: Communication -->
+<div class="flex flex-col gap-6 flex-1">
+<!-- Section Header -->
+<div class="flex items-center gap-4">
+<div class="h-3 w-3 bg-primary rounded-full shadow-[0_0_10px_#258cf4] relative z-10 lg:ml-[20px]"></div>
+<h2 class="text-xl font-bold tracking-widest text-white uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">sensors</span>
+                            Communication Uplink
+                        </h2>
+</div>
+<!-- Panel Group -->
+<div class="lg:ml-12 flex flex-col gap-4">
+<!-- Setting Item: DMs -->
+<div class="glass-panel p-5 rounded-lg group hover:border-primary/50 transition-all duration-300">
+<div class="mb-4">
+<h3 class="text-white font-bold text-lg flex items-center gap-2">
+                                    Direct Transmissions
+                                    <span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded border border-primary/20 uppercase">DM Protocol</span>
+</h3>
+<p class="text-gray-400 text-sm mt-1 font-body">Who is authorized to send direct messages to your inbox?</p>
+</div>
+<!-- Radio List Component -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<label class="relative cursor-pointer group/radio">
+<input checked="" class="radio-check invisible absolute" name="dm_permission" type="radio"/>
+<div class="flex items-center justify-between rounded-lg border border-primary/20 bg-background-dark/50 px-4 py-3 h-full transition-all duration-200 hover:bg-primary/5">
+<span class="text-sm font-medium text-gray-300 group-hover/radio:text-white">Open Freq (All)</span>
+<div class="indicator w-2 h-2 rounded-full bg-gray-700 transition-all duration-300"></div>
+</div>
+</label>
+<label class="relative cursor-pointer group/radio">
+<input class="radio-check invisible absolute" name="dm_permission" type="radio"/>
+<div class="flex items-center justify-between rounded-lg border border-primary/20 bg-background-dark/50 px-4 py-3 h-full transition-all duration-200 hover:bg-primary/5">
+<span class="text-sm font-medium text-gray-300 group-hover/radio:text-white">Encrypted (Friends)</span>
+<div class="indicator w-2 h-2 rounded-full bg-gray-700 transition-all duration-300"></div>
+</div>
+</label>
+<label class="relative cursor-pointer group/radio">
+<input class="radio-check invisible absolute" name="dm_permission" type="radio"/>
+<div class="flex items-center justify-between rounded-lg border border-primary/20 bg-background-dark/50 px-4 py-3 h-full transition-all duration-200 hover:bg-primary/5">
+<span class="text-sm font-medium text-gray-300 group-hover/radio:text-white">Silence (None)</span>
+<div class="indicator w-2 h-2 rounded-full bg-gray-700 transition-all duration-300"></div>
+</div>
+</label>
+</div>
+</div>
+<!-- Setting Item: Comments -->
+<div class="glass-panel p-5 rounded-lg group hover:border-primary/50 transition-all duration-300">
+<div class="mb-4">
+<h3 class="text-white font-bold text-lg flex items-center gap-2">
+                                    Commentary Feed
+                                    <span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded border border-primary/20 uppercase">Public Logs</span>
+</h3>
+<p class="text-gray-400 text-sm mt-1 font-body">Manage write access to your public activity posts.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<label class="relative cursor-pointer group/radio">
+<input checked="" class="radio-check invisible absolute" name="comment_permission" type="radio"/>
+<div class="flex items-center gap-3 rounded-lg border border-primary/20 bg-background-dark/50 px-4 py-3 transition-all duration-200 hover:bg-primary/5">
+<div class="indicator w-3 h-3 rounded-sm border border-gray-600 bg-transparent flex items-center justify-center">
+<div class="w-1.5 h-1.5 bg-primary opacity-0 transition-opacity"></div>
+</div>
+<span class="text-sm font-medium text-gray-300">Allow Everyone</span>
+</div>
+<style>
+                                        .radio-check:checked + div .indicator div { opacity: 1; }
+                                        .radio-check:checked + div .indicator { border-color: #258cf4; box-shadow: 0 0 5px #258cf4; }
+                                    </style>
+</label>
+<label class="relative cursor-pointer group/radio">
+<input class="radio-check invisible absolute" name="comment_permission" type="radio"/>
+<div class="flex items-center gap-3 rounded-lg border border-primary/20 bg-background-dark/50 px-4 py-3 transition-all duration-200 hover:bg-primary/5">
+<div class="indicator w-3 h-3 rounded-sm border border-gray-600 bg-transparent flex items-center justify-center">
+<div class="w-1.5 h-1.5 bg-primary opacity-0 transition-opacity"></div>
+</div>
+<span class="text-sm font-medium text-gray-300">Friends &amp; Guild Only</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Section 2: Surveillance (Spacer) -->
+<div class="h-8 lg:border-l-2 border-dashed border-primary/10 ml-[26px]"></div>
+<!-- Section 2 Header -->
+<div class="flex items-center gap-4">
+<div class="h-3 w-3 bg-primary rounded-full shadow-[0_0_10px_#258cf4] relative z-10 lg:ml-[20px]"></div>
+<h2 class="text-xl font-bold tracking-widest text-white uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">visibility</span>
+                            Surveillance Countermeasures
+                        </h2>
+</div>
+<!-- Section 2 Content -->
+<div class="lg:ml-12 flex flex-col gap-4">
+<!-- Setting Item: Profile Visibility -->
+<div class="glass-panel p-5 rounded-lg group hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
+<!-- Background accent -->
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
+<div>
+<h3 class="text-white font-bold text-lg">Profile Visibility</h3>
+<p class="text-gray-400 text-sm mt-1 font-body">Control access level to your main dossier.</p>
+</div>
+<div class="flex items-center bg-background-dark/80 rounded-lg p-1 border border-primary/20">
+<button class="px-4 py-1.5 rounded-md text-xs font-bold uppercase transition-all bg-primary text-white shadow-neon">Public</button>
+<button class="px-4 py-1.5 rounded-md text-xs font-bold uppercase text-gray-400 hover:text-white transition-all hover:bg-white/5">Friends</button>
+<button class="px-4 py-1.5 rounded-md text-xs font-bold uppercase text-gray-400 hover:text-white transition-all hover:bg-white/5">Ghost</button>
+</div>
+</div>
+<!-- Sub-settings for Profile -->
+<div class="space-y-3">
+<label class="flex items-center justify-between p-3 rounded bg-white/5 border border-white/5 hover:border-primary/30 transition-colors cursor-pointer">
+<span class="text-sm text-gray-300">Show Online Status</span>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary peer-checked:shadow-[0_0_10px_#258cf4]"></div>
+</div>
+</label>
+<label class="flex items-center justify-between p-3 rounded bg-white/5 border border-white/5 hover:border-primary/30 transition-colors cursor-pointer">
+<span class="text-sm text-gray-300">Allow Search Engine Indexing</span>
+<div class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary peer-checked:shadow-[0_0_10px_#258cf4]"></div>
+</div>
+</label>
+</div>
+</div>
+<!-- Setting Item: Activity Log -->
+<div class="glass-panel p-5 rounded-lg group hover:border-primary/50 transition-all duration-300">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-white font-bold text-lg flex items-center gap-2">
+                                        Activity Log
+                                        <span class="material-symbols-outlined text-primary text-sm">history</span>
+</h3>
+<p class="text-gray-400 text-sm mt-1 font-body">Who can see what you are watching, reading, or playing?</p>
+</div>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-4">
+<!-- Custom stylized dropdown trigger -->
+<div class="col-span-2 md:col-span-1 relative group">
+<label class="text-xs text-primary/60 uppercase font-bold tracking-wider mb-1 block">Anime &amp; Manga</label>
+<button class="w-full flex items-center justify-between bg-background-dark border border-primary/30 text-white px-4 py-3 rounded hover:border-primary hover:shadow-neon transition-all text-sm">
+<span>Followers Only</span>
+<span class="material-symbols-outlined text-primary">arrow_drop_down</span>
+</button>
+</div>
+<div class="col-span-2 md:col-span-1 relative group">
+<label class="text-xs text-primary/60 uppercase font-bold tracking-wider mb-1 block">Game Activity</label>
+<button class="w-full flex items-center justify-between bg-background-dark border border-primary/30 text-white px-4 py-3 rounded hover:border-primary hover:shadow-neon transition-all text-sm">
+<span>Everyone</span>
+<span class="material-symbols-outlined text-primary">arrow_drop_down</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: System Status / Helper (Desktop Only Visual) -->
+<div class="hidden xl:flex w-72 flex-col gap-6 shrink-0 sticky top-10 h-fit">
+<div class="glass-panel p-6 rounded-lg border-t-2 border-t-primary/80">
+<h4 class="text-primary font-bold tracking-widest uppercase text-sm mb-4 border-b border-primary/20 pb-2">System Diagnostic</h4>
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center text-sm">
+<span class="text-gray-400">Security Level</span>
+<span class="text-green-400 font-bold">HIGH</span>
+</div>
+<div class="w-full bg-gray-800 rounded-full h-1.5">
+<div class="bg-green-400 h-1.5 rounded-full" style="width: 85%"></div>
+</div>
+<div class="text-xs text-gray-500 font-mono mt-2">
+                                &gt; scanning protocols...<br/>
+                                &gt; encryption: AES-256<br/>
+                                &gt; 2FA: active
+                            </div>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-lg bg-gradient-to-b from-primary/10 to-transparent border border-primary/20">
+<span class="material-symbols-outlined text-primary text-3xl mb-2">shield</span>
+<h4 class="text-white font-bold text-lg mb-2">Guild Protection</h4>
+<p class="text-sm text-gray-300 mb-4">Your current guild <span class="text-primary">"Void Walkers"</span> enforces strict privacy on guild-related posts.</p>
+<button class="text-xs text-primary underline hover:text-white uppercase tracking-wider font-bold">View Guild Policy</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Floating Command Deck -->
+<div class="fixed bottom-8 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none">
+<div class="pointer-events-auto bg-[#101a23]/90 backdrop-blur-xl border border-primary/30 rounded-full p-2 pl-6 pr-2 shadow-neon-strong flex items-center gap-6 max-w-full overflow-x-auto">
+<!-- Nav Items -->
+<div class="flex items-center gap-1 md:gap-2">
+<button class="p-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-full transition-colors flex flex-col items-center justify-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-[24px] group-hover:-translate-y-0.5 transition-transform">home</span>
+<span class="text-[9px] uppercase tracking-widest font-bold opacity-0 group-hover:opacity-100 absolute -bottom-1">Deck</span>
+</button>
+<button class="p-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-full transition-colors flex flex-col items-center justify-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-[24px] group-hover:-translate-y-0.5 transition-transform">person</span>
+<span class="text-[9px] uppercase tracking-widest font-bold opacity-0 group-hover:opacity-100 absolute -bottom-1">Profile</span>
+</button>
+<button class="p-3 text-primary bg-primary/10 rounded-full transition-colors flex flex-col items-center justify-center gap-1 w-16 shadow-[0_0_15px_rgba(37,140,244,0.3)] relative">
+<span class="material-symbols-outlined text-[24px] mb-0.5">settings</span>
+<span class="absolute top-2 right-4 w-1.5 h-1.5 bg-primary rounded-full"></span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-primary/20 mx-2"></div>
+<!-- Action Button -->
+<button class="bg-primary hover:bg-primary-dim text-white font-bold px-6 py-3 rounded-full shadow-lg flex items-center gap-2 transition-all hover:scale-105 active:scale-95 group">
+<span class="material-symbols-outlined text-[20px] animate-pulse">save</span>
+<span class="hidden sm:inline">SAVE PROTOCOL</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

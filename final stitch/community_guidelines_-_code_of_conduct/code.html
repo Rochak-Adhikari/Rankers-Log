@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - Code of Conduct</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f20d0d",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#050505",
+                        "surface-dark": "#0f0f0f",
+                        "surface-highlight": "#1a1a1a",
+                        "accent-red": "#ff4444",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for the high-tech feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0f0f; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f20d0d; 
+        }
+
+        /* Scanline effect */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        
+        /* Glow effects */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(242, 13, 13, 0.5);
+        }
+        .glow-border {
+            box-shadow: 0 0 15px rgba(242, 13, 13, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white overflow-x-hidden min-h-screen flex flex-col relative">
+<!-- Background Grid & Effects -->
+<div class="fixed inset-0 bg-grid-pattern bg-[length:40px_40px] opacity-20 pointer-events-none z-0"></div>
+<div class="fixed inset-0 bg-gradient-to-b from-transparent via-background-dark/80 to-background-dark pointer-events-none z-0"></div>
+<div class="fixed inset-0 scanlines opacity-10 z-50 pointer-events-none h-full w-full"></div>
+<!-- Main Layout -->
+<div class="layout-container flex h-full grow flex-col relative z-10">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-primary/20 bg-surface-dark/90 backdrop-blur-md px-6 py-4 lg:px-10 sticky top-0 z-40">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 flex items-center justify-center text-primary glow-text">
+<span class="material-symbols-outlined text-3xl">token</span>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-wider uppercase">Rankers Log <span class="text-primary text-xs align-top">v2.4</span></h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 hidden md:flex">
+<div class="flex items-center gap-6">
+<a class="text-gray-400 hover:text-primary text-sm font-bold tracking-widest uppercase transition-colors" href="#">Dashboard</a>
+<a class="text-gray-400 hover:text-primary text-sm font-bold tracking-widest uppercase transition-colors" href="#">Manga</a>
+<a class="text-gray-400 hover:text-primary text-sm font-bold tracking-widest uppercase transition-colors" href="#">Novels</a>
+<a class="text-primary glow-text text-sm font-bold tracking-widest uppercase transition-colors border-b-2 border-primary" href="#">Community</a>
+</div>
+<div class="flex gap-3">
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded bg-surface-highlight border border-gray-800 hover:border-primary text-white transition-all hover:shadow-[0_0_10px_rgba(242,13,13,0.3)]">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded bg-surface-highlight border border-gray-800 hover:border-primary text-white transition-all hover:shadow-[0_0_10px_rgba(242,13,13,0.3)]">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded size-10 border border-gray-700" data-alt="User avatar with sci-fi helmet" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDzrV1voo-voVd_zw70Z88x1NC3pjSygP8M40n-hZZWP1FnKQevKjm6yBckiv67AHocQkcht3F72kTcAImDkL7otQLOQg6zSrxasLN2aiOKJRd-iZlxjsoKaEE2xLMoTQLAzoP1ZG4tEYd8he0oTTl0D7t68pBh1nA1nJ032JZ1s6qgrNCWmxyB36l23QlPrRxevy8PCzYxIdb269Dti0_6jixtGq33zBTNN2sy1IdoQVf0pbMkP88iAi8g7sPqdEY-NT52CoiLN5dr");'></div>
+</div>
+</div>
+<!-- Mobile Menu Icon -->
+<button class="md:hidden flex size-10 items-center justify-center text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<!-- Breadcrumbs -->
+<div class="w-full border-b border-white/5 bg-background-dark/50 backdrop-blur-sm">
+<div class="px-6 lg:px-40 py-2">
+<div class="flex flex-wrap gap-2 items-center text-xs tracking-widest font-mono">
+<a class="text-primary hover:text-white transition-colors" href="#">SYSTEM</a>
+<span class="text-gray-600">/</span>
+<a class="text-primary hover:text-white transition-colors" href="#">PROTOCOLS</a>
+<span class="text-gray-600">/</span>
+<span class="text-white font-bold glow-text">CODE_OF_CONDUCT</span>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 flex justify-center py-8 px-4 lg:px-0">
+<div class="w-full max-w-[1024px] flex flex-col gap-6">
+<!-- Page Heading -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 pb-6 border-b border-primary/30 relative">
+<!-- Decorative corner markers -->
+<div class="absolute -bottom-[1px] -left-[1px] w-4 h-4 border-l-2 border-b-2 border-primary"></div>
+<div class="absolute -bottom-[1px] -right-[1px] w-4 h-4 border-r-2 border-b-2 border-primary"></div>
+<div class="flex flex-col gap-2">
+<h1 class="text-4xl md:text-5xl font-black leading-tight tracking-tight uppercase text-white glow-text">
+                            System Protocols
+                        </h1>
+<div class="flex items-center gap-2 text-gray-400 font-mono text-sm">
+<span class="material-symbols-outlined text-primary text-lg">terminal</span>
+<span>Directive: Maintain Community Integrity</span>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 px-4 py-2 rounded text-primary text-xs font-bold tracking-widest animate-pulse">
+                        STATUS: MANDATORY
+                    </div>
+</div>
+<!-- Intro Text -->
+<div class="p-4 bg-surface-dark border-l-4 border-primary rounded-r-lg">
+<p class="text-gray-300 text-lg leading-relaxed">
+<strong class="text-white">Attention Ranker:</strong> To maintain system stability and ensure a viable environment for all users, adherence to the following directives is absolute. Violations will result in account penalties or immediate termination.
+                    </p>
+</div>
+<!-- Guidelines Container -->
+<div class="flex flex-col gap-8 mt-4">
+<!-- Section 1: Respect & Honor -->
+<section class="group">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-primary text-black text-xs font-bold px-2 py-1 rounded">01</span>
+<h2 class="text-xl font-bold tracking-widest text-white group-hover:text-primary transition-colors">DIRECTIVE: RESPECT &amp; HONOR</h2>
+<div class="h-[1px] flex-1 bg-gradient-to-r from-primary/50 to-transparent"></div>
+</div>
+<div class="grid gap-4 md:grid-cols-2">
+<!-- Rule Card -->
+<div class="bg-surface-highlight/50 border border-white/5 hover:border-primary/50 hover:bg-surface-highlight hover:shadow-[0_0_15px_rgba(242,13,13,0.1)] transition-all duration-300 rounded-lg p-5 flex gap-4 items-start">
+<div class="bg-surface-dark p-2 rounded border border-white/10 shrink-0 text-primary">
+<span class="material-symbols-outlined">diversity_3</span>
+</div>
+<div>
+<h3 class="text-white font-bold mb-1">Respect Fellow Rankers</h3>
+<p class="text-gray-400 text-sm leading-relaxed">PvP is for games, not comments. Treat all users with dignity regardless of their level or faction.</p>
+</div>
+</div>
+<!-- Rule Card -->
+<div class="bg-surface-highlight/50 border border-white/5 hover:border-primary/50 hover:bg-surface-highlight hover:shadow-[0_0_15px_rgba(242,13,13,0.1)] transition-all duration-300 rounded-lg p-5 flex gap-4 items-start">
+<div class="bg-surface-dark p-2 rounded border border-white/10 shrink-0 text-primary">
+<span class="material-symbols-outlined">handshake</span>
+</div>
+<div>
+<h3 class="text-white font-bold mb-1">Constructive Feedback</h3>
+<p class="text-gray-400 text-sm leading-relaxed">Critique the content, not the creator. Toxic behavior degrades system performance.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Content Integrity -->
+<section class="group">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-primary text-black text-xs font-bold px-2 py-1 rounded">02</span>
+<h2 class="text-xl font-bold tracking-widest text-white group-hover:text-primary transition-colors">DIRECTIVE: DATA INTEGRITY</h2>
+<div class="h-[1px] flex-1 bg-gradient-to-r from-primary/50 to-transparent"></div>
+</div>
+<div class="flex flex-col gap-3">
+<!-- List Item Style -->
+<div class="flex items-center gap-4 bg-surface-highlight/30 px-5 py-4 rounded border-l-2 border-gray-600 hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-gray-400">visibility_off</span>
+<div class="flex flex-col md:flex-row md:items-center justify-between w-full gap-2">
+<div>
+<p class="text-white font-medium">Spoiler Protocol</p>
+<p class="text-gray-500 text-sm">Use appropriate tags. Do not ruin the plot for new recruits.</p>
+</div>
+<span class="text-xs border border-gray-700 bg-black/50 px-2 py-1 rounded text-gray-400 font-mono">TAG_REQUIRED</span>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-highlight/30 px-5 py-4 rounded border-l-2 border-gray-600 hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-gray-400">cleaning_services</span>
+<div class="flex flex-col md:flex-row md:items-center justify-between w-full gap-2">
+<div>
+<p class="text-white font-medium">No Spamming</p>
+<p class="text-gray-500 text-sm">Keep the database clean. Repetitive noise will be filtered.</p>
+</div>
+<span class="text-xs border border-gray-700 bg-black/50 px-2 py-1 rounded text-gray-400 font-mono">AUTO_FILTER</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Zero Tolerance (Critical) -->
+<section class="group">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded animate-pulse">CRITICAL</span>
+<h2 class="text-xl font-bold tracking-widest text-accent-red">ZERO TOLERANCE PROTOCOLS</h2>
+<div class="h-[1px] flex-1 bg-gradient-to-r from-red-600 to-transparent"></div>
+</div>
+<div class="bg-red-950/20 border border-red-900/50 rounded-lg p-6 relative overflow-hidden">
+<!-- Background alert pattern -->
+<div class="absolute -right-10 -top-10 text-red-900/10 rotate-12 pointer-events-none">
+<span class="material-symbols-outlined text-[200px]">warning</span>
+</div>
+<div class="flex flex-col gap-6 relative z-10">
+<div class="flex gap-4">
+<div class="shrink-0 mt-1">
+<span class="material-symbols-outlined text-accent-red">block</span>
+</div>
+<div>
+<h3 class="text-white font-bold text-lg">Immediate Termination</h3>
+<p class="text-gray-400 mt-1">The following actions result in an immediate ban from the Rankers Log system. There is no appeal process for these violations.</p>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="flex items-center gap-3 bg-black/40 p-3 rounded border border-red-900/30">
+<div class="size-2 bg-red-600 rounded-full shadow-[0_0_5px_red]"></div>
+<span class="text-gray-300 text-sm">Hate Speech &amp; Discrimination</span>
+</div>
+<div class="flex items-center gap-3 bg-black/40 p-3 rounded border border-red-900/30">
+<div class="size-2 bg-red-600 rounded-full shadow-[0_0_5px_red]"></div>
+<span class="text-gray-300 text-sm">Severe Harassment / Doxxing</span>
+</div>
+<div class="flex items-center gap-3 bg-black/40 p-3 rounded border border-red-900/30">
+<div class="size-2 bg-red-600 rounded-full shadow-[0_0_5px_red]"></div>
+<span class="text-gray-300 text-sm">Illegal Content Distribution</span>
+</div>
+<div class="flex items-center gap-3 bg-black/40 p-3 rounded border border-red-900/30">
+<div class="size-2 bg-red-600 rounded-full shadow-[0_0_5px_red]"></div>
+<span class="text-gray-300 text-sm">System Exploitation / Hacking</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Footer -->
+<div class="flex flex-col items-center justify-center gap-4 mt-8 pt-8 border-t border-white/10">
+<p class="text-gray-500 text-sm text-center font-mono">By proceeding, you acknowledge these protocols are binding.</p>
+<div class="flex gap-4 w-full md:w-auto">
+<button class="flex-1 md:flex-none h-12 px-8 rounded bg-transparent border border-gray-600 text-white font-bold tracking-wider hover:bg-white/5 hover:border-white transition-colors uppercase flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+                                Decline
+                            </button>
+<button class="flex-1 md:flex-none h-12 px-10 rounded bg-primary text-black font-bold tracking-wider hover:bg-red-600 hover:shadow-[0_0_20px_rgba(242,13,13,0.4)] transition-all uppercase flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined group-hover:animate-bounce">check_circle</span>
+                                Acknowledge &amp; Return
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

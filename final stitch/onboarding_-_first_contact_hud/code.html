@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rankers Log - System Initialization</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#258cf4",
+              "background-light": "#f5f7f8",
+              "background-dark": "#101922",
+              "void": "#050505",
+              "glass": "rgba(16, 25, 34, 0.6)",
+              "glass-border": "rgba(49, 77, 104, 0.5)",
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"],
+              "body": ["Noto Sans", "sans-serif"],
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+            backgroundImage: {
+                'grid-pattern': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)",
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom Scanline Effect */
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        
+        /* Custom Scrollbar for a tech feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #314d68; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #258cf4; 
+        }
+
+        .hud-border {
+            position: relative;
+        }
+        .hud-border::before, .hud-border::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-color: #258cf4;
+            border-style: solid;
+            transition: all 0.3s ease;
+        }
+        .hud-border::before {
+            top: -1px;
+            left: -1px;
+            border-width: 2px 0 0 2px;
+            border-top-left-radius: 0.5rem;
+        }
+        .hud-border::after {
+            bottom: -1px;
+            right: -1px;
+            border-width: 0 2px 2px 0;
+            border-bottom-right-radius: 0.5rem;
+        }
+        
+        .glow-hover:hover {
+            box-shadow: 0 0 15px rgba(37, 140, 244, 0.2);
+            border-color: rgba(37, 140, 244, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-void text-white font-display overflow-x-hidden antialiased min-h-screen flex flex-col relative selection:bg-primary selection:text-white">
+<!-- Background Elements -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-20 bg-[size:40px_40px] bg-grid-pattern [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+<div class="fixed inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(37,140,244,0.08)_0%,transparent_70%)]"></div>
+<div class="fixed inset-0 z-10 pointer-events-none scanlines opacity-30"></div>
+<!-- Main Content Wrapper -->
+<div class="relative z-20 flex flex-col h-full grow layout-container">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-glass-border bg-glass backdrop-blur-md px-6 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8 flex items-center justify-center rounded bg-primary/10 border border-primary/30">
+<span class="material-symbols-outlined text-xl">deployed_code</span>
+</div>
+<div class="flex flex-col">
+<h2 class="text-white text-lg font-bold leading-none tracking-widest">RANKERS LOG</h2>
+<span class="text-xs text-primary/60 tracking-[0.2em] font-medium">SYSTEM INITIALIZATION V.1.0</span>
+</div>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<span class="animate-pulse h-2 w-2 rounded-full bg-green-500"></span>
+<span class="text-xs font-mono text-green-500 tracking-wider">ONLINE</span>
+</div>
+</header>
+<div class="flex flex-1 justify-center py-8 px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col max-w-[960px] w-full gap-8">
+<!-- System Calibration (Progress) -->
+<div class="flex flex-col gap-2 p-6 rounded-xl border border-glass-border bg-glass backdrop-blur-sm shadow-lg">
+<div class="flex gap-6 justify-between items-end">
+<div class="flex flex-col">
+<p class="text-primary text-sm font-bold tracking-widest mb-1">CALIBRATION SEQUENCE</p>
+<p class="text-white text-2xl font-black leading-tight">SETUP WIZARD</p>
+</div>
+<p class="text-primary font-mono text-xl font-bold">01/03</p>
+</div>
+<div class="mt-4 rounded-full bg-[#1a2c3d] h-1.5 w-full overflow-hidden">
+<div class="h-full bg-primary shadow-[0_0_10px_#258cf4]" style="width: 33%;"></div>
+</div>
+</div>
+<!-- Step 1: Data Streams (Interests) -->
+<section class="flex flex-col gap-6 p-6 sm:p-8 rounded-xl border border-glass-border bg-glass backdrop-blur-md relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-50"></div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">dataset</span>
+<h3 class="text-white text-xl font-bold tracking-wide">SELECT DATA STREAMS</h3>
+</div>
+<p class="text-[#90adcb] text-sm font-body max-w-2xl">
+                            Initialize your feed by activating primary media interest modules. Selected streams will be prioritized for tracking.
+                        </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Anime Card -->
+<label class="cursor-pointer group/card relative">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="hud-border h-full flex flex-col gap-3 p-3 rounded-lg border border-glass-border bg-[#151f2b] transition-all duration-300 peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:shadow-[0_0_20px_rgba(37,140,244,0.15)] glow-hover">
+<div class="w-full aspect-[4/3] bg-cover bg-center rounded border border-white/10 relative overflow-hidden" data-alt="Abstract anime style illustration with vibrant pink and blue neon colors" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDimzB4ICywmfflrO8CH1peRlr9zDTf0tO6kKOwHLhyKIn89wfBOzggzj1Wwex4U-awuTeUk4YcC9aEWfTRb9tmY7uTJ1BCwnrMIJe39zzl4PLKrqjGs3ISC5rJwGBshEDxl80szqb0iFrpTCLChlfRrHJpTsv4sVMVzHP8nsiYXJOvbqfZPcP5In2xz7sF50v0O_rsFT2pbwimUSeVezps3c0l-i23C4SHwjpuLyNLLX-eWkguufY4EjOuscam6uG5guQxpKXDB2P_');">
+<div class="absolute inset-0 bg-black/40 group-hover/card:bg-black/20 transition-colors"></div>
+<div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">check_circle</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<p class="text-white text-sm font-bold tracking-wider">ANIME</p>
+<span class="text-[10px] text-primary/70 font-mono">[ACT]</span>
+</div>
+</div>
+</label>
+<!-- Manga Card -->
+<label class="cursor-pointer group/card relative">
+<input class="peer sr-only" type="checkbox"/>
+<div class="hud-border h-full flex flex-col gap-3 p-3 rounded-lg border border-glass-border bg-[#151f2b] transition-all duration-300 peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:shadow-[0_0_20px_rgba(37,140,244,0.15)] glow-hover">
+<div class="w-full aspect-[4/3] bg-cover bg-center rounded border border-white/10 relative overflow-hidden" data-alt="Black and white comic book texture background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuANaD1JBtkG2E0qOgu-v94_-mxqAc5Ymne8_M0iSz42_iurnkmRiO7dUQ6oiK92RDubYu1oJhgbOUryaUqkCV6ziD3jVWhK44OoMEzRP6Bo0vjCPT0I4Mm0Vd92NOSpzoWDuActF-FFO1t5B8piFqEA5z-CU04P6mHgJ40z5M1NElNu6nQMV42skMNDPocervXcvhXQisZxVDNQvT8CCHCJOKwtZmkXOSISMOg1iYAw-AMo-WtVILDHYZBmSPpPqg-hFVZB0BB8g5Ep');">
+<div class="absolute inset-0 bg-black/40 group-hover/card:bg-black/20 transition-colors"></div>
+<div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">check_circle</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<p class="text-white text-sm font-bold tracking-wider">MANGA</p>
+<span class="text-[10px] text-slate-500 font-mono peer-checked:text-primary/70">[OFF]</span>
+</div>
+</div>
+</label>
+<!-- Games Card -->
+<label class="cursor-pointer group/card relative">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="hud-border h-full flex flex-col gap-3 p-3 rounded-lg border border-glass-border bg-[#151f2b] transition-all duration-300 peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:shadow-[0_0_20px_rgba(37,140,244,0.15)] glow-hover">
+<div class="w-full aspect-[4/3] bg-cover bg-center rounded border border-white/10 relative overflow-hidden" data-alt="Futuristic glowing computer hardware circuitry" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBpSbQY_fzgpBoqasm4swDwGVg6RgTYVVcbwHgwFVy3jcuqt4VP4qsLWV0W6-DYb4BNZoyKIbFC-GilND6O2w-Rif1XoMm-iGYFWiAXNfSZXXCC-CRVgmAUTljd6jm6mkUObMa7VGkLlcvgNt1Xyh4I2z6xXtqlL0j-6EJa5FUEPYKP_uIr6ACoW8X93U5wsEXAyr5Af81q6TR1plF4iwH13PtcN6LiuA9I6WcFAHWQYPZj14n9U7gtZT5STko_Fqcw_S6SaiITFOYI');">
+<div class="absolute inset-0 bg-black/40 group-hover/card:bg-black/20 transition-colors"></div>
+<div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">check_circle</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<p class="text-white text-sm font-bold tracking-wider">GAMES</p>
+<span class="text-[10px] text-primary/70 font-mono">[ACT]</span>
+</div>
+</div>
+</label>
+<!-- Novels Card -->
+<label class="cursor-pointer group/card relative">
+<input class="peer sr-only" type="checkbox"/>
+<div class="hud-border h-full flex flex-col gap-3 p-3 rounded-lg border border-glass-border bg-[#151f2b] transition-all duration-300 peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:shadow-[0_0_20px_rgba(37,140,244,0.15)] glow-hover">
+<div class="w-full aspect-[4/3] bg-cover bg-center rounded border border-white/10 relative overflow-hidden" data-alt="Abstract digital network connections glowing in blue" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXk6TMxa2GfKavPtLlYsEJ4GCE7yH4EdIYZpvKLlAgCspe2aEgYbQg-cUs_4NkkXDo_1-BSKgvfpTMQSCyOesdwXp4TuNDDh8FDFLwHVJyG4Wrh8_Ssmdf3BjQ0z1fGSVgukpwr6_R5f1jwqRIA29MIiIT9qbmp81bwuHXuNa9n0dRYZFlXL07NW_FBwDSAncTQuTGHvZDZ2obCrBPT90vLShgi9immUprjdSExG2IGEFY5bzURq-OXKN_vHhNG8w8pDNEvIg0O5ba');">
+<div class="absolute inset-0 bg-black/40 group-hover/card:bg-black/20 transition-colors"></div>
+<div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">check_circle</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<p class="text-white text-sm font-bold tracking-wider">NOVELS</p>
+<span class="text-[10px] text-slate-500 font-mono peer-checked:text-primary/70">[OFF]</span>
+</div>
+</div>
+</label>
+</div>
+</section>
+<!-- Step 2: Mission Parameters (Goals) -->
+<section class="flex flex-col gap-6 p-6 sm:p-8 rounded-xl border border-glass-border bg-glass backdrop-blur-md relative overflow-hidden">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">flag</span>
+<h3 class="text-white text-xl font-bold tracking-wide">MISSION OBJECTIVE</h3>
+</div>
+<p class="text-[#90adcb] text-sm font-body">
+                            Select your engagement protocol. This will adjust the density of stats and achievements displayed.
+                        </p>
+</div>
+<div class="flex flex-col gap-3">
+<label class="relative flex items-center gap-4 rounded-lg border border-[#314d68] bg-[#151f2b] p-4 cursor-pointer hover:border-primary/50 transition-colors group">
+<input class="peer h-5 w-5 border-2 border-[#314d68] bg-transparent text-transparent checked:border-primary checked:bg-primary focus:outline-none focus:ring-0 focus:ring-offset-0 transition-all" name="goal" type="radio"/>
+<div class="flex flex-col sm:flex-row sm:items-center grow justify-between gap-2">
+<div class="flex flex-col">
+<p class="text-white text-sm font-bold leading-normal group-hover:text-primary transition-colors">CASUAL TRACKING // LOG ENTRIES</p>
+<p class="text-[#90adcb] text-xs font-normal leading-normal font-mono">Log completion at your own pace. Minimal stat interference.</p>
+</div>
+<div class="px-2 py-1 bg-[#1a2c3d] rounded text-[10px] text-white font-mono border border-white/5">DIFFICULTY: E</div>
+</div>
+<div class="absolute inset-0 border-2 border-primary rounded-lg opacity-0 peer-checked:opacity-100 pointer-events-none shadow-[0_0_15px_rgba(37,140,244,0.1)] transition-opacity"></div>
+</label>
+<label class="relative flex items-center gap-4 rounded-lg border border-[#314d68] bg-[#151f2b] p-4 cursor-pointer hover:border-primary/50 transition-colors group">
+<input checked="" class="peer h-5 w-5 border-2 border-[#314d68] bg-transparent text-transparent checked:border-primary checked:bg-primary focus:outline-none focus:ring-0 focus:ring-offset-0 transition-all" name="goal" type="radio"/>
+<div class="flex flex-col sm:flex-row sm:items-center grow justify-between gap-2">
+<div class="flex flex-col">
+<p class="text-white text-sm font-bold leading-normal group-hover:text-primary transition-colors">COMPLETIONIST // 100% SYNC</p>
+<p class="text-[#90adcb] text-xs font-normal leading-normal font-mono">Detailed stats, hidden achievements, and full ranking tables.</p>
+</div>
+<div class="px-2 py-1 bg-[#1a2c3d] rounded text-[10px] text-primary font-mono border border-primary/20">DIFFICULTY: S</div>
+</div>
+<div class="absolute inset-0 border-2 border-primary rounded-lg opacity-0 peer-checked:opacity-100 pointer-events-none shadow-[0_0_15px_rgba(37,140,244,0.1)] transition-opacity"></div>
+</label>
+<label class="relative flex items-center gap-4 rounded-lg border border-[#314d68] bg-[#151f2b] p-4 cursor-pointer hover:border-primary/50 transition-colors group">
+<input class="peer h-5 w-5 border-2 border-[#314d68] bg-transparent text-transparent checked:border-primary checked:bg-primary focus:outline-none focus:ring-0 focus:ring-offset-0 transition-all" name="goal" type="radio"/>
+<div class="flex flex-col sm:flex-row sm:items-center grow justify-between gap-2">
+<div class="flex flex-col">
+<p class="text-white text-sm font-bold leading-normal group-hover:text-primary transition-colors">SOCIAL DISCOVERY // NETWORK</p>
+<p class="text-[#90adcb] text-xs font-normal leading-normal font-mono">Prioritize feed updates from other Rankers and Guilds.</p>
+</div>
+<div class="px-2 py-1 bg-[#1a2c3d] rounded text-[10px] text-white font-mono border border-white/5">DIFFICULTY: B</div>
+</div>
+<div class="absolute inset-0 border-2 border-primary rounded-lg opacity-0 peer-checked:opacity-100 pointer-events-none shadow-[0_0_15px_rgba(37,140,244,0.1)] transition-opacity"></div>
+</label>
+</div>
+</section>
+<!-- Step 3: Aesthetic (Colors) -->
+<section class="flex flex-col sm:flex-row gap-6 p-6 sm:p-8 rounded-xl border border-glass-border bg-glass backdrop-blur-md justify-between items-start sm:items-center">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">palette</span>
+<h3 class="text-white text-xl font-bold tracking-wide">SYSTEM VISUALIZATION</h3>
+</div>
+<p class="text-[#90adcb] text-sm font-body">
+                           Tune the HUD accent frequency.
+                       </p>
+</div>
+<div class="flex gap-4 bg-[#151f2b] p-2 rounded-lg border border-glass-border">
+<label class="cursor-pointer relative group">
+<input checked="" class="peer sr-only" name="theme" type="radio"/>
+<div class="w-10 h-10 rounded-full bg-[#258cf4] border-2 border-transparent peer-checked:border-white peer-checked:shadow-[0_0_15px_#258cf4] transition-all hover:scale-110"></div>
+</label>
+<label class="cursor-pointer relative group">
+<input class="peer sr-only" name="theme" type="radio"/>
+<div class="w-10 h-10 rounded-full bg-[#f4256d] border-2 border-transparent peer-checked:border-white peer-checked:shadow-[0_0_15px_#f4256d] transition-all hover:scale-110"></div>
+</label>
+<label class="cursor-pointer relative group">
+<input class="peer sr-only" name="theme" type="radio"/>
+<div class="w-10 h-10 rounded-full bg-[#25f488] border-2 border-transparent peer-checked:border-white peer-checked:shadow-[0_0_15px_#25f488] transition-all hover:scale-110"></div>
+</label>
+<label class="cursor-pointer relative group">
+<input class="peer sr-only" name="theme" type="radio"/>
+<div class="w-10 h-10 rounded-full bg-[#a825f4] border-2 border-transparent peer-checked:border-white peer-checked:shadow-[0_0_15px_#a825f4] transition-all hover:scale-110"></div>
+</label>
+</div>
+</section>
+<!-- Action Footer -->
+<div class="flex justify-end pt-4 pb-12">
+<button class="relative group overflow-hidden rounded-lg bg-primary px-8 py-4 transition-all hover:shadow-[0_0_30px_rgba(37,140,244,0.4)] hover:scale-[1.02] active:scale-[0.98]">
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+<div class="relative flex items-center gap-3">
+<span class="text-white text-lg font-bold tracking-widest uppercase">Initialize System</span>
+<span class="material-symbols-outlined text-white animate-pulse">power_settings_new</span>
+</div>
+</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>
